@@ -53,8 +53,10 @@ class Adapter{
     //insert method
     public function insert($query)
     {
-
         $result = $this->query($query);
+        if($result){
+            return $this->getConnect()->insert_id;
+        }
         return $result;
     }
     //update method
@@ -83,6 +85,12 @@ class Adapter{
 		}
 		return false;
 	}
+    //join method
+    public function join($query)
+    {
+        $result = $this->query($query);
+        return $result;
+    }
 
 
 }
