@@ -1,6 +1,6 @@
 <?php 
-require_once ('Adapter.php');
-$adapter = new Adapter();  
+require_once ('Model/Core/Adapter.php');
+$adapter = new Model_Core_Adapter();  
 $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId;");
 ?>
 
@@ -9,7 +9,7 @@ $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join addre
     <title>Customer Grid</title>
 </head>
 <body>
-<button name="Add"><a href="index.php?a=addAction">Add Customer</a></button>
+<button name="Add"><a href="index.php?c=customer&a=add">Add Customer</a></button>
 
     <table border='1' width='100%' cellspacing="4">
         <tr>
@@ -57,8 +57,8 @@ $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join addre
             <td><?php echo $customer['billing']; ?></td>
             <td><?php echo $customer['shipping']; ?></td>
 
-            <td><a href="index.php?a=editAction&id=<?php echo $customer['id'] ?>">Edit</a></td>
-			<td><a href="index.php?a=deleteAction&id=<?php echo $customer['id'] ?>">Delete</a></td>
+            <td><a href="index.php?c=customer&a=edit&id=<?php echo $customer['id'] ?>">Edit</a></td>
+			<td><a href="index.php?c=customer&a=delete&id=<?php echo $customer['id'] ?>">Delete</a></td>
         </tr>
     <?php endforeach; ?>
 <?php endif; ?>

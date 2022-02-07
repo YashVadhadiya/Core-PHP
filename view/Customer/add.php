@@ -1,7 +1,7 @@
 <html>
 <head><title>Category Add</title></head>
 <body>
-<form  method="POST" action="index.php?a=saveAction">
+<form  method="POST" action="index.php?c=customer&a=save">
 	<table border="1" width="100%" cellspacing="4">
 
 	<!-- this is used for personal data -->
@@ -81,7 +81,7 @@
 			<td >&nbsp;</td>
 			<td>
 				<input type="submit" name="submit" value="Save">
-				<button type="button"><a href="index.php?a=gridAction">Cancel</a></button>
+				<button type="button"><a href="index.php?c=customer&a=grid">Cancel</a></button>
 			</td>
 		</tr>
 		
@@ -97,15 +97,6 @@
 				<tr>
 					<td><input type="hidden" name="address[customerId]"></td>
 				</tr>
-
-				<!-- <tr>
-					<td><input type="hidden" name="address[billing]"></td>
-				</tr>
-
-				<tr>
-					<td><input type="hidden" name="address[shipping]"></td>
-				</tr> -->
-
 </form>
 </body>
 </html>

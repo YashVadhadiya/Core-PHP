@@ -1,6 +1,6 @@
 <?php
-require_once('Adapter.php');
-$adapter = new Adapter();
+require_once('Model/Core/Adapter.php');
+$adapter = new Model_Core_Adapter();
 $id = $_GET['id'];
 $product = $adapter->fetchAll("SELECT * FROM `product` WHERE `id` = $id");
 $r = mysqli_fetch_assoc($product);
@@ -13,7 +13,7 @@ $r = mysqli_fetch_assoc($product);
 </head>
 
 <body>
-        <form method="post" action="index.php?a=saveAction">
+        <form method="post" action="index.php?p=product&a=save">
         <label for="">id</label>
         <input type="text" name="id" value="<?php echo $r['id']; ?>">
 </br>
@@ -35,7 +35,7 @@ $r = mysqli_fetch_assoc($product);
         <input type="submit" name="submit" value="Update">
         </form>
 
-        <a href="index.php?a=gridAction">Add Product</a>
+        <a href="index.php?p=product&a=grid">Add Product</a>
 
 </body>
 </html>

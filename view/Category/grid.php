@@ -1,6 +1,6 @@
 <?php
- require_once ('Adapter.php');
- $adapter = new Adapter();
+ require_once ('Model/Core/Adapter.php');
+ $adapter = new Model_Core_Adapter();
  $categories = $adapter->fetchAll("SELECT * FROM `category`");
 ?>
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ tr:nth-child(even) {
 }
 </style>
 <body>
-<button name="Add"><a href="index.php?a=addAction">Add Customer</a></button>
+<button name="Add"><a href="index.php?c=category&a=add">Add Customer</a></button>
 		<table border=1>
 
 			<tr>
@@ -49,8 +49,8 @@ tr:nth-child(even) {
 				<td><?php echo $category['status']; ?></td>
 				<td><?php echo $category['createdAt']?></td>
 				<td><?php echo $category['updatedAt']?></td>
-				<td><a href="index.php?a=editAction&id=<?php echo $category['id']; ?>">Edit</a> 
-				<a href="index.php?a=deleteAction&id=<?php echo $category['id']; ?>">Delete</a></td>
+				<td><a href="index.php?c=category&a=edit&id=<?php echo $category['id']; ?>">Edit</a> 
+				<a href="index.php?c=category&a=delete&id=<?php echo $category['id']; ?>">Delete</a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php endif; ?>

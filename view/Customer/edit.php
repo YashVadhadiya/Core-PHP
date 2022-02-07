@@ -1,6 +1,6 @@
 <?php 
-require_once ('Adapter.php');
-$adapter = new Adapter();
+require_once ('Model/Core/Adapter.php');
+$adapter = new Model_Core_Adapter();
 $id = $_GET['id'];
 $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId WHERE c.id = $id");
 $r = mysqli_fetch_assoc($customers);
@@ -9,7 +9,7 @@ $r = mysqli_fetch_assoc($customers);
 <html>
 <head><title>Category Update</title></head>
 <body>
-<form method="POST" action="index.php?a=saveAction&id=<?php echo $_GET['id']?>">
+<form method="POST" action="index.php?c=customer&a=save&id=<?php echo $_GET['id']?>">
 	<table border="1" width="100%" cellspacing="4">
 
 	<!-- this is used for personal data -->
@@ -77,8 +77,8 @@ $r = mysqli_fetch_assoc($customers);
 			<td >Status</td>
 			<td>
 				<select name="customer[status]">
-					<option value="1">Active</option>
-					<option value="2">Inactive</option>
+					<option value="1" <?php $status = $r['status']; if($status == 1): ?> checked <?php endif; ?>>Active</option>
+					<option value="2" <?php $status = $r['status']; if($status == 2): ?> checked <?php endif; ?>>Inactive</option>
 				</select>
 			</td>
 		</tr>
@@ -87,7 +87,7 @@ $r = mysqli_fetch_assoc($customers);
 			<td >&nbsp;</td>
 			<td>
 				<input type="submit" value="Edit" name="edit">
-				<button type="button"><a href="index.php?a=gridAction">Cancel</a></button>
+				<button type="button"><a href="index.php?c=customer&a=grid">Cancel</a></button>
 			</td>
 		</tr>
 		

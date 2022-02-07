@@ -1,6 +1,6 @@
  <?php
-require_once('Adapter.php');
-$adapter = new Adapter();
+require_once('Model/Core/Adapter.php');
+$adapter = new Model_Core_Adapter();
 $id = $_GET['id'];
 $category = $adapter->fetchAll("SELECT * FROM `category` WHERE `id` = $id");
 $r = mysqli_fetch_assoc($category);
@@ -14,7 +14,7 @@ $r = mysqli_fetch_assoc($category);
 </head>
 
 <body>
-        <form method="post" action="index.php?a=saveAction">
+        <form method="post" action="index.php?c=category&a=save">
         <label for="">id</label>
         <input type="text" name="id" value="<?php echo $r['id']; ?>">
         </br>
@@ -29,6 +29,6 @@ $r = mysqli_fetch_assoc($category);
 </br>
         <input type="submit" name="submit" value="Update">
         </form>
-        <button type="button"><a href="index.php?a=gridAction">Cancel</a></button>
+        <button type="button"><a href="index.php?c=category&a=grid">Cancel</a></button>
 </body>
 </html>

@@ -1,23 +1,27 @@
 <?php 
-require_once('Adapter.php');
+require_once('Model/Core/Adapter.php');
 ?>
 <?php
-class Category{
+class Controller_Category{
     public function gridAction()
     {
-        require_once('category-grid.php');
+        require_once('view/category/grid.php');
     }
     
     public function saveAction()
     {
-        $adapter = new Adapter();
+        $adapter = new Model_Core_Adapter();
+        date_default_timezone_set("Asia/Kolkata");
+        $date = date('Y-m-d H:i:s');
+
         $id = $_POST['id'];
         $name = $_POST['name'];
         $status = $_POST['status'];
-        $updatedAt = date('Y-m-d H:i:s');
+        $createdAt = $date;
+        $updatedAt = $date;
     try{
         if($id == NULL){
-            $query = "INSERT INTO `category`(`name`, `status`) VALUES ('$name','$status')";
+            $query = "INSERT INTO `category`(`name`, `status`, `createdAt`) VALUES ('$name','$status', '$createdAt')";
             
             $result = $adapter->insert($query);
             
@@ -25,7 +29,7 @@ class Category{
                 throw new Exception("Data in not inserted in category.", 1);
             }
             else{
-                $this->redirect('index.php?a=gridAction');
+                $this->redirect('index.php?c=category&a=grid');
             }
             
         }else{
@@ -37,7 +41,7 @@ class Category{
                 throw new Exception("Data in not updated in category.", 1);
             
             }else{
-                $this->redirect('index.php?a=gridAction');
+                $this->redirect('index.php?c=category&a=gridAction');
             }
             }
     
@@ -47,18 +51,18 @@ class Category{
 }    
     public function addAction()
     {
-        require_once('category-add.php');
+        require_once('view/category/add.php');
     }
     
     public function editAction()
     {
-        require_once('category-update.php');
+        require_once('view/category/edit.php');
     }
     
 
     public function deleteAction()
     {
-        $adapter = new Adapter();
+        $adapter = new Model_Core_Adapter();
         $id = $_GET['id'];
         try{
             $result = $adapter->delete("DELETE FROM `category` WHERE `id` = $id");
@@ -74,7 +78,7 @@ class Category{
         }
     public function redirect()
     {
-        header('Location: index.php?a=gridAction');
+        header('Location: index.php?c=category&a=grid');
     }
     
     public function errorAction()
@@ -82,11 +86,5 @@ class Category{
         echo "error";
     }
 }
-
-$action = ($_GET['a']) ? $_GET['a'] : 'errorAction';
-
-$category = new Category();
-
-$category->$action();
 ?>
 

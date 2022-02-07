@@ -1,6 +1,6 @@
 <?php
- require_once('Adapter.php');
- $adapter = new Adapter();
+ require_once('Model/Core/Adapter.php');
+ $adapter = new Model_Core_Adapter();
  $products = $adapter->fetchAll("SELECT * FROM `product`");
 
 ?>
@@ -27,7 +27,7 @@ tr:nth-child(even) {
 }
 </style>
 <body>
-<button name="Add"><a href="index.php?a=addAction">Add Customer</a></button>
+<button name="Add"><a href="index.php?p=product&a=add">Add Customer</a></button>
 
 		<table border=1>
 
@@ -56,8 +56,8 @@ tr:nth-child(even) {
 				<td><?php echo $product['createdAt']?></td>
 				<td><?php echo $product['updatedAt']?></td>
 				
-				<td><a href="index.php?a=editAction&id=<?php echo $product['id']; ?>">Edit</a> 
-				<a href="index.php?a=deleteAction&id=<?php echo $product['id']; ?>">Delete</a></td>
+				<td><a href="index.php?p=product&a=edit&id=<?php echo $product['id']; ?>">Edit</a> 
+				<a href="index.php?p=product&a=delete&id=<?php echo $product['id']; ?>">Delete</a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php endif; ?>

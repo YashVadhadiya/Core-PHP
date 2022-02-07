@@ -1,16 +1,16 @@
 <?php 
-require_once('Adapter.php');
+require_once('Model/Core/Adapter.php');
 ?>
 <?php
-class Customer{
+class Controller_Customer{
     public function gridAction()
     {
-        require_once('customer-grid.php');
+        require_once('view/Customer/grid.php');
     }
     
     public function saveAction()
     {
-        $adapter = new Adapter();
+        $adapter = new Model_Core_Adapter();
         date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
         
@@ -37,61 +37,65 @@ class Customer{
             
             $query_customer_insert = "INSERT INTO customer (firstName, lastName, email, phone, status, createdAt) VALUES ('$firstName', '$lastName', '$email', '$phone', '$status', '$createdAt')";
             
-            $result1 = $adapter->insert($query_customer_insert);
+            $result_customer_insert = $adapter->insert($query_customer_insert);
             
-            if(!$result1){
+            if(!$result_customer_insert){
             throw new Exception("Data in not inserted in customer.", 1);
             }
             
-            $query_address_insert = "INSERT INTO address (customerId, address, postalCode, city, state, country, billing, shipping) VALUES ('$result1', '$address', '$postalCode', '$city', '$state', '$country', '$billing', '$shipping')";
+            $query_address_insert = "INSERT INTO address (customerId, address, postalCode, city, state, country, billing, shipping) VALUES ('$result_customer_insert', '$address', '$postalCode', '$city', '$state', '$country', '$billing', '$shipping')";
             
-            $result2 = $adapter->insert($query_address_insert);
+            $result_address_insert = $adapter->insert($query_address_insert);
             
-            if(!$result2){
+            if(!$result_address_insert){
             throw new Exception("Data in not inserted in address.", 1);
 
             }else{
-                header("Location: index.php?a=gridAction");
+                $this->redirect();
             }
             }else{
             $query_customer_update = "UPDATE customer c INNER JOIN address a ON c.id = a.customerId SET c.firstName='$firstName' , c.lastName='$lastName' ,  c.phone='$phone' , c.email='$email' , c.status='$status' , c.updatedAt='$updatedAt' , a.address='$address' , a.postalCode='$postalCode' ,  a.city='$city' , a.state='$state' , a.country='$country' , a.billing='$billing' , a.shipping='$shipping' WHERE c.id = '$id'";
 
-            $result = $adapter->update($query_customer_update);
-            if(!$result){
+            $result_update = $adapter->update($query_customer_update);
+            if(!$result_update){
             throw new Exception("Data in not updated.", 1);
             }
             else{
-            header("Location: index.php?a=gridAction");
+            $this->redirect();
             }
         }
         }catch(Exception $e){
             $e->getMessage();
-        }
-            
+        }    
         
     }
     
     public function addAction()
     {
-        require_once('customer-add.php');
+        require_once('view/Customer/add.php');
     }
     
     public function editAction()
     {
-        require_once('customer-edit.php');
+        require_once('view/Customer/edit.php');
     }
     
     public function deleteAction()
     {
         $id=$_GET['id'];
-        $adapter = new Adapter();
+        $adapter = new Model_Core_Adapter();
         $result=$adapter->delete("DELETE FROM `customer` WHERE `id` = '$id'");
         $result=$adapter->delete("DELETE FROM `address` WHERE `customerId` = '$id'");
         
         if($result)
         {
-            header('Location: index.php?a=gridAction');
+            header('Location: index.php?c=customer&a=grid');
         }
+    }
+
+    public function redirect()
+    {
+        header('Location: index.php?c=customer&a=grid');
     }
 
     public function errorAction()
@@ -99,10 +103,4 @@ class Customer{
         echo "error";
     }
 }
-
-$action = ($_GET['a']) ? $_GET['a'] : 'errorAction';
-
-$customer = new Customer();
-
-$customer->$action();
 ?>

@@ -1,7 +1,7 @@
 <?php 
 echo "<pre>";
 
-class Adapter{
+class Model_Core_Adapter{
     public $config = [
         'host'=>'localhost:3305',
         'user'=>'root',
@@ -91,9 +91,6 @@ class Adapter{
         $result = $this->query($query);
         return $result;
     }
-
-
 }
-$adapter = new Adapter();
 
 ?>

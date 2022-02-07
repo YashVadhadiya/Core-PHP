@@ -1,16 +1,13 @@
-<?php 
-require_once('Adapter.php');
-?>
 <?php
-class Product{
+class Controller_Product{
     public function gridAction()
     {
-        require_once('product-grid.php');
+        require_once('view/product/grid.php');
     }
     
     public function saveAction()
     {
-        $adapter = new Adapter();
+        $adapter = new Model_Core_Adapter();
         date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
         
@@ -32,7 +29,7 @@ class Product{
                     throw new Exception("System is not able to insert", 1);
                 }
                 else{
-                    $this->redirect('index.php?a=gridAction');
+                    $this->redirect();
                 }
             }else{
                 $query = "UPDATE `product` SET `name` = '$name', `status` = '$status', `price` = '$price', `quantity`= '$quantity', `updatedAt` = '$updatedAt' WHERE `product`.`id` = $id";
@@ -43,7 +40,7 @@ class Product{
                     throw new Exception("System is not able to update", 1);
                 }
                 else{
-                    $this->redirect('index.php?a=gridAction');
+                    $this->redirect();
                 }
 
             }
@@ -54,29 +51,29 @@ class Product{
     
     public function addAction()
     {
-        require_once('product-add.php');
+        require_once('view/product/add.php');
     }
     
     public function editAction()
     {
-        require_once('product-update.php');
+        require_once('view/product/edit.php');
     }
     
     public function deleteAction()
     {
         $id=$_GET['id'];
-        $adapter =new Adapter();
+        $adapter =new Model_Core_Adapter();
         $result=$adapter->delete("DELETE FROM `product` WHERE `product`.`id` = '$id'");
         var_dump($result);
         if($result)
         {
-            header('Location: index.php?a=gridAction');
+            $this->redirect();
         }
     }
 
     public function redirect()
     {
-        header('Location: index.php?a=gridAction');
+        header('Location: index.php?p=product&a=grid');
     }
     
     public function errorAction()
@@ -84,10 +81,4 @@ class Product{
         echo "error";
     }
 }
-
-$action = ($_GET['a']) ? $_GET['a'] : 'errorAction';
-
-$product = new product();
-
-$product->$action();
 ?>
