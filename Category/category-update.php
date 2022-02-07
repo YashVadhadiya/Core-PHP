@@ -22,13 +22,13 @@ $r = mysqli_fetch_assoc($category);
         <input type="text" name="name" value="<?php echo $r['name']; ?>">
 </br>
         <label for="">status</label>
-        <input type="text" name="status" placeholder="Enter Status (active-1, inactive-2)" value="<?php echo $r['status']; ?>">
-
+        <select name="status">
+		<option value="1">Active</option>
+		<option value="2">Inactive</option>
+	</select>
 </br>
         <input type="submit" name="submit" value="Update">
         </form>
-
-        <a href="index.php?a=gridAction">Add category</a>
-
+        <button type="button"><a href="index.php?a=gridAction">Cancel</a></button>
 </body>
 </html>

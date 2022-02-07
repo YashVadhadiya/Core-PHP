@@ -27,13 +27,10 @@ $r = mysqli_fetch_assoc($product);
         <input type="text" name="quantity" value="<?php echo $r['quantity']; ?>">   
 </br>
         <label for="">status</label>
-        <input type="text" name="status" placeholder="Enter Status (active-1, inactive-2)" value="<?php echo $r['status']; ?>">
-</br>    
-        <label for="">Created At (date and time):</label>
-        <input type="datetime-local" id="createdAt" name="createdAt" value="<?php echo $r['createdAt']; ?>">
-</br>
-        <label for="">Updated At (date and time):</label>
-        <input type="datetime-local" id="updatedAt" name="updatedAt" value="<?php echo $r['UpdatedAt']; ?>">
+        <select name="status">
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+        </select>
 </br>
         <input type="submit" name="submit" value="Update">
         </form>

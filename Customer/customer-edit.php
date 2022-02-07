@@ -66,9 +66,9 @@ $r = mysqli_fetch_assoc($customers);
 		<tr>
 			<td>Address Type</td>
 			<td>
-			<input type="checkbox" id="billing" name="address[billing]" value="1">
+			<input type="checkbox" id="billing" name="address[billing]" value="1" <?php $billing = $r['billing']; if($billing == 1): ?> checked <?php endif; ?>>
 			<label for="billing">Billing Address</label><br>
-			<input type="checkbox" id="shipping" name="address[shipping]" value="1">
+			<input type="checkbox" id="shipping" name="address[shipping]" value="1" <?php $shipping = $r['shipping']; if($shipping == 1): ?> checked <?php endif; ?>>
 			<label for="shipping">Shipping Address</label><br>
 			</td>
 		</tr>
@@ -76,7 +76,7 @@ $r = mysqli_fetch_assoc($customers);
 		<tr>
 			<td >Status</td>
 			<td>
-				<select name="status">
+				<select name="customer[status]">
 					<option value="1">Active</option>
 					<option value="2">Inactive</option>
 				</select>

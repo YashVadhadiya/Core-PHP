@@ -32,23 +32,43 @@ class Customer{
         $billing = $_POST['address']['billing'];
         $shipping = $_POST['address']['shipping'];
         
-        if($id == NULL):
-        
-            $query_customer_insert = "INSERT INTO customer (firstName, lastName, email, phone, status, createdAt) VALUES ('$firstName', '$lastName', '$email', '$phone', '$status', '$createdAt')";
-            $result1 = $adapter->insert($query_customer_insert);
-
-            $query_address_insert = "INSERT INTO address (customerId, address, postalCode, city, state, country, billing, shipping) VALUES ('$result1', '$address', '$postalCode', '$city', '$state', '$country', '$billing', '$shipping')";
-            $result2 = $adapter->insert($query_address_insert);
-            header("Location: index.php?a=gridAction");            
-           
-        else:
+        try{
+            if($id == NULL){
             
+            $query_customer_insert = "INSERT INTO customer (firstName, lastName, email, phone, status, createdAt) VALUES ('$firstName', '$lastName', '$email', '$phone', '$status', '$createdAt')";
+            
+            $result1 = $adapter->insert($query_customer_insert);
+            
+            if(!$result1){
+            throw new Exception("Data in not inserted in customer.", 1);
+            }
+            
+            $query_address_insert = "INSERT INTO address (customerId, address, postalCode, city, state, country, billing, shipping) VALUES ('$result1', '$address', '$postalCode', '$city', '$state', '$country', '$billing', '$shipping')";
+            
+            $result2 = $adapter->insert($query_address_insert);
+            
+            if(!$result2){
+            throw new Exception("Data in not inserted in address.", 1);
+
+            }else{
+                header("Location: index.php?a=gridAction");
+            }
+            }else{
             $query_customer_update = "UPDATE customer c INNER JOIN address a ON c.id = a.customerId SET c.firstName='$firstName' , c.lastName='$lastName' ,  c.phone='$phone' , c.email='$email' , c.status='$status' , c.updatedAt='$updatedAt' , a.address='$address' , a.postalCode='$postalCode' ,  a.city='$city' , a.state='$state' , a.country='$country' , a.billing='$billing' , a.shipping='$shipping' WHERE c.id = '$id'";
 
             $result = $adapter->update($query_customer_update);
+            if(!$result){
+            throw new Exception("Data in not updated.", 1);
+            }
+            else{
             header("Location: index.php?a=gridAction");
-        endif;
-
+            }
+        }
+        }catch(Exception $e){
+            $e->getMessage();
+        }
+            
+        
     }
     
     public function addAction()

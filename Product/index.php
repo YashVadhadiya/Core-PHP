@@ -22,27 +22,35 @@ class Product{
         $createdAt = $date;
         $updatedAt = $date;
         
+            try{
             if($id == NULL){
-                $result = $adapter->insert("INSERT INTO `product`(`name`, `status`, `price`, `quantity`, `createdAt`) 
-                VALUES ('$name', '$status', '$price', '$quantity','$createdAt')");
-            if ($result) {
-            echo "Successfully Inserted";
-            header("location: index.php?a=gridAction");
-            } 
-            else {
-            echo "Error";
-            }
-            }
-            else{
-                $result = $adapter->update("UPDATE `product` SET `name` = '$name', `status` = '$status', `price` = '$price', `quantity`= '$quantity', `updatedAt` = '$updatedAt' WHERE `product`.`id` = $id");
-            if($result){
-                    echo "Successfully updated data";
-                    header("location: index.php?a=gridAction");
+                $query ="INSERT INTO `product`(`name`, `status`, `price`, `quantity`, `createdAt`) VALUES ('$name', '$status', '$price', '$quantity','$createdAt')";
+
+                $result = $adapter->insert($query);
+
+                if(!$result){
+                    throw new Exception("System is not able to insert", 1);
+                }
+                else{
+                    $this->redirect('index.php?a=gridAction');
+                }
             }else{
-                    echo "failed to update data";
+                $query = "UPDATE `product` SET `name` = '$name', `status` = '$status', `price` = '$price', `quantity`= '$quantity', `updatedAt` = '$updatedAt' WHERE `product`.`id` = $id";
+
+                $result = $adapter->query($query);
+
+                if(!$result){
+                    throw new Exception("System is not able to update", 1);
+                }
+                else{
+                    $this->redirect('index.php?a=gridAction');
+                }
+
             }
+            }catch(Exception $e){
+                echo $e->getMessage();
             }
-    }
+        }
     
     public function addAction()
     {
@@ -64,6 +72,11 @@ class Product{
         {
             header('Location: index.php?a=gridAction');
         }
+    }
+
+    public function redirect()
+    {
+        header('Location: index.php?a=gridAction');
     }
     
     public function errorAction()

@@ -27,6 +27,8 @@ tr:nth-child(even) {
 }
 </style>
 <body>
+<button name="Add"><a href="index.php?a=addAction">Add Customer</a></button>
+
 		<table border=1>
 
 			<tr>
@@ -54,13 +56,12 @@ tr:nth-child(even) {
 				<td><?php echo $product['createdAt']?></td>
 				<td><?php echo $product['updatedAt']?></td>
 				
-				<td><a href="index.php?a=editAction&id=<?php echo $product['id']; ?>">Update</a> 
+				<td><a href="index.php?a=editAction&id=<?php echo $product['id']; ?>">Edit</a> 
 				<a href="index.php?a=deleteAction&id=<?php echo $product['id']; ?>">Delete</a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php endif; ?>
 		</table>
-        <a href="index.php?a=addAction" class="add">Add Product</a>
 
 </body>
 </html>

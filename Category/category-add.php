@@ -11,11 +11,13 @@
         <input type="text" name="name" placeholder="Enter Name">
 </br>
         <label for="">Status</label>
-        <input type="text" name="status" placeholder="Enter Status (active-1, inactive-2)">
+        <select name="status">
+		<option value="1">Active</option>
+		<option value="2">Inactive</option>
+	</select>
 </br>
         <input type="submit" name="submit" value="Submit">
-        <a href="index.php?a=gridAction" type="submit">View Database</a>
-</br>   
+        <button type="button"><a href="index.php?a=gridAction">Cancel</a></button></br>   
         
 
         </form>
