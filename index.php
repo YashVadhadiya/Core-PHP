@@ -16,15 +16,9 @@ class Ccc
 	{
 		$actionName = (isset($_GET['a'])) ? $_GET['a'] : 'error';
 		$actionName = $actionName.'Action';
-		$controllerName1 = (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'customer';
-        $controllerName2 = (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'category';
-        $controllerName3 = (isset($_GET['p'])) ? ucfirst($_GET['p']) : 'product';
-		$controllerPath = 'Controller/'.$controllerName1.'.php';
-		$controllerClassName = 'Controller_'.$controllerName1;
-        $controllerPath = 'Controller/'.$controllerName2.'.php';
-		$controllerClassName = 'Controller_'.$controllerName2;
-        $controllerPath = 'Controller/'.$controllerName3.'.php';
-		$controllerClassName = 'Controller_'.$controllerName3;
+		$controllerName = (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'customer';
+		$controllerPath = 'Controller/'.$controllerName.'.php';
+		$controllerClassName = 'Controller_'.$controllerName;
 		Ccc::loadClass($controllerClassName);
 		$controller = new $controllerClassName();
 		$controller->$actionName();

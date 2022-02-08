@@ -8,6 +8,16 @@ class Controller_Category{
         require_once('view/category/grid.php');
     }
     
+    public function addAction()
+    {
+        require_once('view/category/add.php');
+    }
+    
+    public function editAction()
+    {
+        require_once('view/category/edit.php');
+    }
+    
     public function saveAction()
     {
         $adapter = new Model_Core_Adapter();
@@ -45,20 +55,10 @@ class Controller_Category{
             }
             }
     
-}catch(Exception $e){
+    }catch(Exception $e){
         echo $e->getMessage();
     }
-}    
-    public function addAction()
-    {
-        require_once('view/category/add.php');
-    }
-    
-    public function editAction()
-    {
-        require_once('view/category/edit.php');
-    }
-    
+    }    
 
     public function deleteAction()
     {

@@ -71,12 +71,13 @@ class Model_Core_Adapter{
         $result = $this->query($query);
         return $result;
     }
-
+    //fetchAll method
     public function fetchAll($query)
     {
         $result = $this->query($query);
         return $result;
     }
+    //fetchRow method
     public function fetchRow($query)
 	{
 		$result = $this->query($query);
@@ -87,6 +88,12 @@ class Model_Core_Adapter{
 	}
     //join method
     public function join($query)
+    {
+        $result = $this->query($query);
+        return $result;
+    }
+    //select method
+    public function select($query)
     {
         $result = $this->query($query);
         return $result;
