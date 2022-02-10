@@ -1,4 +1,6 @@
 <?php
+
+echo "<pre>";
 $data = [
 
 	['category'=>1,'attribute'=>1,'option'=>1],
@@ -20,12 +22,11 @@ foreach ($data as $row) {
 	if(!array_key_exists($categoryId, $final)){
 	$final[$categoryId] = [];
 	}
-	if(!array_key_exists($attributeId, $final)){
+	if(!array_key_exists($attributeId, $final[$categoryId])){
 	$final[$categoryId][$attributeId] = [];
 	}
 
 	$final[$categoryId][$attributeId][$optionId] = $optionId;
-	//print_r($final);
 }
 print_r($final);
 

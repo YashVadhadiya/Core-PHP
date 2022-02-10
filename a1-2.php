@@ -1,8 +1,5 @@
 <?php
-
-
-
-
+echo "<pre>";
 
 $data = [
 	'1'=>[
@@ -42,6 +39,6 @@ foreach ($data as $categoryId => $level1) {
 }
 }
 }
-print_r($row);
+print_r($final);
 
 ?>

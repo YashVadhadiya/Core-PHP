@@ -10,23 +10,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-tr, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 10px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
 <body>
 	<!-- this is nav bar code -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -65,7 +48,7 @@ tr:nth-child(even) {
 			<?php foreach($categories as $category): ?>
 			<tr>
 				<td><?php echo $category['categoryId']; ?></td>
-				<td><?php echo $category['categoryName']; ?></td>
+				<td><?php echo $category['category']; ?></td>
 				<td><?php echo $category['status']; ?></td>
 				<td><?php echo $category['createdAt']?></td>
 				<td><?php echo $category['updatedAt']?></td>
