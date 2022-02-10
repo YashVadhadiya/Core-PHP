@@ -16,7 +16,7 @@ class Ccc
 	{
 		$actionName = (isset($_GET['a'])) ? $_GET['a'] : 'error';
 		$actionName = $actionName.'Action';
-		$controllerName = (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'customer';
+		$controllerName = (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'admin';
 		$controllerPath = 'Controller/'.$controllerName.'.php';
 		$controllerClassName = 'Controller_'.$controllerName;
 		Ccc::loadClass($controllerClassName);

@@ -24,14 +24,14 @@ class Controller_Category{
         date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
 
-        $id = $_POST['id'];
-        $name = $_POST['name'];
+        $categoryId = $_POST['categoryId'];
+        $categoryName = $_POST['categoryName'];
         $status = $_POST['status'];
         $createdAt = $date;
         $updatedAt = $date;
     try{
-        if($id == NULL){
-            $query = "INSERT INTO `category`(`name`, `status`, `createdAt`) VALUES ('$name','$status', '$createdAt')";
+        if($categoryId == NULL){
+            $query = "INSERT INTO `category`(`categoryName`, `status`, `createdAt`) VALUES ('$categoryName', '$status', '$createdAt')";
             
             $result = $adapter->insert($query);
             
@@ -43,7 +43,7 @@ class Controller_Category{
             }
             
         }else{
-            $query = "UPDATE `category` SET `name`='$name',`status`='$status', `updatedAt`= '$updatedAt' WHERE `id` = $id";
+            $query = "UPDATE `category` SET `categoryName`='$categoryName', `status`='$status', `updatedAt`= '$updatedAt' WHERE `categoryId` = $categoryId";
             
             $result = $adapter->query($query);
             
@@ -63,9 +63,9 @@ class Controller_Category{
     public function deleteAction()
     {
         $adapter = new Model_Core_Adapter();
-        $id = $_GET['id'];
+        $categoryId = $_GET['id'];
         try{
-            $result = $adapter->delete("DELETE FROM `category` WHERE `id` = $id");
+            $result = $adapter->delete("DELETE FROM `category` WHERE `categoryId` = $categoryId");
             if(!$result){
                 throw new Exception("Failed to delete", 1);
             }
@@ -85,6 +85,14 @@ class Controller_Category{
     {
         echo "error";
     }
+
+    public function categoryTree(){
+        $adapter = new Model_Core_Adapter();
+        $query = "SELECT * FROM `category`";
+        $result = $adapter->query($query);
+        $category = array();
+        $categoryTree = $this->$adapter($category);
+        return $categoryTree;
+    }
 }
 ?>
-
