@@ -3,16 +3,16 @@ require_once('Model/Core/Adapter.php');
 ?>
 <?php
 class Controller_Admin{
-    public function gridAction()
-    {
-        require_once('view/Admin/grid.php');
-    }
-
-    protected function saveadmin()
+	public function gridAction()
 	{
-        if(!isset($_POST['admin']['id'])){
-            throw new Exception("Data is not inserted in admin(isset).", 1);
-        }
+		require_once('view/Admin/grid.php');
+	}
+
+	protected function saveadmin()
+	{
+		if(!isset($_POST['admin']['id'])){
+			throw new Exception("Data is not inserted in admin(isset).", 1);
+		}
 
 		$adapter = new Model_Core_Adapter();
 		date_default_timezone_set("Asia/Kolkata");
@@ -34,8 +34,8 @@ class Controller_Admin{
 				throw new Exception("Data is not inserted in admin(result).",1);
 			endif;
 			return $result_admin_insert;
-		
-        else:
+			
+		else:
 			$query_admin_update ="UPDATE admin 
 			SET firstName='$firstName', lastName='$lastName', password=md5('$password'), email='$email', status='$status', updatedAt='$updatedAt' WHERE id = '$id'";
 			$result_admin_update = $adapter->update($query_admin_update);
@@ -59,36 +59,36 @@ class Controller_Admin{
 	}
 
 
-    
-    public function addAction()
-    {
-        require_once('view/Admin/add.php');
-    }
-    
-    public function editAction()
-    {
-        require_once('view/Admin/edit.php');
-    }
-    
-    public function deleteAction()
-    {
-        $id=$_GET['id'];
-        $adapter = new Model_Core_Adapter();
-        $result=$adapter->delete("DELETE FROM `admin` WHERE `id` = '$id'");        
-        if($result)
-        {
-            header('Location: index.php?c=admin&a=grid');
-        }
-    }
+	
+	public function addAction()
+	{
+		require_once('view/Admin/add.php');
+	}
+	
+	public function editAction()
+	{
+		require_once('view/Admin/edit.php');
+	}
+	
+	public function deleteAction()
+	{
+		$id=$_GET['id'];
+		$adapter = new Model_Core_Adapter();
+		$result=$adapter->delete("DELETE FROM `admin` WHERE `id` = '$id'");        
+		if($result)
+		{
+			header('Location: index.php?c=admin&a=grid');
+		}
+	}
 
-    public function redirect()
-    {
-        header('Location: index.php?c=admin&a=grid');
-    }
+	public function redirect()
+	{
+		header('Location: index.php?c=admin&a=grid');
+	}
 
-    public function errorAction()
-    {
-        echo "error";
-    }
+	public function errorAction()
+	{
+		echo "error";
+	}
 }
 ?>

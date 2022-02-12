@@ -1,7 +1,7 @@
 <?php
- require_once ('Model/Core/Adapter.php');
- $adapter = new Model_Core_Adapter();
- $categories = $adapter->fetchAll("SELECT * FROM `category`");
+
+$controllerCategory = new Controller_category();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,52 +13,54 @@
 <body>
 	<!-- this is nav bar code -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.php?c=admin&a=grid">Admin</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php?c=customer&a=grid" name="customer">Customer</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php?c=category&a=grid" name="category">Category</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php?c=product&a=grid" name="Product">Product</a>
-            </li>
-            </ul>
-        </div>
-        </nav>
-            <!-- nav bar ends -->
-<button name="Add"><a href="index.php?c=category&a=add">Add Customer</a></button>
-		<table border=1>
+		<a class="navbar-brand" href="index.php?c=admin&a=grid">Admin</a>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="index.php?c=customer&a=grid" name="customer">Customer</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="index.php?c=category&a=grid" name="category">Category</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="index.php?c=product&a=grid" name="Product">Product</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- nav bar ends -->
+	<button name="Add"><a href="index.php?c=category&a=add">Add Category</a></button>
+	<table border=1 width="100%">
 
+		<tr>
+			<th>Id</th>
+			<th>Category Name</th>
+			<th>Status</th>
+			<th>Created At</th>
+			<th>Updated At</th>
+			<th>Action</th>
+		</tr>
+		<?php if(!$data['categories']): ?> 
 			<tr>
-				<th>Id</th>
-				<th>Category Name</th>
-				<th>Status</th>
-				<th>Created At</th>
-				<th>Updated At</th>
-                <th>Action</th>
+				<td colspan="10">No records found.</td>
 			</tr>
-			 <?php if(!$categories): ?> 
-			 <tr>
-        		<td colspan="10">No records found.</td>
-    		</tr>
-			<?php else: ?>
-			<?php foreach($categories as $category): ?>
-			<tr>
-				<td><?php echo $category['categoryId']; ?></td>
-				<td><?php echo $category['category']; ?></td>
-				<td><?php echo $category['status']; ?></td>
-				<td><?php echo $category['createdAt']?></td>
-				<td><?php echo $category['updatedAt']?></td>
-				<td><a href="index.php?c=category&a=edit&id=<?php echo $category['categoryId']; ?>">Edit</a> 
-				<a href="index.php?c=category&a=delete&id=<?php echo $category['categoryId']; ?>">Delete</a></td>
-			</tr>
-			<?php endforeach; ?>
+		<?php else: ?>
+			<?php foreach($data['categories'] as $category): ?>
+				<tr>
+					<td><?php echo $category['categoryId']; ?></td>
+					
+					<td><?php $pathReturn =  $controllerCategory->getCategoryWithPath(); echo $pathReturn[$category['categoryId']]; ?></td>
+					
+					<td><?php echo $category['status']; ?></td>
+					<td><?php echo $category['createdAt']?></td>
+					<td><?php echo $category['updatedAt']?></td>
+					<td><a href="index.php?c=category&a=edit&id=<?php echo $category['categoryId']; ?>">Edit</a> 
+						<a href="index.php?c=category&a=delete&id=<?php echo $category['categoryId']; ?>">Delete</a></td>
+					</tr>
+				<?php endforeach; ?>
 			<?php endif; ?>
 		</table>
 		
 
-</body>
-</html>
+	</body>
+	</html>

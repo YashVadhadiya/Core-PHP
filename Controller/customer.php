@@ -3,16 +3,16 @@ require_once('Model/Core/Adapter.php');
 ?>
 <?php
 class Controller_Customer{
-    public function gridAction()
-    {
-        require_once('view/Customer/grid.php');
-    }
-
-    protected function saveCustomer()
+	public function gridAction()
 	{
-        if(!isset($_POST['customer']['id'])){
-            throw new Exception("Data is not inserted in customer(isset).", 1);
-        }
+		require_once('view/Customer/grid.php');
+	}
+
+	protected function saveCustomer()
+	{
+		if(!isset($_POST['customer']['id'])){
+			throw new Exception("Data is not inserted in customer(isset).", 1);
+		}
 
 		$adapter = new Model_Core_Adapter();
 		date_default_timezone_set("Asia/Kolkata");
@@ -34,8 +34,8 @@ class Controller_Customer{
 				throw new Exception("Data is not inserted in customer(result).",1);
 			endif;
 			return $result_customer_insert;
-		
-        else:
+			
+		else:
 			$query_customer_update ="UPDATE customer 
 			SET firstName='$firstName', lastName='$lastName', phone='$phone', email='$email', status='$status', updatedAt='$updatedAt' WHERE id = '$id'";
 			$result_customer_update = $adapter->update($query_customer_update);
@@ -61,14 +61,14 @@ class Controller_Customer{
 
 		$addressData = $adapter->fetchRow("SELECT * FROM address WHERE customerId = '$id'");
 		
-        if(!$addressData):
+		if(!$addressData):+
 			$query_address_insert = "INSERT INTO `address`( `customerId`, `address`, `postalCode`, `city`, `state`, `country`, `billing`,`shipping`) VALUES ('$id','$address','$postalCode','$city','$state','$country','$billing' ,'$shipping')";
 			$result_address_insert = $adapter->insert($query_address_insert);
 			if(!$result_address_insert):
 				throw new Exception("Data is not inserted in address(result).",1);
 			endif;
-		
-        else:
+			
+		else:
 			$query_address_update ="UPDATE address 
 			SET address='$address', postalCode='$postalCode', city='$city', state='$state', country='$country', billing='$billing', shipping='$shipping' WHERE customerId = '$id'";
 			$result_address_update = $adapter->update($query_address_update);
@@ -77,7 +77,7 @@ class Controller_Customer{
 			endif;
 			
 		endif;
-			
+		
 	}
 
 	public function saveAction()
@@ -95,38 +95,33 @@ class Controller_Customer{
 	}
 
 
-    
-    public function addAction()
-    {
-        require_once('view/Customer/add.php');
-    }
-    
-    public function editAction()
-    {
-        require_once('view/Customer/edit.php');
-    }
-    
-    public function deleteAction()
-    {
-        $id=$_GET['id'];
-        $adapter = new Model_Core_Adapter();
-        $result=$adapter->delete("DELETE FROM `customer` WHERE `id` = '$id'");
-        $result=$adapter->delete("DELETE FROM `address` WHERE `customerId` = '$id'");
-        
-        if($result)
-        {
-            header('Location: index.php?c=customer&a=grid');
-        }
-    }
+	
+	public function addAction()
+	{
+		require_once('view/Customer/add.php');
+	}
+	
+	public function editAction()
+	{
+		require_once('view/Customer/edit.php');
+	}
+	
+	public function deleteAction()
+	{
+		$id=$_GET['id'];
+		$adapter = new Model_Core_Adapter();
+		$result=$adapter->delete("DELETE FROM `customer` WHERE `id` = '$id'");
+		$result=$adapter->delete("DELETE FROM `address` WHERE `customerId` = '$id'");
+		
+		if($result)
+		{
+			header('Location: index.php?c=customer&a=grid');
+		}
+	}
 
-    public function redirect()
-    {
-        header('Location: index.php?c=customer&a=grid');
-    }
-
-    public function errorAction()
-    {
-        echo "error";
-    }
+	public function errorAction()
+	{
+		echo "error";
+	}
 }
 ?>

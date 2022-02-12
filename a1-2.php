@@ -36,8 +36,8 @@ foreach ($data as $categoryId => $level1) {
 			$row['option'] = $optionId;
 
 			array_push($final, $row);
-}
-}
+		}
+	}
 }
 print_r($final);
 

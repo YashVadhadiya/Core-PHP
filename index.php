@@ -1,12 +1,16 @@
-<?php require_once('Model/Core/Adapter.php');  ?>
-<?php 
+<?php require_once('Model/Core/Adapter.php');  
+date_default_timezone_set("Asia/Kolkata");
+?>
 
+<?php 
+echo "<pre>";
 class Ccc
 {
 	public static function loadFile($path)
-	{
-		require_once($path);
+	{	
+		require_once($path); 
 	}
+
 	public static function loadClass($className)
 	{
 		$path = str_replace("_", "/", $className).'.php';

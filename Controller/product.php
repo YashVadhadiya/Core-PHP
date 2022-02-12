@@ -19,7 +19,7 @@ class Controller_Product{
         $createdAt = $date;
         $updatedAt = $date;
         
-            try{
+        try{
             if($id == NULL){
                 $query ="INSERT INTO `product`(`name`, `status`, `price`, `quantity`, `createdAt`) VALUES ('$name', '$status', '$price', '$quantity','$createdAt')";
 
@@ -44,18 +44,18 @@ class Controller_Product{
                 }
 
             }
-            }catch(Exception $e){
-                echo $e->getMessage();
-            }
+        }catch(Exception $e){
+            echo $e->getMessage();
         }
+    }
     
     public function addAction()
     {
         require_once('view/product/add.php');
     }
     
-    public function editAction()
-    {
+    public function editAction(
+    )    {
         require_once('view/product/edit.php');
     }
     
@@ -73,7 +73,7 @@ class Controller_Product{
 
     public function redirect()
     {
-        header('Location: index.php?p=product&a=grid');
+        header('Location: index.php?c=product&a=grid');
     }
     
     public function errorAction()

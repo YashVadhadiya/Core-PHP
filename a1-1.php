@@ -20,10 +20,10 @@ foreach ($data as $row) {
 	$optionId = $row['option'];
 
 	if(!array_key_exists($categoryId, $final)){
-	$final[$categoryId] = [];
+		$final[$categoryId] = [];
 	}
 	if(!array_key_exists($attributeId, $final[$categoryId])){
-	$final[$categoryId][$attributeId] = [];
+		$final[$categoryId][$attributeId] = [];
 	}
 
 	$final[$categoryId][$attributeId][$optionId] = $optionId;

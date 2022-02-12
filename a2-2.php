@@ -62,9 +62,23 @@ $data = [
 
 $final = [];
 
-foreach ($data as $categoryId => $level1) {
-	$row['categoryId'] = $categoryId;
-	
+foreach ($data['category'] as $categoryId => $level1) {
+	$row['category'] = $categoryId;
+	$row['categoryname'] = $level1['Cname'];
+
+	foreach ($level1['attribute'] as $attributeId => $level2) {
+		$row['attribute'] = $attributeId;
+		$row['attributename'] = $level2['Aname'];
+
+		foreach ($level2['option'] as $optionId => $level3) {
+			$row['option'] = $optionId;
+			$row['optionname'] = $level3['Oname'];
+
+			array_push($final, $row);
+		}
+	}
+}
+	/*
 	foreach ($level1 as $Cname => $level2) {
 	$row['Cname'] = $Cname;
 	
@@ -78,14 +92,10 @@ foreach ($data as $categoryId => $level1) {
 				$row['optionId'] = $optionId;
 	
 					foreach ($level5 as $Oname => $level6) {
-					$row['Oname'] = $Oname;
-						array_push($final, $row);
-						}
-					}
-				}
-			}
+					$row['Oname'] = $Oname;						
 		}
 	}
+}*/
 print_r($final);
 
 
