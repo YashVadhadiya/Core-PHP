@@ -1,32 +1,9 @@
-<?php
-require_once('Model/Core/Adapter.php');
-$adapter = new Model_Core_Adapter();
-$products = $adapter->fetchAll("SELECT * FROM `product`");
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<title>Product Grid</title>
 </head>
-<style>
-	table {
-		font-family: arial, sans-serif;
-		border-collapse: collapse;
-		width: 100%;
-	}
-
-	tr, th {
-		border: 1px solid #dddddd;
-		text-align: left;
-		padding: 10px;
-	}
-
-	tr:nth-child(even) {
-		background-color: #dddddd;
-	}
-</style>
 <body>
 	<!-- this is nav bar code -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -48,7 +25,7 @@ $products = $adapter->fetchAll("SELECT * FROM `product`");
 	<!-- nav bar ends -->
 	<button name="Add"><a href="index.php?c=product&a=add">Add Product</a></button>
 
-	<table border=1>
+	<table border=1 width="100%">
 
 		<tr>
 			<th>Id</th>
@@ -60,12 +37,12 @@ $products = $adapter->fetchAll("SELECT * FROM `product`");
 			<th>Updated At</th>
 			<th>Action</th>
 		</tr>
-		<?php if(!$products): ?>
+		<?php if(!$data['products']): ?>
 			<tr>
 				<td colspan="10">No records found.</td>
 			</tr>
 		<?php else: ?>
-			<?php foreach($products as $product): ?>
+			<?php foreach($data['products'] as $product): ?>
 				<tr>
 					<td><?php echo $product['id']; ?></td>
 					<td><?php echo $product['name']; ?></td>

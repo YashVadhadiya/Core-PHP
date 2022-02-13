@@ -17,7 +17,9 @@ $controllerCategory = new Controller_category();
             <td>
                 <select name="category[parentId]">
                     <option value="">New Category</option>
-                    <?php $result = $controllerCategory->getCategoryWithPath(); foreach($result as $key => $value): ?>
+                    <?php $result = $controllerCategory->getCategoryWithPath(); 
+                    foreach($result as $key => $value): 
+                        ?>
                     <option value=<?php echo $key; ?> >
                         <?php echo($value); ?>
                     </option>

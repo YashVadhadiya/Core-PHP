@@ -5,27 +5,34 @@
 </head>
 
 <body>
-    <div class="form-tbl">
-         <form method="post" action="index.php?c=product&a=save">
-         </br>
-         <label for="">name</label>
-         <input type="text" name="name" placeholder="Enter Name">
- </br>
- <label for="">price</label>
- <input type="text" name="price" placeholder="Enter Price">
-</br>
-<label for="">quantity</label>
-<input type="text" name="quantity" placeholder="Enter Quantity">
-</br>
-<label for="">status</label>
-<select>
-    <option value="1">Active</option>
-    <option value="2">Inactive</option>
-</select>
-</br>
-<input type="submit" name="submit" value="Submit">
-<button type="button"><a href="index.php?c=product&a=grid">Cancel</a></button></br>   
-</form>
-</div>
+    <table border="1" width="100%">
+        <form method="post" action="index.php?c=product&a=save">
+            <tr>
+                <td>Product Name</td>
+                <td><input type="text" name="product[name]"></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td><select name="product[status]">
+                    <option value="1">Active</option>
+                    <option value="2">Inactive</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="text" name="product[price]"></td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td><input type="text" name="product[quantity]"></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" name="submit" value="Submit">
+                <button type="button"><a href="index.php?c=product&a=grid">Cancel</a></button></td>
+            </tr>
+        </form>
+    </table>
 </body>
 </html>

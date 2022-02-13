@@ -1,7 +1,8 @@
-<?php 
+<?php
 echo "<pre>";
 
-class Model_Core_View{
+class Model_Core_View
+{
 
     public $template = null;
 
@@ -21,7 +22,7 @@ class Model_Core_View{
     public function toHtml()
     {
         $data = $this->data;
-        require($this->getTemplate());
+        require ($this->getTemplate());
     }
 
     public function getData()
@@ -43,7 +44,7 @@ class Model_Core_View{
 
     public function removeData($key)
     {
-        if(array_key_exists($key, $this->data))
+        if (array_key_exists($key, $this->data))
         {
             unset($this->data[$key]);
         }

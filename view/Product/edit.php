@@ -1,45 +1,47 @@
-<?php
-require_once('Model/Core/Adapter.php');
-$adapter = new Model_Core_Adapter();
-$id = $_GET['id'];
-$product = $adapter->fetchRow("SELECT * FROM `product` WHERE `id` = $id");
-
-$name = $product['name'];
-$price = $product['price'];
-$quantity = $product['quantity'];
-$status = $product['status'];
-
-?>
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Product Update</title>
+    <title>Product Update</title>
 </head>
 
 <body>
-        <form method="post" action="index.php?c=product&a=save">
-                <label for="">id</label>
-                <input type="text" name="id" value="<?php echo $id; ?>">
-        </br>
-        <label for="">name</label>
-        <input type="text" name="name" value="<?php echo $name; ?>">
-</br>
-<label for="">price</label>
-<input type="text" name="price" value="<?php echo $price; ?>"> 
-</br>    
-<label for="">quantity</label>
-<input type="text" name="quantity" value="<?php echo $quantity; ?>">   
-</br>
-<label for="">status</label>
-<select name="status">
-        <option value="1">Active</option>
-        <option value="2">Inactive</option>
-</select>
-</br>
-<input type="submit" name="submit" value="Update">
-</form>
+    <table border="1" width="100%">
+        <form action="index.php?c=product&a=save" method="post">
+            <tr>
+                <td>Id</td>
+                <td><input type="text" name="product[id]" value="<?php echo $data['products']['id']; ?>" readonly></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="product[name]" value="<?php echo $data['products']['name']; ?>"></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input type="text" name="product[price]" value="<?php echo $data['products']['price']; ?>"></td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td><input type="text" name="product[quantity]" value="<?php echo $data['products']['quantity']; ?>"></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td><select name="product[status]">
+                        <option value="1" <?php if($data['products']['status'] == 1): ?> selected = "selected" <?php endif; ?>>Active</option>
+                        <option value="2" <?php if($data['products']['status'] == 2): ?> selected = "selected" <?php endif; ?>>Inactive</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" name="submit" value="Save">
+                    <button type="button"><a href="index.php?c=product&a=grid">Cancel</a></button>
+                </td>
+            </tr>
+        </form>
+    </table>
 
-<a href="index.php?c=product&a=grid">Add Product</a>
+            
 
 </body>
+
 </html>

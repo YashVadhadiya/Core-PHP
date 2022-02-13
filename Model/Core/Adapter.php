@@ -1,21 +1,14 @@
-<?php 
+<?php
 echo "<pre>";
 
-class Model_Core_Adapter{
-    public $config = [
-        'host'=>'localhost:3305',
-        'user'=>'root',
-        'password'=>'',
-        'dbname'=>'crud_oop'
-    ];
+class Model_Core_Adapter
+{
+    public $config = ['host' => 'localhost:3305', 'user' => 'root', 'password' => '', 'dbname' => 'crud_oop'];
     private $connect = NULL;
     public function connect()
     {
-        $connect = mysqli_connect(  $this->config['host'],
-            $this->config['user'],
-            $this->config['password'],
-            $this->config['dbname']);
-            $this->setConnect($connect);
+        $connect = mysqli_connect($this->config['host'], $this->config['user'], $this->config['password'], $this->config['dbname']);
+        $this->setConnect($connect);
         return $connect;
     }
     //setConnect method
@@ -25,7 +18,7 @@ class Model_Core_Adapter{
         return $this;
     }
     //getConnect method
-    public function getConnect()     
+    public function getConnect()
     {
         return $this->connect;
     }
@@ -36,17 +29,19 @@ class Model_Core_Adapter{
         return $this;
     }
     //getConfig method
-    public function getConfig()     
+    public function getConfig()
     {
         return $this->config;
     }
     //query method
     public function query($query)
     {
-        if(!$this->getConnect()){
+        if (!$this->getConnect())
+        {
             $this->connect();
         }
-        $result = $this->getConnect()->query($query);
+        $result = $this->getConnect()
+            ->query($query);
         return $result;
 
     }
@@ -54,7 +49,8 @@ class Model_Core_Adapter{
     public function insert($query)
     {
         $result = $this->query($query);
-        if($result){
+        if ($result)
+        {
             return $this->getConnect()->insert_id;
         }
         return $result;
@@ -87,46 +83,51 @@ class Model_Core_Adapter{
     public function fetchRow($query)
     {
         $result = $this->query($query);
-        if($result->num_rows){
-           return $result->fetch_assoc();   
-       }
-       return false;
-   }
+        if ($result->num_rows)
+        {
+            return $result->fetch_assoc();
+        }
+        return false;
+    }
     //fetchAll method
-   public function fetchAll($query , $mode= MYSQLI_ASSOC)
-   {
-    $result = $this->query($query);
-    if($result->num_rows){
-        return $result->fetch_all($mode);
-    }
-    return false;
-}
-
-public function fetchPairs($query)
-{
-    $result = $this->fetchAll( $query , MYSQLI_NUM);
-
-    if(!$result){
+    public function fetchAll($query, $mode = MYSQLI_ASSOC)
+    {
+        $result = $this->query($query);
+        if ($result->num_rows)
+        {
+            return $result->fetch_all($mode);
+        }
         return false;
     }
-    $keys = array_column($result, "0");
-    $values = array_column($result, "1");
-    if(!$values){
-        $values = array_fill(0, count($keys), null);
-    }
-    $result = array_combine($keys,$values);
-    return $result;
-}
 
-public function fetchOne($query)
-{
-    $result = $this->fetchRow($query);
-    if(!$result){
-        return false;
+    public function fetchPairs($query)
+    {
+        $result = $this->fetchAll($query, MYSQLI_NUM);
+
+        if (!$result)
+        {
+            return false;
+        }
+        $keys = array_column($result, "0");
+        $values = array_column($result, "1");
+        if (!$values)
+        {
+            $values = array_fill(0, count($keys) , null);
+        }
+        $result = array_combine($keys, $values);
+        return $result;
     }
-    $popElement = array_pop($result);
-    return $popElement;
-}
+
+    public function fetchOne($query)
+    {
+        $result = $this->fetchRow($query);
+        if (!$result)
+        {
+            return false;
+        }
+        $popElement = array_pop($result);
+        return $popElement;
+    }
 
 }
 

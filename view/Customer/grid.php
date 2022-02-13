@@ -1,7 +1,6 @@
 <?php 
-require_once ('Model/Core/Adapter.php');
-$adapter = new Model_Core_Adapter();  
-$customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId;");
+Ccc::loadClass('Controller_Core_Action');
+
 ?>
 
 <html>
@@ -52,12 +51,12 @@ $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join addre
             <th>Delete</th>
         </tr>
         
-        <?php if(!$customers): ?>
+        <?php if(!$data['customers']): ?>
             <tr>
                 <td colspan="17">No records found.</td>
             </tr>
         <?php else: ?>
-            <?php foreach($customers as $customer): ?>
+            <?php foreach($data['customers'] as $customer): ?>
                 <tr>
                     <td><?php echo $customer['id']; ?></td>
                     <td><?php echo $customer['firstName']; ?></td>
