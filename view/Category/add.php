@@ -1,7 +1,5 @@
 <?php 
-
 $controllerCategory = new Controller_category();
-
 ?>
 
 <!DOCTYPE html>

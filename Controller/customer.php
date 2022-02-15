@@ -25,7 +25,7 @@ class Controller_Customer extends Controller_Core_Action
         }
 
         $adapter = new Model_Core_Adapter();
-        date_default_timezone_set("Asia/Kolkata");
+        //date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
 
         $id = $_POST['customer']['id'];

@@ -13,7 +13,6 @@ class Controller_Admin extends Controller_Core_Action
         $view->setTemplate('view/Admin/grid.php');
         $view->toHtml();
         //require_once('view/Admin/grid.php');
-        
     }
 
     protected function saveadmin()
@@ -24,7 +23,7 @@ class Controller_Admin extends Controller_Core_Action
         }
 
         $adapter = new Model_Core_Adapter();
-        date_default_timezone_set("Asia/Kolkata");
+        //date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
 
         $id = $_POST['admin']['id'];

@@ -20,7 +20,7 @@ class Controller_Product extends Controller_Core_Action
     public function saveAction()
     {
         $adapter = new Model_Core_Adapter();
-        date_default_timezone_set("Asia/Kolkata");
+        //date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
         $id = $_POST['product']['id'];
         $name = $_POST['product']['name'];
