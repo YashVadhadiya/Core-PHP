@@ -1,37 +1,50 @@
 <?php
 Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Admin');
+Ccc::loadClass('Model_Core_Request');
 ?>
 <?php
 class Controller_Admin extends Controller_Core_Action
 {
+    public function testAction()
+    {
+        $adminTable = new Model_Admin();
+        $adminTable->insert(['firstName' => 'Yash', 'lastName' => 'Patel', 'email' => 'yash@mail', 'password' => 'yash123' , 'status' => '1' ]);
+        // $adminTable->setPrimaryKey('adminId');
+        // $adminTable->update(['firstName' => 'Yash' , 'lastName' => 'Vadhadiya'], ['id' => 9]);
+        // $adminTable->delete(['id' => 5]);
+        // $adminTable->fetchRow("select * from admin where id = 10");
+        // $adminTable->fetchAll("select * from admin");
+    }
+
     public function gridAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $admins = $adapter->fetchAll("SELECT * FROM admin");
         $view = $this->getView();
         $view->addData('admins', $admins);
         $view->setTemplate('view/Admin/grid.php');
         $view->toHtml();
-        //require_once('view/Admin/grid.php');
     }
 
-    protected function saveadmin()
+    protected function saveAdmin()
     {
+        
         if (!isset($_POST['admin']['id']))
         {
             throw new Exception("Data is not inserted in admin(isset).", 1);
         }
-
-        $adapter = new Model_Core_Adapter();
-        //date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
-
-        $id = $_POST['admin']['id'];
-        $firstName = $_POST['admin']['firstName'];
-        $lastName = $_POST['admin']['lastName'];
-        $email = $_POST['admin']['email'];
-        $password = $_POST['admin']['password'];
-        $status = $_POST['admin']['status'];
+        $request = new Model_Core_Request();
+        //global $request;
+        global $adapter;
+        $getSaveData = $request->getPost('admin');
+        $id = $getSaveData['id'];
+        $firstName = $getSaveData['firstName'];
+        $lastName = $getSaveData['lastName'];
+        $email = $getSaveData['email'];
+        $password = $getSaveData['password'];
+        $status = $getSaveData['status'];
         $createdAt = $date;
         $updatedAt = $date;
 
@@ -54,11 +67,12 @@ class Controller_Admin extends Controller_Core_Action
             return $id;
         endif;
     }
+
     public function saveAction()
     {
         try
         {
-            $id = $this->saveadmin();
+            $id = $this->saveAdmin();
             $this->redirect('index.php?c=admin&a=grid');
         }
 
@@ -70,34 +84,33 @@ class Controller_Admin extends Controller_Core_Action
 
     public function addAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $view = $this->getView();
         $view->setTemplate('view/Admin/add.php');
         $view->toHtml();
-        //require_once('view/Admin/add.php');
-        
     }
 
     public function editAction()
     {
-        $adapter = new Model_Core_Adapter();
-        if ($_GET['id'])
-        {
-            $id = $_GET['id'];
-            $admins = $adapter->fetchRow("SELECT * FROM `admin` WHERE `id` = $id");
-        }
+        //global $request;
+        $request = new Model_Core_Request();
+        global $adapter;
+        $getUpdateData = $request->getRequest('id');
+        $id = $getUpdateData;
+        $admins = $adapter->fetchRow("SELECT * FROM `admin` WHERE `id` = $id");
         $view = $this->getView();
         $view->addData('admins', $admins);
         $view->setTemplate('view/Admin/edit.php');
         $view->toHtml();
-        //require_once('view/Admin/edit.php');
-        
     }
 
     public function deleteAction()
     {
-        $id = $_GET['id'];
-        $adapter = new Model_Core_Adapter();
+        $request = new Model_Core_Request();
+        //global $request;
+        global $adapter;
+        $getDelete = $request->getRequest('id');
+        $id = $getDelete;
         $result = $adapter->delete("DELETE FROM `admin` WHERE `id` = '$id'");
         if ($result)
         {

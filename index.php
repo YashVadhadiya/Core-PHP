@@ -1,8 +1,9 @@
-<?php require_once('Model/Core/Adapter.php');  
+<?php 
+require_once('Model/Core/Adapter.php'); 
 date_default_timezone_set("Asia/Kolkata");
 ?>
 
-<?php 
+<?php
 echo "<pre>";
 class Ccc
 {

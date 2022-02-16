@@ -1,5 +1,6 @@
 <?php
 Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Core_Request');
 ?>
 <?php
 class Controller_Customer extends Controller_Core_Action
@@ -7,33 +8,30 @@ class Controller_Customer extends Controller_Core_Action
 
     public function gridAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId;");
         $view = $this->getView();
         $view->addData('customers', $customers);
         $view->setTemplate('view/customer/grid.php');
-        $view->toHtml();
-        //require_once('view/Customer/grid.php');
-        
+        $view->toHtml();        
     }
 
     protected function saveCustomer()
     {
-        if (!isset($_POST['customer']['id']))
+        $request = new Model_Core_Request();
+        $getSaveCustomerData = $request->getPost('customer');
+        if (!isset($getSaveCustomerData['id']))
         {
             throw new Exception("Data is not inserted in customer(isset).", 1);
         }
-
-        $adapter = new Model_Core_Adapter();
-        //date_default_timezone_set("Asia/Kolkata");
+        global $adapter;
         $date = date('Y-m-d H:i:s');
-
-        $id = $_POST['customer']['id'];
-        $firstName = $_POST['customer']['firstName'];
-        $lastName = $_POST['customer']['lastName'];
-        $email = $_POST['customer']['email'];
-        $phone = $_POST['customer']['phone'];
-        $status = $_POST['customer']['status'];
+        $id = $getSaveCustomerData['id'];
+        $firstName = $getSaveCustomerData['firstName'];
+        $lastName = $getSaveCustomerData['lastName'];
+        $email = $getSaveCustomerData['email'];
+        $phone = $getSaveCustomerData['phone'];
+        $status = $getSaveCustomerData['status'];
         $createdAt = $date;
         $updatedAt = $date;
 
@@ -60,14 +58,16 @@ class Controller_Customer extends Controller_Core_Action
 
     protected function saveAddress($id)
     {
-        $adapter = new Model_Core_Adapter();
-        $address = $_POST['address']['address'];
-        $postalCode = $_POST['address']['postalCode'];
-        $city = $_POST['address']['city'];
-        $state = $_POST['address']['state'];
-        $country = $_POST['address']['country'];
-        $billing = $_POST['address']['billing'];
-        $shipping = $_POST['address']['shipping'];
+        $request = new Model_Core_Request();
+        global $adapter;
+        $getSaveAddressData = $request->getPost('address');
+        $address = $getSaveAddressData['address'];
+        $postalCode = $getSaveAddressData['postalCode'];
+        $city = $getSaveAddressData['city'];
+        $state = $getSaveAddressData['state'];
+        $country = $getSaveAddressData['country'];
+        $billing = $getSaveAddressData['billing'];
+        $shipping = $getSaveAddressData['shipping'];
 
         $addressData = $adapter->fetchRow("SELECT * FROM address WHERE customerId = '$id'");
 
@@ -106,34 +106,31 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $view = $this->getView();
         $view->setTemplate('view/customer/add.php');
         $view->toHtml();
-        //require_once('view/Customer/add.php');
-        
     }
 
     public function editAction()
     {
-        $adapter = new Model_Core_Adapter();
-        if ($_GET['id'])
-        {
-            $id = $_GET['id'];
-            $customers = $adapter->fetchRow("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId WHERE c.id = $id");
-        }
+        global $adapter;
+        $request = new Model_Core_Request();
+        $getUpdateData = $request->getRequest('id');
+        $id = $getUpdateData;
+        $customers = $adapter->fetchRow("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId WHERE c.id = $id");
         $view = $this->getView();
         $view->addData('customers', $customers);
         $view->setTemplate('view/customer/edit.php');
         $view->toHtml();
-        //require_once('view/Customer/edit.php');
-        
     }
 
     public function deleteAction()
     {
-        $id = $_GET['id'];
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
+        $request = new Model_Core_Request();
+        $getUpdateData = $request->getRequest('id');
+        $id = $getUpdateData;
         $result = $adapter->delete("DELETE FROM `customer` WHERE `id` = '$id'");
         $result = $adapter->delete("DELETE FROM `address` WHERE `customerId` = '$id'");
 

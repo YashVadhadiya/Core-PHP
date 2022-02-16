@@ -1,10 +1,12 @@
 <?php
-Ccc::loadClass("Controller_Core_Action"); ?>
+Ccc::loadClass("Controller_Core_Action");
+Ccc::loadClass("Model_Core_Request"); 
+?>
 <?php class Controller_Category extends Controller_Core_Action
 {
     public function gridAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $categories = $adapter->fetchAll("SELECT * FROM category ORDER BY path ASC");
         $view = $this->getView();
         $view->addData("categories", $categories);
@@ -15,7 +17,7 @@ Ccc::loadClass("Controller_Core_Action"); ?>
 
     public function addAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $view = $this->getView();
         $view->setTemplate("view/category/add.php");
         $view->toHtml();
@@ -23,7 +25,7 @@ Ccc::loadClass("Controller_Core_Action"); ?>
 
     public function getCategoryWithPath()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $category = [];
         $idName = $adapter->fetchPairs("SELECT categoryId , categoryName FROM category");
         $idPath = $adapter->fetchPairs("SELECT categoryId , path FROM category");
@@ -46,12 +48,11 @@ Ccc::loadClass("Controller_Core_Action"); ?>
 
     public function editAction()
     {
-        $adapter = new Model_Core_Adapter();
-        //if($_GET["id"])
-        //{
-            $id = $_GET["id"];
-            $categories = $adapter->fetchRow("SELECT * FROM `category` WHERE `categoryId` = $id");
-        //}
+        global $adapter;
+        $request = new Model_Core_Request();
+        $getUpdateData = $request->getRequest('categoryId');
+        $id = $getUpdateData;
+        $categories = $adapter->fetchRow("SELECT * FROM `category` WHERE `categoryId` = $id");
         $view = $this->getView();
         $view->addData("categories", $categories);
         $view->setTemplate("view/category/edit.php");
@@ -64,7 +65,7 @@ Ccc::loadClass("Controller_Core_Action"); ?>
         if (!isset($_POST['category'])) {
             throw new Exception("Invalid Request.", 1);
         }
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
         
@@ -137,8 +138,10 @@ Ccc::loadClass("Controller_Core_Action"); ?>
 
     public function deleteAction()
     {
-        $adapter = new Model_Core_Adapter();
-        $categoryId = $_GET["id"];
+        $request = new Model_Core_Request();
+        global $adapter;
+        $getDeleteData = $request->getRequest('categoryId');
+        $categoryId = $getDeleteData;
         try
         {
             $result = $adapter->delete("DELETE FROM `category` WHERE `categoryId` = $categoryId");
@@ -161,7 +164,7 @@ Ccc::loadClass("Controller_Core_Action"); ?>
 
     public function updatePathIntoCategory($categoryId, $parentId)
     {
-    $adapter = new Model_Core_Adapter();
+    global $adapter;
     $query = "SELECT path FROM category WHERE categoryId = '$categoryId'";
     $result = $adapter->fetchOne($query);
     
@@ -188,7 +191,7 @@ Ccc::loadClass("Controller_Core_Action"); ?>
 
 /*    public function saveAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $date = date("Y-m-d H:i:s");
         $categoryId = $_POST["category"]["categoryId"];
         $parentId = $_POST["category"]["parentId"];
@@ -244,7 +247,7 @@ Ccc::loadClass("Controller_Core_Action"); ?>
             }
             else
             {
-                /*$adapter = new Model_Core_Adapter();
+                /*global $adapter;
                 $categories = $_POST['category'];
                 $categoryName = $categories['categoryName'];
                 $status = $categories['status'];

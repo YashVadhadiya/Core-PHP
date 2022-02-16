@@ -1,5 +1,6 @@
 <?php
 Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Core_Request');
 ?>
 <?php
 class Controller_Product extends Controller_Core_Action
@@ -7,26 +8,25 @@ class Controller_Product extends Controller_Core_Action
 
     public function gridAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $products = $adapter->fetchAll("SELECT * FROM product");
         $view = $this->getView();
         $view->addData('products', $products);
         $view->setTemplate('view/product/grid.php');
-        $view->toHtml();
-        //require_once('view/product/grid.php');
-        
+        $view->toHtml();        
     }
 
     public function saveAction()
     {
-        $adapter = new Model_Core_Adapter();
-        //date_default_timezone_set("Asia/Kolkata");
+        global $adapter;
+        $request = new Model_Core_Request();
+        $getSaveData = $request->getPost('product');
         $date = date('Y-m-d H:i:s');
-        $id = $_POST['product']['id'];
-        $name = $_POST['product']['name'];
-        $status = $_POST['product']['status'];
-        $price = $_POST['product']['price'];
-        $quantity = $_POST['product']['quantity'];
+        $id = $getSaveData['id'];
+        $name = $getSaveData['name'];
+        $status = $getSaveData['status'];
+        $price = $getSaveData['price'];
+        $quantity = $getSaveData['quantity'];
         $createdAt = $date;
         $updatedAt = $date;
 
@@ -72,34 +72,31 @@ class Controller_Product extends Controller_Core_Action
 
     public function addAction()
     {
-        $adapter = new Model_Core_Adapter();
+        global $adapter;
         $view = $this->getView();
         $view->setTemplate('view/product/add.php');
         $view->toHtml();
-        //require_once('view/product/add.php');
-        
     }
 
     public function editAction()
     {
-        $adapter = new Model_Core_Adapter();
-        if ($_GET['id'])
-        {
-            $id = $_GET['id'];
-            $products = $adapter->fetchRow("SELECT * FROM `product` WHERE `id` = $id");
-        }
+        $request = new Model_Core_Request();
+        global $adapter;
+        $getUpdateData = $request->getRequest('id');
+        $id = $getUpdateData;
+        $products = $adapter->fetchRow("SELECT * FROM `product` WHERE `id` = $id");
         $view = $this->getView();
         $view->addData('products', $products);
         $view->setTemplate('view/product/edit.php');
-        $view->toHtml();
-        //require_once('view/product/edit.php');
-        
+        $view->toHtml();        
     }
 
     public function deleteAction()
     {
-        $id = $_GET['id'];
-        $adapter = new Model_Core_Adapter();
+        $request = new Model_Core_Request();
+        global $adapter;
+        $getDeleteData = $request->getRequest('id');
+        $id = $getDeleteData;
         $result = $adapter->delete("DELETE FROM `product` WHERE `product`.`id` = '$id'");
         var_dump($result);
         if ($result)

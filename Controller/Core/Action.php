@@ -24,6 +24,23 @@ class Controller_Core_Action{
         $this->view = $view;
         return $this;
     }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
+        return $this;
+    }
+
+    public function getAdapter()
+    {
+        global $adapter;
+        return $this->adapter;
+    }
 }
 
 ?>

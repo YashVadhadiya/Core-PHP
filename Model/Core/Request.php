@@ -1,56 +1,58 @@
 <?php 
-Ccc::loadClass('Controller_Core_Front');
-
+echo '<pre>';
 class Model_Core_Request
-{
-    public function isPost()
+{ 
+    public function getPost($key = null , $value = null)
     {
-        return ($_SERVER['REQUEST_METHOD'] == 'POST') ? true : false;
-    }
-
-    public function getRequest($key,$value)
-    {
-        if(isset($_REQUEST[$key]))
+        if(!$this->isPost())
         {
-            return $_REQUEST[$key];
+            return null;
         }
-        else
-        {
-            return $value;
-        }
-    }
-
-    public function getPost($key = null,$value = null)
-	{
-		if($key == null && $value == null)
+        if($key == null)
         {
             return $_POST;
         }
-
-		elseif($key == null && $value!=null)
-		{
-			return $_POST[$value];
-		}
-
-		else
-		{
-			if(array_key_exists($key, $_POST))
-			{
-				return $_POST[$key];
-			}
-		}
-	}
-
-    public function getAction()
-    {
-        return (isset($_GET['a'])) ? $_GET['a'] : 'error';
+        if(!array_key_exists($key, $_POST))
+        {
+            return $value;
+        }
+        return $_POST[$key];
     }
 
-    public function getController()
+    public function getRequest($key = null , $value = null)
     {
-        return (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'admin';
+        if($key == null)
+        {
+            return $_REQUEST;
+        }
+        if(!array_key_exists($key, $_REQUEST))
+        {
+            return $value;
+        }
+        return $_REQUEST[$key];
     }
 
+    public function isPost()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function getActionName()
+    {
+        return $this->getRequest('a','index');
+    }
+
+    public function getControllerName()
+    {
+        $controllerName = (isset($_GET['c'])) ? ucfirst($_GET['c']) : 'Customer';
+        return $controllerName;        
+    }
+ 
 }
+$request = new Model_Core_Request();
 
 ?>
