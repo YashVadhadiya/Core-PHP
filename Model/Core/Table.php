@@ -32,7 +32,7 @@ class Model_Core_Table
     {
         $sqlColumn = [];
         $sqlValue = [];
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         foreach ($queryInsert as $columnName => $value) {
             array_push($sqlColumn, $columnName);
             array_push($sqlValue, $value);
@@ -43,21 +43,23 @@ class Model_Core_Table
 
         $sqlResult = "INSERT INTO admin($sql1) values($sql3);";
         $result = $adapter->insert($sqlResult);
+        return $result;
     }
 
     public function delete(array $queryDelete)
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
         $key = key($queryDelete);
         $value = $queryDelete["id"];
         $sqlResult = "DELETE FROM $tableName WHERE $key = $value;";
         $result = $adapter->delete($sqlResult);
+        return $result;
     }
 
     public function update(array $queryUpdate, array $queryId)
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $date = date("Y-m-d H:i:s");
         $set = [];
         $tableName = $this->getTableName();
@@ -67,27 +69,25 @@ class Model_Core_Table
             $set[] = "$sqlKey ='$sqlValue'";
         }
         $sql1 = implode(",", $set);
-        $update =
-            "UPDATE $tableName SET $sql1, updatedAt = '" .
-            $date .
-            "' WHERE $key = $value;";
+        $update = "UPDATE $tableName SET $sql1, updatedAt = '" .$date ."' WHERE $key = $value;";
         $result = $adapter->update($update);
+        return $result;
     }
 
     public function fetchRow($queryFetchRow)
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
         $result = $adapter->fetchRow($queryFetchRow);
+        return $result;
     }
 
     public function fetchAll($queryFetchAll)
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
         $result = $adapter->fetchAll($queryFetchAll);
-        print_r($result);
-        exit();
+        return $result;
     }
 }
 

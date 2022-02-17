@@ -6,7 +6,7 @@ Ccc::loadClass("Model_Core_Request");
 {
     public function gridAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $categories = $adapter->fetchAll("SELECT * FROM category ORDER BY path ASC");
         $view = $this->getView();
         $view->addData("categories", $categories);
@@ -17,7 +17,7 @@ Ccc::loadClass("Model_Core_Request");
 
     public function addAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $view = $this->getView();
         $view->setTemplate("view/category/add.php");
         $view->toHtml();
@@ -25,7 +25,7 @@ Ccc::loadClass("Model_Core_Request");
 
     public function getCategoryWithPath()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $category = [];
         $idName = $adapter->fetchPairs("SELECT categoryId , categoryName FROM category");
         $idPath = $adapter->fetchPairs("SELECT categoryId , path FROM category");
@@ -48,7 +48,7 @@ Ccc::loadClass("Model_Core_Request");
 
     public function editAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $request = new Model_Core_Request();
         $getUpdateData = $request->getRequest('categoryId');
         $id = $getUpdateData;
@@ -65,7 +65,7 @@ Ccc::loadClass("Model_Core_Request");
         if (!isset($_POST['category'])) {
             throw new Exception("Invalid Request.", 1);
         }
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         date_default_timezone_set("Asia/Kolkata");
         $date = date('Y-m-d H:i:s');
         
@@ -139,7 +139,7 @@ Ccc::loadClass("Model_Core_Request");
     public function deleteAction()
     {
         $request = new Model_Core_Request();
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $getDeleteData = $request->getRequest('categoryId');
         $categoryId = $getDeleteData;
         try
@@ -164,7 +164,7 @@ Ccc::loadClass("Model_Core_Request");
 
     public function updatePathIntoCategory($categoryId, $parentId)
     {
-    global $adapter;
+    $adapter = new Model_Core_Adapter();
     $query = "SELECT path FROM category WHERE categoryId = '$categoryId'";
     $result = $adapter->fetchOne($query);
     
@@ -191,7 +191,7 @@ Ccc::loadClass("Model_Core_Request");
 
 /*    public function saveAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $date = date("Y-m-d H:i:s");
         $categoryId = $_POST["category"]["categoryId"];
         $parentId = $_POST["category"]["parentId"];
@@ -247,7 +247,7 @@ Ccc::loadClass("Model_Core_Request");
             }
             else
             {
-                /*global $adapter;
+                /*$adapter = new Model_Core_Adapter();
                 $categories = $_POST['category'];
                 $categoryName = $categories['categoryName'];
                 $status = $categories['status'];

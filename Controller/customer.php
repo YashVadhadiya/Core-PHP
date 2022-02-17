@@ -8,7 +8,7 @@ class Controller_Customer extends Controller_Core_Action
 
     public function gridAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId;");
         $view = $this->getView();
         $view->addData('customers', $customers);
@@ -24,7 +24,7 @@ class Controller_Customer extends Controller_Core_Action
         {
             throw new Exception("Data is not inserted in customer(isset).", 1);
         }
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $date = date('Y-m-d H:i:s');
         $id = $getSaveCustomerData['id'];
         $firstName = $getSaveCustomerData['firstName'];
@@ -59,7 +59,7 @@ class Controller_Customer extends Controller_Core_Action
     protected function saveAddress($id)
     {
         $request = new Model_Core_Request();
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $getSaveAddressData = $request->getPost('address');
         $address = $getSaveAddressData['address'];
         $postalCode = $getSaveAddressData['postalCode'];
@@ -106,7 +106,7 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $view = $this->getView();
         $view->setTemplate('view/customer/add.php');
         $view->toHtml();
@@ -114,7 +114,7 @@ class Controller_Customer extends Controller_Core_Action
 
     public function editAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $request = new Model_Core_Request();
         $getUpdateData = $request->getRequest('id');
         $id = $getUpdateData;
@@ -127,7 +127,7 @@ class Controller_Customer extends Controller_Core_Action
 
     public function deleteAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $request = new Model_Core_Request();
         $getUpdateData = $request->getRequest('id');
         $id = $getUpdateData;

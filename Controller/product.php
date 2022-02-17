@@ -8,7 +8,8 @@ class Controller_Product extends Controller_Core_Action
 
     public function gridAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $products = $adapter->fetchAll("SELECT * FROM product");
         $view = $this->getView();
         $view->addData('products', $products);
@@ -18,7 +19,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function saveAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $request = new Model_Core_Request();
         $getSaveData = $request->getPost('product');
         $date = date('Y-m-d H:i:s');
@@ -72,7 +73,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function addAction()
     {
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $view = $this->getView();
         $view->setTemplate('view/product/add.php');
         $view->toHtml();
@@ -81,7 +82,7 @@ class Controller_Product extends Controller_Core_Action
     public function editAction()
     {
         $request = new Model_Core_Request();
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $getUpdateData = $request->getRequest('id');
         $id = $getUpdateData;
         $products = $adapter->fetchRow("SELECT * FROM `product` WHERE `id` = $id");
@@ -94,7 +95,7 @@ class Controller_Product extends Controller_Core_Action
     public function deleteAction()
     {
         $request = new Model_Core_Request();
-        global $adapter;
+        $adapter = new Model_Core_Adapter();
         $getDeleteData = $request->getRequest('id');
         $id = $getDeleteData;
         $result = $adapter->delete("DELETE FROM `product` WHERE `product`.`id` = '$id'");
