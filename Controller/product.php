@@ -1,20 +1,26 @@
 <?php
 Ccc::loadClass('Controller_Core_Action');
 Ccc::loadClass('Model_Core_Request');
+
 ?>
 <?php
 class Controller_Product extends Controller_Core_Action
 {
+    public function testAction()
+    {
+        $adminTable = new Model_Admin();
+    }
 
     public function gridAction()
     {
-        $adapter = new Model_Core_Adapter();
+        Ccc::getBlock('Product_Grid')->toHtml();
+        /*$adapter = new Model_Core_Adapter();
         //$adapter = new Model_Core_Adapter();
         $products = $adapter->fetchAll("SELECT * FROM product");
         $view = $this->getView();
         $view->addData('products', $products);
         $view->setTemplate('view/product/grid.php');
-        $view->toHtml();        
+        $view->toHtml();        */
     }
 
     public function saveAction()
@@ -45,7 +51,7 @@ class Controller_Product extends Controller_Core_Action
                 }
                 else
                 {
-                    $this->redirect('index.php?c=product&a=grid');
+                    $this->redirect($this->getUrl('grid','product',null,true));
                 }
             }
             else
@@ -60,7 +66,7 @@ class Controller_Product extends Controller_Core_Action
                 }
                 else
                 {
-                    $this->redirect('index.php?c=product&a=grid');
+                    $this->redirect($this->getUrl('grid','product',null,true));
                 }
 
             }
@@ -73,24 +79,42 @@ class Controller_Product extends Controller_Core_Action
 
     public function addAction()
     {
-        $adapter = new Model_Core_Adapter();
+        Ccc::getBlock('Product_Add')->toHtml();
+        /*$adapter = new Model_Core_Adapter();
         $view = $this->getView();
         $view->setTemplate('view/product/add.php');
-        $view->toHtml();
+        $view->toHtml();*/
     }
 
     public function editAction()
     {
-        $request = new Model_Core_Request();
-        $adapter = new Model_Core_Adapter();
+        try{
+            $id = (int)$this->getRequest()->getRequest('id');
+            if(!$id){
+                throw new Exception("Error Processing Request", 1);
+            }
+            $productModel = Ccc::getModel('Product');
+            $product = $productModel->fetchRow("SELECT * FROM product WHERE id = $id");
+            if(!$product){
+                throw new Exception("Error Processing Request", 1);
+            }
+            Ccc::getBlock('Product_Edit')->addData('product', $product)->toHtml();
+            
+            
+            
+            }catch(Exception $e){
+                echo $e->getMessage();
+            }
+        }
+        /*
         $getUpdateData = $request->getRequest('id');
         $id = $getUpdateData;
         $products = $adapter->fetchRow("SELECT * FROM `product` WHERE `id` = $id");
         $view = $this->getView();
         $view->addData('products', $products);
         $view->setTemplate('view/product/edit.php');
-        $view->toHtml();        
-    }
+        $view->toHtml();*/
+    
 
     public function deleteAction()
     {
@@ -102,7 +126,7 @@ class Controller_Product extends Controller_Core_Action
         var_dump($result);
         if ($result)
         {
-            $this->redirect('index.php?c=product&a=grid');
+            $this->redirect($this->getUrl('grid','product',null,true));
         }
     }
 

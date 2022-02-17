@@ -1,6 +1,4 @@
 <?php
-echo "<pre>";
-
 class Model_Core_View
 {
 
@@ -21,13 +19,18 @@ class Model_Core_View
 
     public function toHtml()
     {
-        $data = $this->data;
         require ($this->getTemplate());
     }
 
-    public function getData()
+    public function getData($key = null)
     {
-        return $this->data;
+        if(!$key){
+            return $this->data;    
+        }
+        if(!array_key_exists($key, $this->data)){
+            return null;
+        }
+        return $this->data[$key];
     }
 
     public function setData(array $data)

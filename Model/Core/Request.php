@@ -1,6 +1,5 @@
 <?php 
 Ccc::loadClass('Controller_Core_Front');
-echo '<pre>';
 class Model_Core_Request
 { 
     public function getPost($key = null , $value = null)

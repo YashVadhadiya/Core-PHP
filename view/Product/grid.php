@@ -1,3 +1,4 @@
+<?php $products = $this->getProducts(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,12 +38,12 @@
 			<th>Updated At</th>
 			<th>Action</th>
 		</tr>
-		<?php if(!$data['products']): ?>
+		<?php if(!$products): ?>
 			<tr>
 				<td colspan="10">No records found.</td>
 			</tr>
 		<?php else: ?>
-			<?php foreach($data['products'] as $product): ?>
+			<?php foreach($products as $product): ?>
 				<tr>
 					<td><?php echo $product['id']; ?></td>
 					<td><?php echo $product['name']; ?></td>

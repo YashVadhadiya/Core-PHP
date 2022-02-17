@@ -1,13 +1,9 @@
 <?php 
 Ccc::loadClass('Model_Core_Adapter');
-Ccc::loadClass('Model_Core_Request');
-Ccc::loadClass('Controller_Core_Front');
-Ccc::loadClass('Controller_Core_Action');
 date_default_timezone_set("Asia/Kolkata");
 ?>
 
 <?php
-echo "<pre>";
 class Ccc
 {
 	protected static $front = null;
@@ -42,6 +38,13 @@ class Ccc
 	public static function getModel($className)
 	{
 		$className = 'Model_'.$className;
+		self::loadClass($className);
+		return new $className;
+	}
+
+	public static function getBlock($className)
+	{
+		$className = 'Block_'.$className;
 		self::loadClass($className);
 		return new $className;
 	}

@@ -25,10 +25,11 @@ class Controller_Core_Action
         return $this;
     }
 
-    public function getRequest()
+     public function getRequest()
     {
-        return $this->request;
+        return Ccc::getFront()->getRequest();
     }
+
 
     public function setRequest($request)
     {
@@ -42,69 +43,44 @@ class Controller_Core_Action
         return $this->adapter;
     }
 
-    public function getUrl(
-        $action = null,
-        $controller = null,
-        array $parameters = null,
-        $resetParam = false) 
+    public function getUrl($action = null, $controller = null, array $parameters = null, $resetParam = false) 
     {
-        echo "<pre>";
-        $uri = $_SERVER["REQUEST_URI"];
-        $query_str = parse_url($uri, PHP_URL_QUERY);
-        parse_str($query_str, $queryParams);
-        //print_r($queryParams); // cur url  in arry
-        //print_r($query_str);  //cur url in string
-
-        $array = [
-            "c" => $controller,
-            "a" => $action,
-        ];
-        $result5 = http_build_query($array);
-
-        $ad = array_merge($queryParams, $array);
-        $result4 = http_build_query($ad); //c a cur url
-        //echo $result4;
-        //exit();
-
-        $abc = array_merge($array, $parameters);
-        $result3 = http_build_query($abc); // c a parameter
-        //echo $result3;
-
-        $var = array_merge($queryParams, $abc);
-        //print_r($var);                             // all
-        $result1 = http_build_query($var);
-
-        if ($action != null) 
+        $resultUrl = [];
+        if(!$controller)
         {
-            if ($controller != null) 
-            {
-                if ($parameters != null) 
-                {
-                    echo $result1;
-                    exit();
-                }
-                echo $result4;
-                exit();
-            }
-            echo $result5;
-            exit();
+            $resultUrl['c'] = $this->getRequest()->getRequest('c'); 
         }
-        echo $query_str;
-        exit();
+        else
+        {
+            $resultUrl['c'] = $controller;
+        }
 
-        /*
-        //print_r($parameters);
-       //$result1 = http_build_query($array);
-       //$result2 = http_build_query($parameters); 
-       //print_r($url1 = $result1 . '&' . $result2);
-       
-    /* 
-        $action = null;
-        $controller = null;
-        $parameters = [];
+        if(!$action)
+        {
+            $resultUrl['a'] = $this->getRequest()->getRequest('a'); 
+        }
+        else
+        {
+            $resultUrl['a'] = $action;
+        }
 
-    */
-        // $resetParam = false;
+        if($reset)
+        {
+            if($parameters)
+            {
+                $resultUrl = array_merge($resultUrl,$parameters);
+            }
+        }
+        else
+        {
+            $resultUrl = array_merge($_GET,$resultUrl);
+            if($parameters)
+            {
+                $resultUrl = array_merge($resultUrl,$parameters);
+            }
+        }
+        $url = 'index.php?'.http_build_query($resultUrl);
+        return $url;
     }
 }
 

@@ -1,3 +1,4 @@
+<?php $product = $this->getProduct(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -10,25 +11,25 @@
         <form action="index.php?c=product&a=save" method="post">
             <tr>
                 <td>Id</td>
-                <td><input type="text" name="product[id]" value="<?php echo $data['products']['id']; ?>" readonly></td>
+                <td><input type="text" name="product[id]" value="<?php echo $product['id']; ?>" readonly></td>
             </tr>
             <tr>
                 <td>Name</td>
-                <td><input type="text" name="product[name]" value="<?php echo $data['products']['name']; ?>"></td>
+                <td><input type="text" name="product[name]" value="<?php echo $product['name']; ?>"></td>
             </tr>
             <tr>
                 <td>Price</td>
-                <td><input type="text" name="product[price]" value="<?php echo $data['products']['price']; ?>"></td>
+                <td><input type="text" name="product[price]" value="<?php echo $product['price']; ?>"></td>
             </tr>
             <tr>
                 <td>Quantity</td>
-                <td><input type="text" name="product[quantity]" value="<?php echo $data['products']['quantity']; ?>"></td>
+                <td><input type="text" name="product[quantity]" value="<?php echo $product['quantity']; ?>"></td>
             </tr>
             <tr>
                 <td>Status</td>
                 <td><select name="product[status]">
-                        <option value="1" <?php if($data['products']['status'] == 1): ?> selected = "selected" <?php endif; ?>>Active</option>
-                        <option value="2" <?php if($data['products']['status'] == 2): ?> selected = "selected" <?php endif; ?>>Inactive</option>
+                        <option value="1" <?php if($product['status'] == 1): ?> selected = "selected" <?php endif; ?>>Active</option>
+                        <option value="2" <?php if($product['status'] == 2): ?> selected = "selected" <?php endif; ?>>Inactive</option>
                     </select></td>
             </tr>
             <tr>

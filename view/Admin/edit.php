@@ -1,6 +1,4 @@
-<?php
-$controllerAdmin = new Controller_Admin();
-?>
+<?php $admin = $this->getAdmin(); ?>
 	<html>
 
 	<head>
@@ -18,40 +16,40 @@ $controllerAdmin = new Controller_Admin();
 				<tr>
 					<td>Id</td>
 					<td>
-						<input type="text" name="admin[id]" value="<?php echo $data['admins']['id']; ?>" readonly>
+						<input type="text" name="admin[id]" value="<?php echo $admin['id']; ?>" readonly>
 					</td>
 				</tr>
 				<tr>
 					<td>First Name</td>
 					<td>
-						<input type="text" name="admin[firstName]" value="<?php echo $data['admins']['firstName']; ?>">
+						<input type="text" name="admin[firstName]" value="<?php echo $admin['firstName']; ?>">
 					</td>
 				</tr>
 				<tr>
 					<td>Last Name</td>
 					<td>
-						<input type="text" name="admin[lastName]" value="<?php echo $data['admins']['lastName']; ?>">
+						<input type="text" name="admin[lastName]" value="<?php echo $admin['lastName']; ?>">
 					</td>
 				</tr>
 				<tr>
 					<td>Email</td>
 					<td>
-						<input type="text" name="admin[email]" value="<?php echo $data['admins']['email']; ?>">
+						<input type="text" name="admin[email]" value="<?php echo $admin['email']; ?>">
 					</td>
 				</tr>
 				<tr>
 					<td>password</td>
 					<td>
-						<input type="password" name="admin[password]" value="<?php echo $data['admins']['password']; ?>">
+						<input type="password" name="admin[password]" value="<?php echo $admin['password']; ?>">
 					</td>
 				</tr>
 				<tr>
 					<td>Status</td>
 					<td>
 						<select name="admin[status]">
-							<option value="1" <?php if($data[ 'admins'][ 'status']==1 ): ?> selected = "selected"
+							<option value="1" <?php if($admin[ 'status']==1 ): ?> selected = "selected"
 								<?php endif; ?>>Active</option>
-							<option value="2" <?php if($data[ 'admins'][ 'status']==2 ): ?> selected = "selected"
+							<option value="2" <?php if($admin[ 'status']==2 ): ?> selected = "selected"
 								<?php endif; ?>>Inactive</option>
 						</select>
 					</td>

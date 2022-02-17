@@ -5,6 +5,10 @@ Ccc::loadClass('Model_Core_Request');
 <?php
 class Controller_Customer extends Controller_Core_Action
 {
+    public function testAction()
+    {
+        $adminTable = new Model_Admin();
+    }
 
     public function gridAction()
     {
@@ -95,7 +99,7 @@ class Controller_Customer extends Controller_Core_Action
         {
             $id = $this->saveCustomer();
             $this->saveAddress($id);
-            $this->redirect('index.php?c=customer&a=grid');
+            $this->redirect($this->getUrl('grid','customer',null,true));
         }
 
         catch(Exception $e)
@@ -136,7 +140,7 @@ class Controller_Customer extends Controller_Core_Action
 
         if ($result)
         {
-            header('Location: index.php?c=customer&a=grid');
+            $this->redirect($this->getUrl('grid','customer',null,true));
         }
     }
 

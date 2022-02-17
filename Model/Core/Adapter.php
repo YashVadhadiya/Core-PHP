@@ -1,6 +1,4 @@
 <?php
-echo "<pre>";
-
 class Model_Core_Adapter
 {
     public $config = ['host' => 'localhost:3305', 'user' => 'root', 'password' => '', 'dbname' => 'crud_oop'];

@@ -59,7 +59,7 @@ Ccc::loadClass("Model_Core_Request");
         $view->toHtml();
     }
 
-    public function saveAction()
+    /*public function saveAction()
     {
     try {
         if (!isset($_POST['category'])) {
@@ -134,7 +134,7 @@ Ccc::loadClass("Model_Core_Request");
     catch (Exception $e) {
         $this->redirect("index.php?c=category&a=grid");
     }
-}
+}*/
 
     public function deleteAction()
     {
@@ -189,7 +189,7 @@ Ccc::loadClass("Model_Core_Request");
     }
 } 
 
-/*    public function saveAction()
+    public function saveAction()
     {
         $adapter = new Model_Core_Adapter();
         $date = date("Y-m-d H:i:s");
@@ -247,7 +247,7 @@ Ccc::loadClass("Model_Core_Request");
             }
             else
             {
-                /*$adapter = new Model_Core_Adapter();
+                $adapter = new Model_Core_Adapter();
                 $categories = $_POST['category'];
                 $categoryName = $categories['categoryName'];
                 $status = $categories['status'];
@@ -264,6 +264,6 @@ Ccc::loadClass("Model_Core_Request");
         {
             echo $e->getMessage();
         }
-    }*/
+    }
 
 ?>
