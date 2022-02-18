@@ -14,13 +14,6 @@ class Controller_Product extends Controller_Core_Action
     public function gridAction()
     {
         Ccc::getBlock('Product_Grid')->toHtml();
-        /*$adapter = new Model_Core_Adapter();
-        //$adapter = new Model_Core_Adapter();
-        $products = $adapter->fetchAll("SELECT * FROM product");
-        $view = $this->getView();
-        $view->addData('products', $products);
-        $view->setTemplate('view/product/grid.php');
-        $view->toHtml();        */
     }
 
     public function saveAction()
@@ -80,10 +73,6 @@ class Controller_Product extends Controller_Core_Action
     public function addAction()
     {
         Ccc::getBlock('Product_Add')->toHtml();
-        /*$adapter = new Model_Core_Adapter();
-        $view = $this->getView();
-        $view->setTemplate('view/product/add.php');
-        $view->toHtml();*/
     }
 
     public function editAction()
@@ -105,17 +94,8 @@ class Controller_Product extends Controller_Core_Action
             }catch(Exception $e){
                 echo $e->getMessage();
             }
-        }
-        /*
-        $getUpdateData = $request->getRequest('id');
-        $id = $getUpdateData;
-        $products = $adapter->fetchRow("SELECT * FROM `product` WHERE `id` = $id");
-        $view = $this->getView();
-        $view->addData('products', $products);
-        $view->setTemplate('view/product/edit.php');
-        $view->toHtml();*/
+    }
     
-
     public function deleteAction()
     {
         $request = new Model_Core_Request();

@@ -1,3 +1,5 @@
+<?php $category = $this->getCategory(); ?>
+
 <?php
 $controllerCategory = new Controller_category();
 ?>
@@ -12,12 +14,12 @@ $controllerCategory = new Controller_category();
 		<form method="post" action="index.php?c=category&a=save">
 			<tr>
                 <td>Id</td>
-                <td><input type="text" name="category[categoryId]" value="<?php echo $data['categories']['categoryId']; ?>" readonly></td>
+                <td><input type="text" name="category[categoryId]" value="<?php echo $category['categoryId']; ?>" readonly></td>
             </tr>
 			<tr>
 				<td>Chooese Category</td>   
 				<td>
-					<select name="category[parentId]" value="<?php echo $data['categories']['parentId']; ?>" >
+					<select name="category[parentId]" value="<?php echo $category['parentId']; ?>" >
 						<option>New Category</option>
 						<?php $result = $controllerCategory->getCategoryWithPath(); foreach($result as $key => $value): ?>
 						<option value=<?php echo $key; ?> >
@@ -30,9 +32,9 @@ $controllerCategory = new Controller_category();
 
 		<tr>
 			<td>Status</td>
-			<td><select name="category[status]" value="<?php echo $data['categories']['status'];?>">
-				<option value="1" <?php if($data['categories']['status'] == 1): ?> selected = "selected" <?php endif; ?>>Active</option>
-				<option value="2" <?php if($data['categories']['status'] == 2): ?> selected = "selected" <?php endif; ?>>Inactive</option>
+			<td><select name="category[status]" value="<?php echo $category['status'];?>">
+				<option value="1" <?php if($category['status'] == 1): ?> selected = "selected" <?php endif; ?>>Active</option>
+				<option value="2" <?php if($category['status'] == 2): ?> selected = "selected" <?php endif; ?>>Inactive</option>
 			</select>
 		</td>
 	</tr>
@@ -40,7 +42,7 @@ $controllerCategory = new Controller_category();
 	<tr>
 		<td>Category Name</td>
 		<td>
-			<input type="text" name="category[categoryName]" value="<?php echo $data['categories']['categoryName']; ?>">
+			<input type="text" name="category[categoryName]" value="<?php echo $category['categoryName']; ?>">
 		</td>
 	</tr>
 

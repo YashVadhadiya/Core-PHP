@@ -1,3 +1,5 @@
+<?php $categories = $this->getCategories(); ?>
+
 <?php
 $controllerCategory = new Controller_category();
 ?>
@@ -41,12 +43,12 @@ $controllerCategory = new Controller_category();
             <th>Updated At</th>
             <th>Action</th>
         </tr>
-        <?php if(!$data['categories']): ?>
+        <?php if(!$categories): ?>
         <tr>
             <td colspan="10">No records found.</td>
         </tr>
         <?php else: ?>
-        <?php foreach($data['categories'] as $category): ?>
+        <?php foreach($categories as $category): ?>
         <tr>
             <td><?php echo $category['categoryId']; ?></td>
 

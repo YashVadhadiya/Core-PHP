@@ -1,8 +1,4 @@
-<?php 
-Ccc::loadClass('Controller_Core_Action');
-
-?>
-
+<?php $customers = $this->getCustomers(); ?>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -51,12 +47,12 @@ Ccc::loadClass('Controller_Core_Action');
             <th>Delete</th>
         </tr>
         
-        <?php if(!$data['customers']): ?>
+        <?php if(!$customers): ?>
             <tr>
                 <td colspan="17">No records found.</td>
             </tr>
         <?php else: ?>
-            <?php foreach($data['customers'] as $customer): ?>
+            <?php foreach($customers as $customer): ?>
                 <tr>
                     <td><?php echo $customer['id']; ?></td>
                     <td><?php echo $customer['firstName']; ?></td>

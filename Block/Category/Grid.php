@@ -1,7 +1,8 @@
 <?php 
 
 Ccc::loadClass('Block_Core_Template');
-class Block_Category_Grid extends Block_Core_Template{
+class Block_Category_Grid extends Block_Core_Template
+{
 	public function __construct()
 	{
 		$this->setTemplate('view/category/grid.php');
@@ -9,7 +10,7 @@ class Block_Category_Grid extends Block_Core_Template{
 
 	public function getCategories()
 	{
-		$categoryModel = Ccc::getModel('category');
+		$categoryModel = Ccc::getModel('Category');
 		$categories = $categoryModel->fetchAll("SELECT * FROM category");
 		return $categories;
 	}

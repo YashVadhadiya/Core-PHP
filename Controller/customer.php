@@ -12,12 +12,7 @@ class Controller_Customer extends Controller_Core_Action
 
     public function gridAction()
     {
-        $adapter = new Model_Core_Adapter();
-        $customers = $adapter->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId;");
-        $view = $this->getView();
-        $view->addData('customers', $customers);
-        $view->setTemplate('view/customer/grid.php');
-        $view->toHtml();        
+        Ccc::getBlock('Customer_Grid')->toHtml();       
     }
 
     protected function saveCustomer()
@@ -110,23 +105,26 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
-        $adapter = new Model_Core_Adapter();
-        $view = $this->getView();
-        $view->setTemplate('view/customer/add.php');
-        $view->toHtml();
+        Ccc::getBlock('Customer_Add')->toHtml();
     }
 
     public function editAction()
     {
-        $adapter = new Model_Core_Adapter();
-        $request = new Model_Core_Request();
-        $getUpdateData = $request->getRequest('id');
-        $id = $getUpdateData;
-        $customers = $adapter->fetchRow("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId WHERE c.id = $id");
-        $view = $this->getView();
-        $view->addData('customers', $customers);
-        $view->setTemplate('view/customer/edit.php');
-        $view->toHtml();
+        try{
+            $id = (int)$this->getRequest()->getRequest('id');
+            if(!$id){
+                throw new Exception("Error Processing Request", 1);
+            }
+            $customerModel = Ccc::getModel('Customer');
+            $customer = $customerModel->fetchRow("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId WHERE c.id = $id");
+            if(!$customer){
+                throw new Exception("Error Processing Request", 1);
+            }
+            Ccc::getBlock('Customer_Edit')->addData('customer', $customer)->toHtml();
+            
+            }catch(Exception $e){
+                echo $e->getMessage();
+            }
     }
 
     public function deleteAction()

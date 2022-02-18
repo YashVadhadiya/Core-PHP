@@ -20,25 +20,6 @@ class Controller_Admin extends Controller_Core_Action
     public function gridAction()
     {
         Ccc::getBlock('Admin_Grid')->toHtml();
-        //$adminTable = new Model_Admin();
-        //$this->getUrl();
-        //$this->getUrl('save','category',['id' => 5,'tab' => null], false); //index.php?c=category&a=save&id=5
-        //$this->getUrl(); //index.php?c=category&a=grid&id=5&tab=menu
-        //$this->getUrl('save'); //index.php?c=category&a=save&id=5&tab=menu
-        //$this->getUrl('save','admin'); //index.php?c=admin&a=save&id=5&tab=menu
-        //$this->getUrl('save','category',['id' => 10]); //index.php?c=category&a=save&id=10&tab=menu
-        //$this->getUrl('save','category',['id' => 10,'tab' => 'hello']); //index.php?c=category&a=save&id=10&tab=hello
-        //$this->getUrl('save','category',['id' => 5,'tab' => null]); //index.php?c=category&a=save&id=5
-        //$this->getUrl('save','category',null,true); //index.php?c=category&a=save
-        //$this->getUrl(null,'category',null,true); //index.php?c=category&a=grid
-        //$this->getUrl(null,'category',['module' => 'Admin'],true); //index.php?c=category&a=grid&module=Admin
-
-         /*$adapter = new Model_Core_Adapter();
-         $admins = $adminTable->fetchAll("select * from admin");
-         $view = $this->getView();
-         $view->addData('admins', $admins);
-         $view->setTemplate('view/Admin/grid.php');
-         $view->toHtml();*/
     }
 
     protected function saveAdmin()
@@ -51,7 +32,6 @@ class Controller_Admin extends Controller_Core_Action
         }
         $date = date('Y-m-d H:i:s');
         $request = new Model_Core_Request();
-        //global $request;
         $adapter = new Model_Core_Adapter();
         $getSaveData = $request->getPost('admin');
         $id = $getSaveData['id'];
@@ -66,8 +46,6 @@ class Controller_Admin extends Controller_Core_Action
         if (!$id):
             $result_admin_insert = $adminTable->insert(['firstName' => $firstName, 'lastName' => $lastName, 'email' => $email, 'password' => $password , 'status' => $status ]);
 
-            /*$query_admin_insert = "INSERT INTO `admin`(`firstName`,`lastName`,`password`,`email`,`status`,`createdAt`) VALUES ('$firstName','$lastName',md5('$password'),'$email','$status','$createdAt')";
-            $result_admin_insert = $adapter->insert($query_admin_insert);*/
             if (!$result_admin_insert):
                 throw new Exception("Data is not inserted in admin(result).", 1);
             endif;
@@ -76,9 +54,6 @@ class Controller_Admin extends Controller_Core_Action
         else:
             $result_admin_update = $adminTable->update(['firstName' => $firstName, 'lastName' => $lastName, 'email' => $email, 'password' => $password , 'status' => $status ], ['id' => $id]);
 
-            /*$query_admin_update = "UPDATE admin 
-			SET firstName='$firstName', lastName='$lastName', password=md5('$password'), email='$email', status='$status', updatedAt='$updatedAt' WHERE id = '$id'";
-            $result_admin_update = $adapter->update($query_admin_update);*/
             if (!$result_admin_update)
             {
                 throw new Exception("Data is not updated in admin.", 1);
@@ -105,11 +80,6 @@ class Controller_Admin extends Controller_Core_Action
     public function addAction()
     {
         Ccc::getBlock('Admin_Add')->toHtml();
-        /*$adminTable = new Model_Admin();
-        $adapter = new Model_Core_Adapter();
-        $view = $this->getView();
-        $view->setTemplate('view/Admin/add.php');
-        $view->toHtml();*/
     }
 
     public function editAction()
@@ -129,17 +99,6 @@ class Controller_Admin extends Controller_Core_Action
                 echo $e->getMessage();
         }
     }
-        //$adminTable = new Model_Admin();
-        //global $request;
-        /*$request = new Model_Core_Request();
-        $adapter = new Model_Core_Adapter();
-        $getUpdateData = $request->getRequest('id');
-        $id = $getUpdateData;
-        $admins =$adminTable->fetchRow("select * from admin where id = $id"); //$adapter->fetchRow("SELECT * FROM `admin` WHERE `id` = $id");
-        $view = $this->getView();
-        $view->addData('admins', $admins);
-        $view->setTemplate('view/Admin/edit.php');
-        $view->toHtml();*/
 
     public function deleteAction()
     {
