@@ -11,7 +11,7 @@ class Block_Category_Grid extends Block_Core_Template
 	public function getCategories()
 	{
 		$categoryModel = Ccc::getModel('Category');
-		$categories = $categoryModel->fetchAll("SELECT * FROM category");
+		$categories = $categoryModel->fetchAll("SELECT * FROM category ORDER BY path ASC");
 		return $categories;
 	}
 }

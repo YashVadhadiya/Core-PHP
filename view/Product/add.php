@@ -1,3 +1,4 @@
+<?php $urlAction = new Controller_Core_Action();?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +7,7 @@
 
 <body>
     <table border="1" width="100%">
-        <form method="post" action="index.php?c=product&a=save">
+        <form method="post" action="<?php echo $urlAction->getUrl('save','product',null,true) ?>">
             <tr>
                 <td>Product Name</td>
                 <td><input type="text" name="product[name]"></td>
@@ -30,7 +31,7 @@
         <tr>
             <td>&nbsp;</td>
             <td><input type="submit" name="submit" value="Submit">
-                <button type="button"><a href="index.php?c=product&a=grid">Cancel</a></button></td>
+                <button type="button"><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Cancel</a></button></td>
             </tr>
         </form>
     </table>

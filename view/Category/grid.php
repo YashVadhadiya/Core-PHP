@@ -1,8 +1,6 @@
 <?php $categories = $this->getCategories(); ?>
-
-<?php
-$controllerCategory = new Controller_category();
-?>
+<?php $controllerCategory = new Controller_category(); ?>
+<?php $urlAction = new Controller_Core_Action();?>
 <!DOCTYPE html>
 <html>
 
@@ -20,19 +18,19 @@ $controllerCategory = new Controller_category();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.php?c=customer&a=grid" name="customer">Customer</a>
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','customer',null,true) ?>" name="customer">Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=category&a=grid" name="category">Category</a>
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>" name="category">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=product&a=grid" name="Product">Product</a>
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>" name="Product">Product</a>
                 </li>
             </ul>
         </div>
     </nav>
     <!-- nav bar ends -->
-    <button name="Add"><a href="index.php?c=category&a=add">Add Category</a></button>
+    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','category',null,true) ?>">Add Category</a></button>
     <table border=1 width="100%">
 
         <tr>
@@ -58,8 +56,8 @@ $controllerCategory = new Controller_category();
             <td><?php echo $category['status']; ?></td>
             <td><?php echo $category['createdAt']?></td>
             <td><?php echo $category['updatedAt']?></td>
-            <td><a href="index.php?c=category&a=edit&id=<?php echo $category['categoryId']; ?>">Edit</a>
-                <a href="index.php?c=category&a=delete&id=<?php echo $category['categoryId']; ?>">Delete</a>
+            <td><a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category['categoryId']],true) ?>">Edit</a>
+                <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category['categoryId']],true) ?>">Delete</a>
             </td>
         </tr>
         <?php endforeach; ?>

@@ -6,7 +6,6 @@ class Model_Product extends Model_Core_Table
     {
         $this->setTableName('product')->setPrimaryKey('id');
     }
-
 }
 
 ?>

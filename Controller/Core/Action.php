@@ -1,4 +1,5 @@
 <?php
+
 Ccc::loadClass("Model_Core_View");
 
 class Controller_Core_Action
@@ -13,7 +14,8 @@ class Controller_Core_Action
 
     public function getView()
     {
-        if (!$this->view) {
+        if (!$this->view) 
+        {
             $this->setView(new Model_Core_View());
         }
         return $this->view;
@@ -43,13 +45,14 @@ class Controller_Core_Action
         return $this->adapter;
     }
 
-    public function getUrl($action = null, $controller = null, array $parameters = null, $resetParam = false) 
+    public function getUrl($action = null, $controller = null, array $parameters = null, $reset = false) 
     {
         $resultUrl = [];
         if(!$controller)
         {
             $resultUrl['c'] = $this->getRequest()->getRequest('c'); 
         }
+
         else
         {
             $resultUrl['c'] = $controller;
@@ -59,6 +62,7 @@ class Controller_Core_Action
         {
             $resultUrl['a'] = $this->getRequest()->getRequest('a'); 
         }
+        
         else
         {
             $resultUrl['a'] = $action;
@@ -68,17 +72,20 @@ class Controller_Core_Action
         {
             if($parameters)
             {
-                $resultUrl = array_merge($resultUrl,$parameters);
+                $resultUrl = array_merge($resultUrl, $parameters);
             }
         }
+        
         else
         {
-            $resultUrl = array_merge($_GET,$resultUrl);
+            $resultUrl = array_merge($this->getRequest()->getRequest(), $resultUrl);
+        
             if($parameters)
             {
-                $resultUrl = array_merge($resultUrl,$parameters);
+                $resultUrl = array_merge($resultUrl, $parameters);
             }
         }
+        
         $url = 'index.php?'.http_build_query($resultUrl);
         return $url;
     }

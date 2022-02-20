@@ -33,15 +33,18 @@ class Model_Core_Table
         $sqlColumn = [];
         $sqlValue = [];
         $adapter = new Model_Core_Adapter();
-        foreach ($queryInsert as $columnName => $value) {
+        
+        foreach ($queryInsert as $columnName => $value) 
+        {
             array_push($sqlColumn, $columnName);
             array_push($sqlValue, $value);
         }
+        
         $sql1 = implode(",", $sqlColumn);
         $sql2 = implode("','", $sqlValue);
         $sql3 = "'" . $sql2 . "'";
-
-        $sqlResult = "INSERT INTO admin($sql1) values($sql3);";
+        $tableName = $this->getTableName();
+        $sqlResult = "INSERT INTO $tableName($sql1) values($sql3);";
         $result = $adapter->insert($sqlResult);
         return $result;
     }
@@ -51,7 +54,7 @@ class Model_Core_Table
         $adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
         $key = key($queryDelete);
-        $value = $queryDelete["id"];
+        $value = $queryDelete[$this->primaryKey];
         $sqlResult = "DELETE FROM $tableName WHERE $key = $value;";
         $result = $adapter->delete($sqlResult);
         return $result;
@@ -64,12 +67,15 @@ class Model_Core_Table
         $set = [];
         $tableName = $this->getTableName();
         $key = key($queryId);
-        $value = $queryId["id"];
-        foreach ($queryUpdate as $sqlKey => $sqlValue) {
+        $value = $queryId[$this->primaryKey];
+        
+        foreach ($queryUpdate as $sqlKey => $sqlValue) 
+        {
             $set[] = "$sqlKey ='$sqlValue'";
         }
+        
         $sql1 = implode(",", $set);
-        $update = "UPDATE $tableName SET $sql1, updatedAt = '" .$date ."' WHERE $key = $value;";
+        $update = "UPDATE $tableName SET $sql1 WHERE $key = $value;";
         $result = $adapter->update($update);
         return $result;
     }

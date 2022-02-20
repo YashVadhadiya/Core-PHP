@@ -1,7 +1,8 @@
+<?php $urlAction = new Controller_Core_Action();?>
 <html>
 <head><title>Category Add</title></head>
 <body>
-	<form  method="POST" action="index.php?c=customer&a=save">
+	<form  method="POST" action="<?php echo $urlAction->getUrl('save','customer',null,true) ?>">
 		<table border="1" width="100%" cellspacing="4">
 
 			<!-- this is used for personal data -->
@@ -60,12 +61,11 @@
 			
 			<tr>
 				<td>Address Type</td>
-				<td>
-					<input type="checkbox" id="billing" name="address[billing]" value="1">
-					<label for="billing">Billing Address</label><br>
-					<input type="checkbox" id="shipping" name="address[shipping]" value="1">
-					<label for="shipping">Shipping Address</label><br>
-				</td>
+				   
+      				<td><input type="checkbox" name="address[billing]" value="1">Billing Addres
+      				<input type="checkbox" name="address[shipping]" value="1"> Shipping Address</td>
+    
+
 			</tr>
 			<tr>
 				<td >Status</td>
@@ -81,22 +81,11 @@
 				<td >&nbsp;</td>
 				<td>
 					<input type="submit" name="submit" value="Save">
-					<button type="button"><a href="index.php?c=customer&a=grid">Cancel</a></button>
+					<button type="button"><a href="<?php echo $urlAction->getUrl('grid','customer',null,true) ?>">Cancel</a></button>
 				</td>
 			</tr>
 			
 		</table>
-		<tr>
-			<td><input type="hidden" name="customer[id]"></td>
-		</tr>
-
-		<tr>
-			<td><input type="hidden" name="address[addressId]"></td>
-		</tr>
-
-		<tr>
-			<td><input type="hidden" name="address[customerId]"></td>
-		</tr>
 	</form>
 </body>
 </html>

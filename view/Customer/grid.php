@@ -1,4 +1,6 @@
 <?php $customers = $this->getCustomers(); ?>
+<?php $urlAction = new Controller_Core_Action();?>
+
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -11,19 +13,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.php?c=customer&a=grid" name="customer">Customer</a>
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','customer',null,true) ?>" name="customer">Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=category&a=grid" name="category">Category</a>
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>" name="category">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?c=product&a=grid" name="Product">Product</a>
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>" name="Product">Product</a>
                 </li>
             </ul>
         </div>
     </nav>
     <!-- nav bar ends -->
-    <button name="Add"><a href="index.php?c=customer&a=add">Add Customer</a></button>
+    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','customer',null,true) ?>">Add Customer</a></button>
 
     <table border='1' width='100%' cellspacing="4">
         <tr>
@@ -71,8 +73,8 @@
                     <td><?php echo $customer['billing']; ?></td>
                     <td><?php echo $customer['shipping']; ?></td>
 
-                    <td><a href="index.php?c=customer&a=edit&id=<?php echo $customer['id'] ?>">Edit</a></td>
-                    <td><a href="index.php?c=customer&a=delete&id=<?php echo $customer['id'] ?>">Delete</a></td>
+                    <td><a href="<?php echo$urlAction->getUrl('edit','customer',['id' =>  $customer['id']],true) ?>">Edit</a></td>
+                    <td><a href="<?php echo$urlAction->getUrl('delete','customer',['id' =>  $customer['id']],true) ?>">Delete</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>

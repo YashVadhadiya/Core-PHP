@@ -1,8 +1,7 @@
 <?php $category = $this->getCategory(); ?>
-
-<?php
-$controllerCategory = new Controller_category();
-?>
+<?php $urlAction = new Controller_Core_Action();?>
+<?php $getCategoryWithPath = new Controller_category(); ?>
+<?php $result = $this->getData('getCategoryWithPath');?>
 
 <!DOCTYPE html>
 <html>
@@ -11,21 +10,28 @@ $controllerCategory = new Controller_category();
 </head>
 <body>
 	<table border="1" width="100%">
-		<form method="post" action="index.php?c=category&a=save">
+		<form method="post" action="<?php echo $urlAction->getUrl('save','category',['categoryId' =>  $category['categoryId']],true) ?>
+">
 			<tr>
                 <td>Id</td>
                 <td><input type="text" name="category[categoryId]" value="<?php echo $category['categoryId']; ?>" readonly></td>
             </tr>
 			<tr>
-				<td>Chooese Category</td>   
-				<td>
-					<select name="category[parentId]" value="<?php echo $category['parentId']; ?>" >
-						<option>New Category</option>
-						<?php $result = $controllerCategory->getCategoryWithPath(); foreach($result as $key => $value): ?>
-						<option value=<?php echo $key; ?> >
-						<?php echo($value); ?>
-						</option>
-					<?php endforeach; ?>                  
+			<td width="10%">Category</td>
+			<td>
+				<select name="category[parentId]">
+					<option value="">New Category</option>
+					<?php
+						$result = $getCategoryWithPath->getCategoryWithPath();
+						foreach ($result as $key => $row) {
+						 	?>
+						 	<option value="<?php echo $key; ?>" <?php if ($category['parentId'] == $key) {
+						 		echo "selected";
+						 	} ?>><?php echo $row; ?></option>
+						 	<?php
+						 } 
+						
+					?>
 				</select>
 			</td>
 		</tr>
@@ -49,7 +55,7 @@ $controllerCategory = new Controller_category();
 	<tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" name="submit" value="Submit">
-			<button type="button"><a href="index.php?c=category&a=grid">Cancel</a></button></td>
+			<button type="button"><a href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>">Cancel</a></button></td>
 		</tr>
 	</form>        
 </table>

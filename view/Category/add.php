@@ -1,7 +1,5 @@
-<?php 
-$controllerCategory = new Controller_category();
-?>
-
+<?php $controllerCategory = new Controller_category(); ?>
+<?php $urlAction = new Controller_Core_Action(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +7,7 @@ $controllerCategory = new Controller_category();
 </head>
 <body>
     <table border="1" width="100%">
-       <form method="post" action="index.php?c=category&a=save">
+       <form method="post" action="<?php echo $urlAction->getUrl('save','category',null,true) ?>">
         <tr>
             <td>Chooese Category</td>   
             <td>
@@ -48,7 +46,7 @@ $controllerCategory = new Controller_category();
 <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="submit" value="Submit">
-        <button type="button"><a href="index.php?c=category&a=grid">Cancel</a></button></td>
+        <button type="button"><a href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>">Cancel</a></button></td>
     </tr>
 </form>        
 </table>

@@ -1,4 +1,5 @@
 <?php $admin = $this->getAdmin(); ?>
+<?php $urlAction = new Controller_Core_Action();?>
 	<html>
 
 	<head>
@@ -6,7 +7,7 @@
 	</head>
 
 	<body>
-		<form method="POST" action="index.php?c=admin&a=save&id=<?php echo $_GET['id']?>">
+		<form method="POST" action="<?php echo$urlAction->getUrl('save','admin',['id' =>  $admin['id']],true) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>
@@ -58,7 +59,7 @@
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" value="Edit" name="edit">
-						<button type="button"><a href="index.php?c=admin&a=grid">Cancel</a></button>
+						<button type="button"><a href="<?php echo $urlAction->getUrl('grid','admin',null,true) ?>">Cancel</a></button>
 					</td>
 				</tr>
 			</table>

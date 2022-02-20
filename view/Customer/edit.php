@@ -1,8 +1,9 @@
 <?php $customer = $this->getCustomer(); ?>
+<?php $urlAction = new Controller_Core_Action();?>
 <html>
 <head><title>Category Update</title></head>
 <body>
-	<form method="POST" action="index.php?c=customer&a=save&id=<?php echo $_GET['id']?>">
+	<form method="POST" action="<?php echo$urlAction->getUrl('save','customer',['id' =>  $customer['id']],true) ?>">
 		<table border="1" width="100%" cellspacing="4">
 
 			<!-- this is used for personal data -->
@@ -36,6 +37,10 @@
 			<tr>
 				<td colspan="4"><h1>Customer Address</h1></td>
 			</tr>
+			<tr>
+				<td >Id</td>
+				<td><input type="text" name="address[id]" value="<?php echo $customer['addressId']; ?>" readonly></td>
+			</tr>	
 			<tr>
 				<td>Address</td>
 				<td><input type="text" name="address[address]"  value="<?php echo $customer['address'] ?>"></td>
@@ -80,7 +85,7 @@
 				<td >&nbsp;</td>
 				<td>
 					<input type="submit" value="Edit" name="edit">
-					<button type="button"><a href="index.php?c=customer&a=grid">Cancel</a></button>
+					<button type="button"><a href="<?php echo $urlAction->getUrl('grid','customer',null,true) ?>">Cancel</a></button>
 				</td>
 			</tr>
 			

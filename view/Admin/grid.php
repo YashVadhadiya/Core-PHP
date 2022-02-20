@@ -1,4 +1,6 @@
 <?php $admins = $this->getAdmins(); ?>
+<?php $urlAction = new Controller_Core_Action();?>
+
 <!DOCTYPE html>
 <html>
 
@@ -12,14 +14,20 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light"> <a class="navbar-brand" href="index.php?c=admin&a=grid">Admin</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active"> <a class="nav-link" href="index.php?c=customer&a=grid" name="customer">Customer</a> </li>
-                <li class="nav-item"> <a class="nav-link" href="index.php?c=category&a=grid" name="category">Category</a> </li>
-                <li class="nav-item"> <a class="nav-link" href="index.php?c=product&a=grid" name="Product">Product</a> </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','customer',null,true) ?>" name="customer">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>" name="category">Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>" name="Product">Product</a>
+                </li>
             </ul>
         </div>
     </nav>
     <!-- nav bar ends -->
-    <button name="Add"><a href="index.php?c=admin&a=add">Add admin</a></button>
+    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','admin',null,true) ?>">Add admin</a></button>
     <table border='1' width='100%' cellspacing="4">
         <tr>
             <th>Id</th>
@@ -61,8 +69,8 @@
                         <td>
                             <?php echo $admin['updatedAt']; ?>
                         </td>
-                        <td><a href="index.php?c=admin&a=edit&id=<?php echo $admin['id'] ?>">Edit</a></td>
-                        <td><a href="index.php?c=admin&a=delete&id=<?php echo $admin['id'] ?>">Delete</a></td>
+                        <td><a href="<?php echo$urlAction->getUrl('edit','admin',['id' =>  $admin['id']],true) ?>">Edit</a></td>
+                        <td><a href="<?php echo$urlAction->getUrl('delete','admin',['id' =>  $admin['id']],true) ?>">Delete</a></td>
                     </tr>
                     <?php endforeach; ?>
                         <?php endif; ?>

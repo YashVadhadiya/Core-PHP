@@ -1,3 +1,4 @@
+<?php $urlAction = new Controller_Core_Action();?>
 <html>
 
 <head>
@@ -5,12 +6,8 @@
 </head>
 
 <body>
-	<form method="POST" action="index.php?c=admin&a=save">
-		<tr>
-			<td>
-				<input type="hidden" name="admin[id]">
-			</td>
-		</tr>
+	<form method="POST" action="<?php echo $urlAction->getUrl('save','admin',null,true) ?>">
+		
 		<table border="1" width="100%" cellspacing="4">
 			<!-- this is used for personal data -->
 			<tr>
@@ -54,7 +51,7 @@
 				<td>&nbsp;</td>
 				<td>
 					<input type="submit" name="submit" value="Save">
-					<button type="button"><a href="index.php?c=admin&a=grid">Cancel</a></button>
+					<button type="button"><a href="<?php echo $urlAction->getUrl('grid','admin',null,true) ?>">Cancel</a></button>
 				</td>
 			</tr>
 		</table>

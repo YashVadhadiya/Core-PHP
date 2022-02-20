@@ -1,4 +1,5 @@
 <?php $product = $this->getProduct(); ?>
+<?php $urlAction = new Controller_Core_Action();?>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +9,7 @@
 
 <body>
     <table border="1" width="100%">
-        <form action="index.php?c=product&a=save" method="post">
+        <form action="<?php echo$urlAction->getUrl('save','product',['id' =>  $product['id']],true) ?>" method="post">
             <tr>
                 <td>Id</td>
                 <td><input type="text" name="product[id]" value="<?php echo $product['id']; ?>" readonly></td>
@@ -35,7 +36,7 @@
             <tr>
                 <td></td>
                 <td><input type="submit" name="submit" value="Save">
-                    <button type="button"><a href="index.php?c=product&a=grid">Cancel</a></button>
+                    <button type="button"><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Cancel</a></button>
                 </td>
             </tr>
         </form>
