@@ -14,6 +14,15 @@ class Block_Category_Grid extends Block_Core_Template
 		$categories = $categoryModel->fetchAll("SELECT * FROM category ORDER BY path ASC");
 		return $categories;
 	}
+
+	public function getCategoryWithPath()
+	{
+		Ccc::loadClass('Controller_Category');
+		$categoryModel = new Controller_Category();
+		$categoryPath = $categoryModel->getCategoryWithPath();
+		return $categoryPath;
+	}
+
 }
 
 ?>

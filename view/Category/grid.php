@@ -1,5 +1,5 @@
 <?php $categories = $this->getCategories(); ?>
-<?php $controllerCategory = new Controller_category(); ?>
+<?php $getCategoryWithPath = $this->getCategoryWithPath(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
 <!DOCTYPE html>
 <html>
@@ -50,7 +50,7 @@
         <tr>
             <td><?php echo $category['categoryId']; ?></td>
 
-            <td><?php $pathReturn =  $controllerCategory->getCategoryWithPath(); echo $pathReturn[$category['categoryId']]; ?>
+            <td><?php $pathReturn =  $getCategoryWithPath; echo $pathReturn[$category['categoryId']]; ?>
             </td>
 
             <td><?php echo $category['status']; ?></td>

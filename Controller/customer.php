@@ -1,12 +1,27 @@
 <?php
-Ccc::loadClass("Controller_Core_Action");
-Ccc::loadClass("Model_Core_Request");
+Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Core_Request');
 
 class Controller_Customer extends Controller_Core_Action
 {
     public function gridAction()
     {
-        Ccc::getBlock("Customer_Grid")->toHtml();
+        $customerModel = Ccc::getModel('Customer');
+        //$customers = $customerModel->fetchAll("SELECT * FROM customer");
+        echo "<pre>";
+        $customer = $customerModel->getRow(); 
+        print_r($customer); 
+        $customer->id = '73';     
+        $customer->email = 'yash@mail';
+        $customer->firstName = 'patel';
+        $customer->lastName = 'yash';
+        $customer->phone = '1478523690';
+        $customer->createdAt = '20-02-2022';
+        $customer->save();
+        print_r($customer);
+        //$customer = $customerModel->load(4);
+        //$customer->firstName = 'qwe2MAIL';
+        //Ccc::getBlock("Customer_Grid")->toHtml();
     }
 
     protected function saveCustomer()

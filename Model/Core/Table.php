@@ -1,10 +1,28 @@
 <?php
-
+Ccc::loadClass('Model_Core_Table_Row');
 class Model_Core_Table
 {
     protected $tableName = null;
 
     protected $primaryKey = null;
+
+    protected $rowClassName;
+
+    public function getRowClassName()
+    {
+        return $this->rowClassName;
+    }
+
+    public function setRowClassName($rowClassName)
+    {
+        $this->rowClassName = $rowClassName;
+        return $this;
+    }
+
+    public function getRow()
+    {
+        return Ccc::getModel($this->getRowClassName());
+    }
 
     public function setTableName($tableName)
     {
@@ -26,6 +44,18 @@ class Model_Core_Table
     {
         $this->primaryKey = $primaryKey;
         return $this;
+    }
+
+    public function load($id)
+    {
+        $rowData = $this->fetchRow("SELECT * FROM {$this->getTableName()} WHERE {$this->getPrimaryKey()} = $id");
+        if (!$rowData) 
+        {
+            return false;
+        }
+        $row = $this->getRow();
+        $row->setData($rowData);
+        return $row;
     }
 
     public function insert(array $queryInsert)
@@ -96,5 +126,6 @@ class Model_Core_Table
         return $result;
     }
 }
+
 
 ?>
