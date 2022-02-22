@@ -69,6 +69,6 @@ class Model_Core_Table_Row
 		{
 			$id = $this->getTable()->insert($this->data);
 		}
-		return $this;
+		return $id;
 	}
 }

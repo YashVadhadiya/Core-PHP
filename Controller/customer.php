@@ -6,27 +6,52 @@ class Controller_Customer extends Controller_Core_Action
 {
     public function gridAction()
     {
-        $customerModel = Ccc::getModel('Customer');
-        //$customers = $customerModel->fetchAll("SELECT * FROM customer");
-        echo "<pre>";
+        /*$customerModel = Ccc::getModel('Customer');
         $customer = $customerModel->getRow(); 
-        print_r($customer); 
+        //print_r($customer); 
         $customer->id = '73';     
-        $customer->email = 'yash@mail';
+        $customer->email = '@mail';
         $customer->firstName = 'patel';
         $customer->lastName = 'yash';
         $customer->phone = '1478523690';
         $customer->createdAt = '20-02-2022';
         $customer->save();
-        print_r($customer);
+        //print_r($customer);*/
         //$customer = $customerModel->load(4);
         //$customer->firstName = 'qwe2MAIL';
-        //Ccc::getBlock("Customer_Grid")->toHtml();
+        Ccc::getBlock("Customer_Grid")->toHtml();
     }
 
     protected function saveCustomer()
     {
-        $customerModel = Ccc::getModel("Customer");
+        $customerModel = Ccc::getModel('Customer');
+        $customer = $customerModel->getRow();
+        date_default_timezone_set("Asia/Kolkata");
+        $getSaveData = $this->getRequest()->getRequest('customer');
+        $date = date('Y-m-d H:i:s');
+        if(!array_key_exists('id',$getSaveData))
+        {
+                $customer->firstName = $getSaveData['firstName'];
+                $customer->lastName = $getSaveData['lastName'];
+                $customer->email = $getSaveData['email'];
+                $customer->phone = $getSaveData['phone'];
+                $customer->status = $getSaveData['status'];
+                $result = $customer->save();
+                return $result;
+        }
+        else
+        {
+                $customer = $customerModel->load($getSaveData['id']);
+                $customer->firstName = $getSaveData['firstName'];
+                $customer->lastName = $getSaveData['lastName'];
+                $customer->email = $getSaveData['email'];
+                $customer->phone = $getSaveData['phone'];
+                $customer->status = $getSaveData['status'];
+                $customer->updatedAt = $date;
+                $customer->save();
+                return $getSaveData['id'];
+        }
+        /*$customerModel = Ccc::getModel("Customer");
         date_default_timezone_set("Asia/Kolkata");
         $date = date("Y-m-d H:i:s");
         $getSaveData = $this->getRequest()->getRequest("customer");
@@ -52,7 +77,7 @@ class Controller_Customer extends Controller_Core_Action
                 throw new Exception("System is unable to update customer information.",1);
             }
             return $id;
-        }
+        }*/
     }
     protected function saveAddress($customerId)
     {
