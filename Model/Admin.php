@@ -1,12 +1,12 @@
 <?php
-Ccc::loadClass('Model_Core_Table');
-class Model_Admin extends Model_Core_Table
+
+Ccc::loadClass('Model_Core_Table_Row');
+class Model_Admin extends Model_Core_Table_Row
 {
     public function __construct()
     {
-        $this->setTableName('admin')->setPrimaryKey('id');
+        $this->setTableClassName('Admin_Resource');
     }
-
 }
 
 ?>

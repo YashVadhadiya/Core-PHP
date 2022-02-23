@@ -48,7 +48,7 @@ class Model_Core_Table
 
     public function load($id)
     {
-        $rowData = $this->fetchRow("SELECT * FROM {$this->getTableName()} WHERE {$this->getPrimaryKey()} = $id");
+        $rowData = $this->fetchRow("SELECT * FROM {$this->getTableName()} WHERE {$this->getPrimaryKey()} = {$id}");
         if (!$rowData) 
         {
             return false;

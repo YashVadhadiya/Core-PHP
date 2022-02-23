@@ -17,11 +17,12 @@ class Controller_Category extends Controller_Core_Action
             {
                 throw new Exception("Error Processing Request in getRequest category.", 1);
             }
-
             $adapter = new Model_Core_Adapter();
-            $categoryModel = Ccc::getModel('Category');
+            $categoryModel = Ccc::getModel('Category_Resource');
             $date = date('Y-m-d H:i:s');
             $getSaveData = $this->getRequest()->getPost('category');
+            $category = $categoryModel->getRow();
+
             $categoryName = $getSaveData['categoryName'];
             $parentId = $getSaveData['parentId'];
             $status = $getSaveData['status'];
@@ -38,7 +39,14 @@ class Controller_Category extends Controller_Core_Action
                 $categoryId = $getSaveData['categoryId'];
                 if (!$parentId) 
                 {
-                    $updateResult = $categoryModel->update(['categoryName' => $categoryName, 'status' => $status, 'parentId' => $parentId, 'updatedAt' => $updatedAt], ['categoryId' => $categoryId]);
+                    $category = $categoryModel->load($categoryId);
+                    $category->categoryName = $categoryName;
+                    $category->parentId = $parentId;
+                    $category->status = $status;
+                    //$category->updatedAt = $date;
+                    $updateResult = $category->save();
+
+                    /*$updateResult = $categoryModel->update(['categoryName' => $categoryName, 'status' => $status, 'parentId' => $parentId, 'updatedAt' => $updatedAt], ['categoryId' => $categoryId]);*/
                     if(!$updateResult) 
                     {
                         throw new Exception("Error Processing Request in updateResult category.", 1);
@@ -48,7 +56,14 @@ class Controller_Category extends Controller_Core_Action
                 }
                 else 
                 {
-                    $result = $categoryModel->update(['categoryName' => $categoryName,'status' => $status,'parentId' => $parentId,'updatedAt' => $updatedAt], ['categoryId' => $categoryId]);
+                    $category = $categoryModel->load($categoryId);
+                    $category->categoryName = $categoryName;
+                    $category->parentId = $parentId;
+                    $category->status = $status;
+                    $category->updatedAt = $date;
+                    $result = $category->save();
+
+                    /*$result = $categoryModel->update(['categoryName' => $categoryName,'status' => $status,'parentId' => $parentId,'updatedAt' => $updatedAt], ['categoryId' => $categoryId]);*/
                     if(!$result) 
                     {
                         throw new Exception("Error Processing Request in result category.", 1);
@@ -61,14 +76,22 @@ class Controller_Category extends Controller_Core_Action
             {
                 if (!$parentId) 
                 {
-                    $resultCategoryName = $categoryModel->insert(['categoryname' => $categoryName, 'status' => $status, 'createdAt' => $createdAt]);
+                    $category->categoryName = $categoryName;
+                    $category->status = $status;
+                    //$category->createdAt = $date;
+                    $resultCategoryName = $category->save();
+                    /*$resultCategoryName = $categoryModel->insert(['categoryname' => $categoryName, 'status' => $status, 'createdAt' => $createdAt]);*/
                     if(!$resultCategoryName)
                     {
                         throw new Exception("System is unable to insert the record.", 1);
                     }
                     else 
                     {
-                        $result = $categoryModel->update(['path' => $resultCategoryName], ['categoryId' => $resultCategoryName]);
+                        $category = $categoryModel->load($resultCategoryName);
+                        $category->path = $resultCategoryName;
+                        $result = $category->save();
+
+                        //$result = $categoryModel->update(['path' => $resultCategoryName], ['categoryId' => $resultCategoryName]);
                         if(!$result) 
                         {
                             throw new Exception("System is unable to insert the record.", 1);
@@ -77,7 +100,13 @@ class Controller_Category extends Controller_Core_Action
                 }
                 else 
                 {
-                    $resultParentId = $categoryModel->insert(['categoryname' => $categoryName, 'parentId' => $parentId, 'status' => $status, 'createdAt' => $createdAt]);
+                    $category->categoryName = $categoryName;
+                    $category->parentId = $parentId;
+                    $category->status = $status;
+                    $category->createdAt = $date;
+                    $resultParentId = $category->save();
+
+                    /*$resultParentId = $categoryModel->insert(['categoryname' => $categoryName, 'parentId' => $parentId, 'status' => $status, 'createdAt' => $createdAt]);*/
                     if(!$resultParentId)
                     {
                         throw new Exception("System is unable to insert the record.", 1);
@@ -87,7 +116,12 @@ class Controller_Category extends Controller_Core_Action
                         $query = "SELECT path FROM category WHERE categoryId = '$parentId'";
                         $result = $adapter->fetchOne($query);
                         $output = $result .'/'. $resultParentId;
-                        $resultUpdate = $categoryModel->update(['path' => $output], ['categoryId' => $resultParentId]);
+
+                        $category = $categoryModel->load($resultParentId);
+                        $category->path = $output;
+                        $resultUpdate = $category->save();
+                        
+                        //$resultUpdate = $categoryModel->update(['path' => $output], ['categoryId' => $resultParentId]);
                         if (!$resultUpdate) 
                         {
                             throw new Exception("System is unable to insert the record.", 1);
@@ -108,7 +142,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function getCategoryWithPath()
     {
-        $categoryModel = Ccc::getModel('Category');
+        $categoryModel = Ccc::getModel('Category_Resource');
         $adapter = new Model_Core_Adapter();
         $query = "SELECT categoryId, categoryName FROM category";
         $idLable = $adapter->fetchPairs($query);
@@ -145,7 +179,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function updatePathIntoCategory($categoryId, $parentId)
     {
-        $categoryModel = Ccc::getModel('Category');
+        $categoryModel = Ccc::getModel('Category_Resource');
         $adapter = new Model_Core_Adapter();
         $query = "SELECT path FROM category WHERE categoryId = '$categoryId'";
         $result = $adapter->fetchOne($query);
@@ -161,7 +195,12 @@ class Controller_Category extends Controller_Core_Action
             $newPath = $path . '/' . $categoryId;           
         }
         
-        $updatePath = $categoryModel->update(['path' => $newPath],[ 'categoryId' => $categoryId]);
+        $category = $categoryModel->load($categoryId);
+        $category->path = $newPath;
+        $updatePath = $category->save();
+        
+        //$updatePath = $categoryModel->update(['path' => $newPath],[ 'categoryId' => $categoryId]);
+        
         $categories = $adapter->fetchAll("SELECT * FROM category WHERE path LIKE('$output') ORDER BY path");
         if(!$categories) 
         { 
@@ -175,7 +214,11 @@ class Controller_Category extends Controller_Core_Action
                 $newCategoryId = $category['categoryId'];
                 $getParentPath = $adapter->fetchOne("SELECT path FROM category WHERE categoryId ='$newParentId'");
                 $updatedPath = $getParentPath . '/' . $category['categoryId'];
-                $updateResult = $categoryModel->update(['path' => $updatedPath], ['categoryId' => $newCategoryId]);
+
+                $category = $categoryModel->load($newCategoryId);
+                $category->path = $updatedPath;
+                $updateResult = $category->save();
+                //$updateResult = $categoryModel->update(['path' => $updatedPath], ['categoryId' => $newCategoryId]);
             }
         }
     }
@@ -195,7 +238,7 @@ class Controller_Category extends Controller_Core_Action
                 throw new Exception("Error Processing Request in categoryId.", 1);
             }
 
-            $categoryModel = Ccc::getModel('Category');
+            $categoryModel = Ccc::getModel('Category_Resource');
             $category = $categoryModel->fetchRow("SELECT * FROM category WHERE categoryId = $categoryId");
             
             if(!$category)
@@ -213,7 +256,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $categoryModel = Ccc::getModel('Category');
+        $categoryModel = Ccc::getModel('Category_Resource');
         $categoryId = $this->getRequest()->getRequest("categoryId");
         
         try 
