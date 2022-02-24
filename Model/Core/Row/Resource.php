@@ -1,12 +1,16 @@
 <?php
-Ccc::loadClass('Model_Core_Table_Row');
-class Model_Core_Table
+class Model_Core_Row_Resource
 {
-    protected $tableName = null;
+	protected $tableName = null;
 
     protected $primaryKey = null;
 
-    protected $rowClassName;
+    protected $rowClassName = null;
+
+    public function __construct()
+    {
+        
+    }
 
     public function getRowClassName()
     {
@@ -46,35 +50,16 @@ class Model_Core_Table
         return $this;
     }
 
-    public function load($id)
-    {
-        $rowData = $this->fetchRow("SELECT * FROM {$this->getTableName()} WHERE {$this->getPrimaryKey()} = {$id}");
-        if (!$rowData) 
-        {
-            return false;
-        }
-        $row = $this->getRow();
-        $row->setData($rowData);
-        return $row;
-    }
-
     public function insert(array $queryInsert)
     {
-        $sqlColumn = [];
-        $sqlValue = [];
-        $adapter = new Model_Core_Adapter();
-        
-        foreach ($queryInsert as $columnName => $value) 
-        {
-            array_push($sqlColumn, $columnName);
-            array_push($sqlValue, $value);
+        if(!$queryInsert){
+            return false;
         }
-        
-        $sql1 = implode(",", $sqlColumn);
-        $sql2 = implode("','", $sqlValue);
-        $sql3 = "'" . $sql2 . "'";
-        $tableName = $this->getTableName();
-        $sqlResult = "INSERT INTO $tableName($sql1) values($sql3);";
+        $adapter = new Model_Core_Adapter();
+        $key = '`'.implode("`,`", array_keys($queryInsert)).'`';
+        $value = '\''.implode("','", array_values($queryInsert)).'\'';
+
+        $sqlResult = "INSERT INTO `{$this->getTableName()}` ({$key}) VALUES ({$value});";
         $result = $adapter->insert($sqlResult);
         return $result;
     }
@@ -84,7 +69,7 @@ class Model_Core_Table
         $adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
         $key = key($queryDelete);
-        $value = $queryDelete[$this->primaryKey];
+        $value = $queryDelete[$key];
         $sqlResult = "DELETE FROM $tableName WHERE $key = $value;";
         $result = $adapter->delete($sqlResult);
         return $result;
@@ -126,6 +111,3 @@ class Model_Core_Table
         return $result;
     }
 }
-
-
-?>

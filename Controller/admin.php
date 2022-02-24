@@ -70,7 +70,6 @@ class Controller_Admin extends Controller_Core_Action
         {
             $id = $this->saveAdmin();
             $this->redirect($this->getUrl("grid","admin",null,true));
-    
         }
         catch (Exception $e) 
         {

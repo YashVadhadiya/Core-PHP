@@ -1,4 +1,4 @@
-<?php $admins = $this->getAdmins(); ?>
+<?php $configs = $this->getConfigs(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
 
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Admin Grid</title>
+    <title>Config Grid</title>
 </head>
 
 <body>
@@ -30,50 +30,46 @@
         </div>
     </nav>
     <!-- nav bar ends -->
-    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','admin',null,true) ?>">Add admin</a></button>
+    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','config',null,true) ?>">Add Config</a></button>
     <table border='1' width='100%' cellspacing="4">
         <tr>
             <th>Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Value</th>
             <!-- <th>Password</th> -->
             <th>Status</th>
             <th>Created At</th>
-            <th>Updated At</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <?php if(!$admins): ?>
+        <?php if(!$configs): ?>
             <tr>
                 <td colspan="17">No records found.</td>
             </tr>
             <?php else: ?>
-                <?php foreach($admins as $admin): ?>
+                <?php foreach($configs as $config): ?>
                     <tr>
                         <td>
-                            <?php echo $admin['id']; ?>
+                            <?php echo $config->configId; ?>
                         </td>
                         <td>
-                            <?php echo $admin['firstName']; ?>
+                            <?php echo $config->name; ?>
                         </td>
                         <td>
-                            <?php echo $admin['lastName']; ?>
+                            <?php echo $config->code; ?>
                         </td>
                         <td>
-                            <?php echo $admin['email']; ?>
+                            <?php echo $config->value; ?>
                         </td>
                         <td>
-                            <?php echo $admin['status']; ?>
+                            <?php echo $config->status; ?>
                         </td>
                         <td>
-                            <?php echo $admin['createdAt']; ?>
+                            <?php echo $config->createdAt; ?>
                         </td>
-                        <td>
-                            <?php echo $admin['updatedAt']; ?>
-                        </td>
-                        <td><a href="<?php echo $urlAction->getUrl('edit','admin',['id' =>  $admin['id']],true) ?>">Edit</a></td>
-                        <td><a href="<?php echo $urlAction->getUrl('delete','admin',['id' =>  $admin['id']],true) ?>">Delete</a></td>
+                        <td><a href="<?php echo$urlAction->getUrl('edit','config',['configId' =>  $config->configId],true) ?>">Edit</a></td>
+                        <td><a href="<?php echo$urlAction->getUrl('delete','config',['configId' =>  $config->configId],true) ?>">Delete</a></td>
                     </tr>
                     <?php endforeach; ?>
                         <?php endif; ?>
