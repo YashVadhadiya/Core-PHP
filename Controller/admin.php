@@ -11,8 +11,7 @@ class Controller_Admin extends Controller_Core_Action
 
     protected function saveAdmin()
     {
-        $adminModel = Ccc::getModel('Admin_Resource');
-        $admin = $adminModel->getRow();
+        $admin = Ccc::getModel('Admin');
         $date = date("Y-m-d H:i:s");
         $getSaveData = $this->getRequest()->getRequest("admin");
 
@@ -24,11 +23,11 @@ class Controller_Admin extends Controller_Core_Action
             $admin->password = $getSaveData["password"];
             $admin->status = $getSaveData["status"];
             $result = $admin->save();
-            //return $result;
         }
         else
         {
-            $admin = $adminModel->load($getSaveData['id']);
+            $admin->load($getSaveData['id']);
+            $admin->id = $getSaveData['id'];
             $admin->firstName = $getSaveData["firstName"];
             $admin->lastName = $getSaveData["lastName"];
             $admin->email = $getSaveData["email"];
@@ -36,35 +35,12 @@ class Controller_Admin extends Controller_Core_Action
             $admin->status = $getSaveData["status"];
             $admin->updatedAt = $date;
             $result = $admin->save();
-            //return $getSaveData['id'];
         }
-
-        
-        /*if (!isset($getSaveData)) 
-        {
-            throw new Exception("You can not insert data in admin.", 1);
-        }
-        if (!array_key_exists('id', $getSaveData)):
-            $result_admin_insert = $adminModel->insert(["firstName" => $firstName,"lastName" => $lastName, "email" => $email,"password" => $password,"status" => $status]);
-
-            if (!$result_admin_insert):
-                throw new Exception("Data is not inserted in admin.",1);
-            endif;
-            return $result_admin_insert;
-        else:
-            $result_admin_update = $adminModel->update(["firstName" => $firstName,"lastName" => $lastName,"email" => $email,"password" => $password,"status" => $status,"updatedAt" => $date],["id" => $id]);
-        
-            if (!$result_admin_update) 
-            {
-                throw new Exception("Data is not updated in admin.", 1);
-            }
-            return $id;
-        endif;*/
     }
 
     public function saveAction()
     {
-        $adminModel = Ccc::getModel('Admin_Resource');
+        $admin = Ccc::getModel('Admin');
     
         try
         {
@@ -92,14 +68,14 @@ class Controller_Admin extends Controller_Core_Action
                 throw new Exception("Edit is not working", 1);
             }
             
-            $adminModel = Ccc::getModel("Admin_Resource");
-            $admin = $adminModel->fetchRow("SELECT * FROM admin WHERE id = $id");
+            $id = Ccc::getModel("Admin")->load($id);
+            //$admin->fetchRow("SELECT * FROM admin WHERE id = $id");
             
-            if (!$admin) {
+            if (!$id) {
                 throw new Exception("This is not admin Id", 1);
             }
             
-            Ccc::getBlock("Admin_Edit")->addData("admin", $admin)->toHtml();
+            Ccc::getBlock("Admin_Edit")->addData("admin", $id)->toHtml();
         }
         catch (Exception $e) {
             echo $e->getMessage();
@@ -108,10 +84,9 @@ class Controller_Admin extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $adminModel = Ccc::getModel("Admin_Resource");
         $getDelete = $this->getRequest()->getRequest("id");
-        $id = $getDelete;
-        $result = $adminModel->delete(["id" => $id]);
+        $admin = Ccc::getModel("Admin")->load($getDelete);
+        $result = $admin->delete();
     
         if ($result)
         {

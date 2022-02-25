@@ -11,7 +11,7 @@
 
 <body>
     <!-- this is nav bar code -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"> <a class="navbar-brand" href="index.php?c=admin&a=grid">Admin</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"> <a class="navbar-brand" href="<?php echo $urlAction->getUrl('grid','admin',null,true) ?>">Admin</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
@@ -52,28 +52,28 @@
                 <?php foreach($admins as $admin): ?>
                     <tr>
                         <td>
-                            <?php echo $admin['id']; ?>
+                            <?php echo $admin->id; ?>
                         </td>
                         <td>
-                            <?php echo $admin['firstName']; ?>
+                            <?php echo $admin->firstName; ?>
                         </td>
                         <td>
-                            <?php echo $admin['lastName']; ?>
+                            <?php echo $admin->lastName; ?>
                         </td>
                         <td>
-                            <?php echo $admin['email']; ?>
+                            <?php echo $admin->email; ?>
                         </td>
                         <td>
-                            <?php echo $admin['status']; ?>
+                            <?php echo $admin->status; ?>
                         </td>
                         <td>
-                            <?php echo $admin['createdAt']; ?>
+                            <?php echo $admin->createdAt; ?>
                         </td>
                         <td>
-                            <?php echo $admin['updatedAt']; ?>
+                            <?php echo $admin->updatedAt; ?>
                         </td>
-                        <td><a href="<?php echo $urlAction->getUrl('edit','admin',['id' =>  $admin['id']],true) ?>">Edit</a></td>
-                        <td><a href="<?php echo $urlAction->getUrl('delete','admin',['id' =>  $admin['id']],true) ?>">Delete</a></td>
+                        <td><a href="<?php echo $urlAction->getUrl('edit','admin',['id' =>  $admin->id],true) ?>">Edit</a></td>
+                        <td><a href="<?php echo $urlAction->getUrl('delete','admin',['id' =>  $admin->id],true) ?>">Delete</a></td>
                     </tr>
                     <?php endforeach; ?>
                         <?php endif; ?>

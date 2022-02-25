@@ -26,7 +26,6 @@ class Controller_Config extends Controller_Core_Action
         }
         else
         {
-
             $config->load($getSaveData['configId']);
             $config->configId = $getSaveData["configId"];
             $config->name = $getSaveData["name"];
@@ -67,7 +66,6 @@ class Controller_Config extends Controller_Core_Action
                 throw new Exception("Edit is not working", 1);
             }
             $config = Ccc::getModel("Config")->load($configId);
-            //$config->fetchRow("SELECT * FROM config WHERE configId = $configId");
             
             if (!$config) {
                 throw new Exception("This is not config Id", 1);
@@ -83,8 +81,6 @@ class Controller_Config extends Controller_Core_Action
     {
         $getDelete = $this->getRequest()->getRequest("configId");
         $config = Ccc::getModel("Config")->load($getDelete);
-        //$config;
-       
         $result = $config->delete();
     
         if ($result)

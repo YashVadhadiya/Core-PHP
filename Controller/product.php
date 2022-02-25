@@ -12,20 +12,9 @@ class Controller_Product extends Controller_Core_Action
 
     public function saveAction()
     {
-        $productModel = Ccc::getModel('Product_Resource');
-        $product = $productModel->getRow();
+        $product = Ccc::getModel('Product');
         $date = date("Y-m-d H:i:s");
         $getSaveData = $this->getRequest()->getRequest("product");
-        /*$productModel = Ccc::getModel('Product_Resource');
-        $getSaveData = $this->getRequest()->getRequest("product");
-        $date = date("Y-m-d H:i:s");
-        $id = $getSaveData["id"];
-        $name = $getSaveData["name"];
-        $status = $getSaveData["status"];
-        $price = $getSaveData["price"];
-        $quantity = $getSaveData["quantity"];
-        $createdAt = $date;
-        $updatedAt = $date;*/
 
         try
         {
@@ -40,7 +29,6 @@ class Controller_Product extends Controller_Core_Action
                 $product->price = $getSaveData['price'];
                 $product->quantity = $getSaveData['quantity'];
                 $result = $product->save();
-                /*$result = $productModel->insert(["name" => $name, "status" => $status, "price" => $price, "quantity" => $quantity, "createdAt" => $createdAt]);*/
 
                 if (!$result) 
                 {
@@ -53,16 +41,14 @@ class Controller_Product extends Controller_Core_Action
             } 
             else 
             {
-                $product = $productModel->load($getSaveData['id']);
+                $product->load($getSaveData['id']);
+                $product->id = $getSaveData['id'];
                 $product->name = $getSaveData['name'];
                 $product->status = $getSaveData['status'];
                 $product->price = $getSaveData['price'];
                 $product->quantity = $getSaveData['quantity'];
                 $product->updatedAt = $date;
                 $result = $product->save();
-                //return $getSaveData['id'];
-                /*$result = $productModel->update(
-                    ["name" => $name,"status" => $status,"price" => $price,"quantity" => $quantity,"updatedAt" => $updatedAt],["id" => $id]);*/
 
                 if (!$result) 
                 {
@@ -92,10 +78,8 @@ class Controller_Product extends Controller_Core_Action
             if (!$id) {
                 throw new Exception("Error Processing Request", 1);
             }
-            $productModel = Ccc::getModel('Product_Resource');
-            $product = $productModel->fetchRow(
-                "SELECT * FROM product WHERE id = $id"
-            );
+            $product = Ccc::getModel('Product')->load($id);
+            //$product = $product->fetchRow("SELECT * FROM product WHERE id = $id");
             if (!$product) {
                 throw new Exception("Error Processing Request", 1);
             }
@@ -109,10 +93,9 @@ class Controller_Product extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $productModel = Ccc::getModel('Product_Resource');
-        $getDeleteData = $this->getRequest()->getRequest("id");
-        $id = $getDeleteData;
-        $result = $productModel->delete(["id" => $id]);
+        $getDelete = $this->getRequest()->getRequest("id");
+        $product = Ccc::getModel('Product')->load($getDelete);
+        $result = $product->delete();
         var_dump($result);
         if ($result) 
         {

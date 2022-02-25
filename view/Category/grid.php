@@ -51,16 +51,16 @@
         <?php else: ?>
         <?php foreach($categories as $category): ?>
         <tr>
-            <td><?php echo $category['categoryId']; ?></td>
+            <td><?php echo $category->categoryId; ?></td>
 
-            <td><?php $pathReturn =  $getCategoryWithPath; echo $pathReturn[$category['categoryId']]; ?>
+            <td><?php $pathReturn =  $getCategoryWithPath; echo $pathReturn[$category->categoryId]; ?>
             </td>
 
-            <td><?php echo $category['status']; ?></td>
-            <td><?php echo $category['createdAt']?></td>
-            <td><?php echo $category['updatedAt']?></td>
-            <td><a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category['categoryId']],true) ?>">Edit</a>
-                <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category['categoryId']],true) ?>">Delete</a>
+            <td><?php echo $category->status; ?></td>
+            <td><?php echo $category->createdAt?></td>
+            <td><?php echo $category->updatedAt?></td>
+            <td><a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],true) ?>">Edit</a>
+                <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category->categoryId],true) ?>">Delete</a>
             </td>
         </tr>
         <?php endforeach; ?>

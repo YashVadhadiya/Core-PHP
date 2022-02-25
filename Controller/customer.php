@@ -11,8 +11,7 @@ class Controller_Customer extends Controller_Core_Action
 
     protected function saveCustomer()
     {
-        $customerModel = Ccc::getModel('Customer_Resource');
-        $customer = $customerModel->getRow();
+        $customer = Ccc::getModel('Customer');
         $getSaveData = $this->getRequest()->getRequest('customer');
         $date = date('Y-m-d H:i:s');
         if(!array_key_exists('id',$getSaveData))
@@ -27,7 +26,8 @@ class Controller_Customer extends Controller_Core_Action
         }
         else
         {
-                $customer = $customerModel->load($getSaveData['id']);
+                $customer->load($getSaveData['id']);
+                $customer->id = $getSaveData['id'];
                 $customer->firstName = $getSaveData['firstName'];
                 $customer->lastName = $getSaveData['lastName'];
                 $customer->email = $getSaveData['email'];
@@ -35,16 +35,14 @@ class Controller_Customer extends Controller_Core_Action
                 $customer->status = $getSaveData['status'];
                 $customer->updatedAt = $date;
                 $result = $customer->save();
-                return $getSaveData['id'];
+                //return $getSaveData['id'];
         }
     }
     
     protected function saveAddress($customerId)
     {
-        $addressModel = Ccc::getModel('Customer_Address_Resource');
-        $address = $addressModel->getRow();
-        date_default_timezone_set("Asia/Kolkata");
         $getSaveData = $this->getRequest()->getRequest('address');
+        $address = Ccc::getModel('Customer_Address');
         $date = date('Y-m-d H:i:s');
         
         $billing = 0;
@@ -58,7 +56,7 @@ class Controller_Customer extends Controller_Core_Action
             $shipping = 1;
         }
 
-        $addressData = $addressModel->fetchRow("SELECT * FROM address WHERE customerId = '$customerId'");
+        $addressData = $address->fetchRow("SELECT * FROM address WHERE customerId = '$customerId'");
 
 
         if (!$addressData):
@@ -69,8 +67,8 @@ class Controller_Customer extends Controller_Core_Action
             $address->state = $getSaveData['state'];
             $address->country = $getSaveData['country'];
             $address->postalCode = $getSaveData['postalCode'];
-            $address->billing = $getSaveData['billing'];
-            $address->shipping = $getSaveData['shipping'];
+            $address->billing = $billing;
+            $address->shipping = $shipping;
             $result = $address->save();
 
             if (!$result):
@@ -78,15 +76,16 @@ class Controller_Customer extends Controller_Core_Action
             endif;
         else:
 
-            $address = $addressModel->load($getSaveData['id']);
+            $address->load($getSaveData['id']);
             $address->customerId = $customerId;
+            $address->addressId = $getSaveData['addressId'];
             $address->address = $getSaveData['address'];
             $address->city = $getSaveData['city'];
             $address->state = $getSaveData['state'];
             $address->country = $getSaveData['country'];
             $address->postalCode = $getSaveData['postalCode'];
-            $address->billing = $getSaveData['billing'];
-            $address->shipping = $getSaveData['shipping'];
+            $address->billing = $billing;
+            $address->shipping = $shipping;
             $result = $address->save();
 
             if (!$result):
@@ -123,9 +122,9 @@ class Controller_Customer extends Controller_Core_Action
             {
                 throw new Exception("Error Processing Request", 1);
             }
-            $customerModel = Ccc::getModel("Customer_Resource");
-            $customer = $customerModel->fetchRow("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId WHERE c.id = $id");
-            
+            $customer = Ccc::getModel("Customer")->load($id);
+            $customer = $customer->fetchRow("select c.*,a.* from customer c join address a on a.customerId = c.id WHERE c.id = $id");
+
             if (!$customer) {
                 throw new Exception("Error Processing Request", 1);
             }
@@ -140,11 +139,10 @@ class Controller_Customer extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $addressModel = Ccc::getModel("Customer_Address_Resource");
-        $customerModel = Ccc::getModel("Customer_Resource");
-        $getUpdateData = $this->getRequest()->getRequest("id");
-        $id = $getUpdateData;
-        $result = $customerModel->delete(["id" => $id]);
+        $getDelete = $this->getRequest()->getRequest("id");
+        $address = Ccc::getModel("Customer_Address")->load($getDelete);
+        $customer = Ccc::getModel("Customer")->load($getDelete);
+        $result = $customer->delete();
         if ($result) {
             $this->redirect($this->getUrl("grid", "customer", null, true));
         }

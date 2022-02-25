@@ -42,6 +42,7 @@
 			<th>Created At</th>
 			<th>Updated At</th>
 			<th>Action</th>
+			<th>Media</th>
 		</tr>
 		<?php if(!$products): ?>
 			<tr>
@@ -50,17 +51,22 @@
 		<?php else: ?>
 			<?php foreach($products as $product): ?>
 				<tr>
-					<td><?php echo $product['id']; ?></td>
-					<td><?php echo $product['name']; ?></td>
-					<td><?php echo $product['price']; ?></td>
-					<td><?php echo $product['quantity']; ?></td>
-					<td><?php echo $product['status']; ?></td>
-					<td><?php echo $product['createdAt']?></td>
-					<td><?php echo $product['updatedAt']?></td>
+					<td><?php echo $product->id; ?></td>
+					<td><?php echo $product->name; ?></td>
+					<td><?php echo $product->price; ?></td>
+					<td><?php echo $product->quantity; ?></td>
+					<td><?php echo $product->status; ?></td>
+					<td><?php echo $product->createdAt?></td>
+					<td><?php echo $product->updatedAt?></td>
 					
-					<td><a href="<?php echo$urlAction->getUrl('edit','product',['id' =>  $product['id']],true) ?>">Edit</a> 
-						<a href="<?php echo$urlAction->getUrl('delete','product',['id' =>  $product['id']],true) ?>">Delete</a></td>
-					</tr>
+					<td><a href="<?php echo$urlAction->getUrl('edit','product',['id' =>  $product->id],true) ?>">Edit</a> 
+						<a href="<?php echo$urlAction->getUrl('delete','product',['id' =>  $product->id],true) ?>">Delete</a></td>
+					<td><a href="<?php echo$urlAction->getUrl('grid','product_media',['id' =>  $product->id],true) ?>">Media</a></td>
+
+					<!-- <td>
+					<a href="<?php //echo$urlAction->getUrl('grid','product_media',['id' =>  $product_media->id],true) ?>">Media</a>	
+					</td> -->
+				</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</table>

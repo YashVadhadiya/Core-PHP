@@ -37,7 +37,6 @@
             <th>Name</th>
             <th>Code</th>
             <th>Value</th>
-            <!-- <th>Password</th> -->
             <th>Status</th>
             <th>Created At</th>
             <th>Edit</th>
