@@ -35,7 +35,7 @@ class Controller_Customer extends Controller_Core_Action
                 $customer->status = $getSaveData['status'];
                 $customer->updatedAt = $date;
                 $result = $customer->save();
-                //return $getSaveData['id'];
+                return $getSaveData['id'];
         }
     }
     
@@ -60,32 +60,29 @@ class Controller_Customer extends Controller_Core_Action
 
 
         if (!$addressData):
-            
-            $address->customerId = $customerId;
+            $E = $address->customerId = $customerId;
+            /*var_dump($E);
+            die;*/
             $address->address = $getSaveData['address'];
             $address->city = $getSaveData['city'];
             $address->state = $getSaveData['state'];
             $address->country = $getSaveData['country'];
             $address->postalCode = $getSaveData['postalCode'];
-            $address->billing = $billing;
-            $address->shipping = $shipping;
+            $address->billing = $getSaveData['billing'];
+            $address->shipping = $getSaveData['shipping'];
             $result = $address->save();
 
-            if (!$result):
-                throw new Exception("System is unable to insert address info.",1);
-            endif;
         else:
-
             $address->load($getSaveData['id']);
             $address->customerId = $customerId;
-            $address->addressId = $getSaveData['addressId'];
+            $address->addressId = $getSaveData['id'];
             $address->address = $getSaveData['address'];
             $address->city = $getSaveData['city'];
             $address->state = $getSaveData['state'];
             $address->country = $getSaveData['country'];
             $address->postalCode = $getSaveData['postalCode'];
-            $address->billing = $billing;
-            $address->shipping = $shipping;
+            $address->billing = $getSaveData['billing'];
+            $address->shipping = $getSaveData['shipping'];
             $result = $address->save();
 
             if (!$result):
