@@ -41,6 +41,9 @@
 			<th>Status</th>
 			<th>Created At</th>
 			<th>Updated At</th>
+			<th>Base</th>
+			<th>Thumb</th>
+			<th>Small</th>
 			<th>Action</th>
 			<th>Media</th>
 		</tr>
@@ -59,13 +62,14 @@
 					<td><?php echo $product->createdAt?></td>
 					<td><?php echo $product->updatedAt?></td>
 					
+					<td><?php echo $product->baseImage ?></td>
+		    		<td><?php echo $product->thumbImage ?></td>
+		    		<td><?php echo $product->smallImage ?></td>
+
+					
 					<td><a href="<?php echo$urlAction->getUrl('edit','product',['id' =>  $product->id],true) ?>">Edit</a> 
 						<a href="<?php echo$urlAction->getUrl('delete','product',['id' =>  $product->id],true) ?>">Delete</a></td>
 					<td><a href="<?php echo$urlAction->getUrl('grid','product_media',['id' =>  $product->id],true) ?>">Media</a></td>
-
-					<!-- <td>
-					<a href="<?php //echo$urlAction->getUrl('grid','product_media',['id' =>  $product_media->id],true) ?>">Media</a>	
-					</td> -->
 				</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>

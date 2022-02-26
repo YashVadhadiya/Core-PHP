@@ -62,6 +62,7 @@
             <td><a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],true) ?>">Edit</a>
                 <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category->categoryId],true) ?>">Delete</a>
             </td>
+            <td><a href="<?php echo$urlAction->getUrl('grid','category_media',['categoryId' =>  $category->categoryId],true) ?>">Media</a></td>
         </tr>
         <?php endforeach; ?>
         <?php endif; ?>
