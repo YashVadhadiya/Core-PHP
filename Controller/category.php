@@ -30,7 +30,7 @@ class Controller_Category extends Controller_Core_Action
             $createdAt = $date;
             $updatedAt = $date;
             
-            if (array_key_exists('categoryId', $getSaveData)) 
+            if (array_key_exists('categoryId', $getSaveData) && $getSaveData['categoryId'] != null) 
             {
                 if (!(int)$getSaveData['categoryId']) 
                 {
@@ -233,7 +233,9 @@ class Controller_Category extends Controller_Core_Action
 
     public function addAction()
     {
-        Ccc::getBlock('Category_Add')->toHtml();
+        $categoryId = Ccc::getModel("Category");
+        //Ccc::getBlock('Category_Add')->toHtml();
+        Ccc::getBlock('Category_Edit')->addData('category', $categoryId)->toHtml();
     }
 
     public function editAction()
