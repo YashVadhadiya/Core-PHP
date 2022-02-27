@@ -39,7 +39,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>password</td>
+					<td>Password</td>
 					<td>
 						<input type="password" name="admin[password]" value="<?php echo $admin->password; ?>">
 					</td>
@@ -48,17 +48,25 @@
 					<td>Status</td>
 					<td>
 						<select name="admin[status]">
-							<option value="1" <?php if($admin->status==1 ): ?> selected = "selected"
-								<?php endif; ?>>Active</option>
-							<option value="2" <?php if($admin->status==2 ): ?> selected = "selected"
-								<?php endif; ?>>Inactive</option>
+							<?php if($admin->status == 2): ?>
+				              <option value='2'>InActive</option>
+				              <option value='1'>Active</option>
+				          	<?php else: ?>
+				              <option value='1'>Active</option>
+				              <option value='2'>InActive</option>
+				          	<?php endif;?>
+				          	
+							<!-- <option value="1" <?php //if($admin->status==1 ): ?> selected = "selected"
+								<?php //endif; ?>>Active</option>
+							<option value="2" <?php //if($admin->status==2 ): ?> selected = "selected"
+								<?php //endif; ?>>Inactive</option> -->
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" value="Edit" name="edit">
+						<input type="submit" value="Save" name="edit">
 						<button type="button"><a href="<?php echo $urlAction->getUrl('grid','admin',null,true) ?>">Cancel</a></button>
 					</td>
 				</tr>

@@ -26,7 +26,7 @@ class Model_Core_Row
         return $this->tableClassName;
     }
 
-    public function setResourceClassName($tableClassName)
+    public function setTableClassName($tableClassName)
     {
         $this->tableClassName = $tableClassName;
         return $this;   

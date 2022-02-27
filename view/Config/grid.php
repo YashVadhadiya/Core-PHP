@@ -62,7 +62,7 @@
                             <?php echo $config->value; ?>
                         </td>
                         <td>
-                            <?php echo $config->status; ?>
+                            <?php echo $config->getStatus($config->status); ?>
                         </td>
                         <td>
                             <?php echo $config->createdAt; ?>

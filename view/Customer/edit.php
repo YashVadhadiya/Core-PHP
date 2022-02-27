@@ -75,8 +75,13 @@
 				<td >Status</td>
 				<td>
 					<select name="customer[status]">
-						<option value="1" <?php if($customer->status == 1): ?> selected = "selected" <?php endif; ?>>Active</option>
-                        <option value="2" <?php if($customer->status == 2): ?> selected = "selected" <?php endif; ?>>Inactive</option>
+						<?php if($customer->status == 2): ?>
+				              <option value='2'>InActive</option>
+				              <option value='1'>Active</option>
+				          	<?php else: ?>
+				              <option value='1'>Active</option>
+				              <option value='2'>InActive</option>
+				          	<?php endif;?>
 					</select>
 				</td>
 			</tr>

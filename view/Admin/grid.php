@@ -37,7 +37,6 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <!-- <th>Password</th> -->
             <th>Status</th>
             <th>Created At</th>
             <th>Updated At</th>
@@ -63,9 +62,11 @@
                         <td>
                             <?php echo $admin->email; ?>
                         </td>
+                        
                         <td>
-                            <?php echo $admin->status; ?>
+                            <?php echo $admin->getStatus($admin->status); ?>
                         </td>
+
                         <td>
                             <?php echo $admin->createdAt; ?>
                         </td>

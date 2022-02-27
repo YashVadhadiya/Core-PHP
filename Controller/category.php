@@ -11,6 +11,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function saveAction()
     {
+        $category = Ccc::getModel('Category');
         try 
         {
             if (!$this->getRequest()->getRequest('category')) 
@@ -18,9 +19,8 @@ class Controller_Category extends Controller_Core_Action
                 throw new Exception("Error Processing Request in getRequest category.", 1);
             }
             //$adapter = new Model_Core_Adapter();
-            $category = Ccc::getModel('Category');
             $date = date('Y-m-d H:i:s');
-            $getSaveData = $this->getRequest()->getPost('category');
+            $getSaveData = $this->getRequest()->getRequest('category');
             //$category = $category->getRow();
 
             $categoryId = $getSaveData['categoryId'];
@@ -145,6 +145,7 @@ class Controller_Category extends Controller_Core_Action
     {
         $category = Ccc::getModel('Category');
         //$adapter = new Model_Core_Adapter();
+        $idpath = [];
         $query = "SELECT categoryId, categoryName FROM category";
         $idLable = $this->getAdapter()->fetchPairs($query);
       
@@ -159,8 +160,8 @@ class Controller_Category extends Controller_Core_Action
             $excludePath = $excludePath . '/%';
             $query2 = "SELECT categoryId,path FROM category WHERE categoryId <> '$categoryId' AND path NOT LIKE('$excludePath') ORDER BY path";  
         }
-        $idpath = $this->getAdapter()->fetchPairs($query2);
-        foreach ($idpath as $categoryId => $path) 
+        $idpath1 = $this->getAdapter()->fetchPairs($query2);
+        foreach ($idpath1 as $categoryId => $path) 
         {
             $idArray = explode("/", $path);
             $temp = [];
@@ -181,7 +182,6 @@ class Controller_Category extends Controller_Core_Action
     public function updatePathIntoCategory($categoryId, $parentId)
     {
         $category = Ccc::getModel('Category');
-        //$adapter = new Model_Core_Adapter();
         $query = "SELECT path FROM category WHERE categoryId = '$categoryId'";
         $result = $this->getAdapter()->fetchOne($query);
         
@@ -195,36 +195,38 @@ class Controller_Category extends Controller_Core_Action
         {
             $newPath = $path . '/' . $categoryId;           
         }
-        
+
         $category->load($categoryId);
         $category->categoryId = $categoryId;
         $category->path = $newPath;
         $updatePath = $category->save();
-        
-        $categories = $this->getAdapter()->fetchAll("SELECT * FROM category WHERE path LIKE('$output') ORDER BY path");
+
+        $query = "SELECT * FROM category WHERE path LIKE('$output') ORDER BY path";
+        //print_r($query);
+
+        $categories = $category->fetchAll($query);
         if(!$categories) 
         { 
-            $this->redirect($this->getUrl('grid', 'category', null, true));
-            //echo 'No others paths found....';
+            $this->redirect($this->getUrl('grid','category',null,true));
+            echo 'No others paths found....';
         }
-        else 
+        else
         {
             foreach ($categories as $categoryId => $category) 
             {
                 $res = $category->getData();
                 $parentId = $res['parentId'];
                 $categoryId = $res['categoryId'];
-
                 $newParentId = $parentId;
                 $newCategoryId = $categoryId;
-                $getParentPath = $this->getAdapter()->fetchOne("SELECT path FROM category WHERE categoryId ='$newParentId'");
+                $getParentPath = $this->getAdapter()->fetchOne("SELECT path FROM category WHERE categoryId='$newParentId'");
                 $updatedPath = $getParentPath . '/' . $categoryId;
-
+                
                 $category->load($newCategoryId);
                 $category->categoryId = $newCategoryId;
                 $category->path = $updatedPath;
                 $updateResult = $category->save();
-                //return $updateResult;
+
             }
         }
     }

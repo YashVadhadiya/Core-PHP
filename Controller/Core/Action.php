@@ -41,8 +41,8 @@ class Controller_Core_Action
 
     public function getAdapter()
     {
-        global $adapter;
-        return $this->adapter;
+        $adapter = new Model_Core_Adapter();
+        return $adapter;
     }
 
     public function getUrl($action = null, $controller = null, array $parameters = null, $reset = false) 

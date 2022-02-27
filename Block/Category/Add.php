@@ -1,6 +1,6 @@
 <?php 
 
-Ccc::loadClass('Block_Core_Template');
+/*Ccc::loadClass('Block_Core_Template');
 class Block_Category_Add extends Block_Core_Template
 {
 	public function __construct()
@@ -16,6 +16,6 @@ class Block_Category_Add extends Block_Core_Template
 		return $categoryPath;
 	}
 
-}
+}*/
 
 ?>

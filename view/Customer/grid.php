@@ -64,7 +64,7 @@
                     <td><?php echo $customer->lastName; ?></td>
                     <td><?php echo $customer->email; ?></td>
                     <td><?php echo $customer->phone; ?></td>
-                    <td><?php echo $customer->status; ?></td>
+                    <td><?php echo $customer->getStatus($customer->status); ?></td>
                     <td><?php echo $customer->createdAt; ?></td>
                     <td><?php echo $customer->updatedAt; ?></td>
                     <td><?php echo $customer->addressId; ?></td>
