@@ -17,7 +17,7 @@ class Controller_Category extends Controller_Core_Action
             {
                 throw new Exception("Error Processing Request in getRequest category.", 1);
             }
-            $adapter = new Model_Core_Adapter();
+            //$adapter = new Model_Core_Adapter();
             $category = Ccc::getModel('Category');
             $date = date('Y-m-d H:i:s');
             $getSaveData = $this->getRequest()->getPost('category');
@@ -115,7 +115,7 @@ class Controller_Category extends Controller_Core_Action
                     else 
                     {
                         $query = "SELECT path FROM category WHERE categoryId = '$parentId'";
-                        $result = $adapter->fetchOne($query);
+                        $result = $this->getAdapter()->fetchOne($query);
                         $output = $result .'/'. $resultParentId;
 
                         $category->load($resultParentId);
@@ -144,9 +144,9 @@ class Controller_Category extends Controller_Core_Action
     public function getCategoryWithPath()
     {
         $category = Ccc::getModel('Category');
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $query = "SELECT categoryId, categoryName FROM category";
-        $idLable = $adapter->fetchPairs($query);
+        $idLable = $this->getAdapter()->fetchPairs($query);
       
         if (!$this->getRequest()->getRequest('categoryId')) 
         {
@@ -155,11 +155,11 @@ class Controller_Category extends Controller_Core_Action
         else 
         {
             $categoryId = $this->getRequest()->getRequest('categoryId');
-            $excludePath = $adapter->fetchOne("SELECT path FROM category WHERE categoryId = '$categoryId'");
+            $excludePath = $this->getAdapter()->fetchOne("SELECT path FROM category WHERE categoryId = '$categoryId'");
             $excludePath = $excludePath . '/%';
             $query2 = "SELECT categoryId,path FROM category WHERE categoryId <> '$categoryId' AND path NOT LIKE('$excludePath') ORDER BY path";  
         }
-        $idpath = $adapter->fetchPairs($query2);
+        $idpath = $this->getAdapter()->fetchPairs($query2);
         foreach ($idpath as $categoryId => $path) 
         {
             $idArray = explode("/", $path);
@@ -181,12 +181,12 @@ class Controller_Category extends Controller_Core_Action
     public function updatePathIntoCategory($categoryId, $parentId)
     {
         $category = Ccc::getModel('Category');
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $query = "SELECT path FROM category WHERE categoryId = '$categoryId'";
-        $result = $adapter->fetchOne($query);
+        $result = $this->getAdapter()->fetchOne($query);
         
         $output = $result . '/%';
-        $path = $adapter->fetchOne("SELECT path FROM category WHERE categoryId = '$parentId'");
+        $path = $this->getAdapter()->fetchOne("SELECT path FROM category WHERE categoryId = '$parentId'");
         if (!$path) 
         {
             $newPath = $categoryId; 
@@ -201,7 +201,7 @@ class Controller_Category extends Controller_Core_Action
         $category->path = $newPath;
         $updatePath = $category->save();
         
-        $categories = $adapter->fetchAll("SELECT * FROM category WHERE path LIKE('$output') ORDER BY path");
+        $categories = $this->getAdapter()->fetchAll("SELECT * FROM category WHERE path LIKE('$output') ORDER BY path");
         if(!$categories) 
         { 
             $this->redirect($this->getUrl('grid', 'category', null, true));
@@ -217,7 +217,7 @@ class Controller_Category extends Controller_Core_Action
 
                 $newParentId = $parentId;
                 $newCategoryId = $categoryId;
-                $getParentPath = $adapter->fetchOne("SELECT path FROM category WHERE categoryId ='$newParentId'");
+                $getParentPath = $this->getAdapter()->fetchOne("SELECT path FROM category WHERE categoryId ='$newParentId'");
                 $updatedPath = $getParentPath . '/' . $categoryId;
 
                 $category->load($newCategoryId);

@@ -12,7 +12,7 @@ class Controller_Product_Media extends Controller_Core_Action
 
     public function saveAction()
     {
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         try {
             $request = $this->getRequest();
             $productId = $request->getRequest("id");
@@ -35,17 +35,17 @@ class Controller_Product_Media extends Controller_Core_Action
                 $removeIdsImplode = implode(",", $removeIds);
 
                 $query = "DELETE FROM `product_media` WHERE imageId IN($removeIdsImplode)";
-                $result = $adapter->delete($query);
+                $result = $this->getAdapter()->delete($query);
             }
 
             $query = "SELECT imageId, productId FROM `product_media` WHERE productId = $productId";
-            $result = $adapter->fetchPairs($query);
+            $result = $this->getAdapter()->fetchPairs($query);
             $ids = array_keys($result);
             $implodeIds = implode(",", $ids);
 
             $query = "UPDATE `product_media` SET status = 0, thumb = 0, base = 0, small = 0 , gallery = 0 WHERE imageId IN ($implodeIds)";
 
-            $result = $adapter->update($query);
+            $result = $this->getAdapter()->update($query);
 
             $status = $rows["media"]["status"];
             if (array_key_exists("status", $media)) 
@@ -57,7 +57,7 @@ class Controller_Product_Media extends Controller_Core_Action
                 }
                 $statusIdsImplode = implode(",", $statusIds);
                 $query = "UPDATE `product_media` SET `status`= 1 WHERE imageId IN($statusIdsImplode)";
-                $result = $adapter->update($query);
+                $result = $this->getAdapter()->update($query);
 
             }
 
@@ -73,7 +73,7 @@ class Controller_Product_Media extends Controller_Core_Action
                 $galleryIdsImplode = implode(",", $galleryIds);
                 $query = "UPDATE `product_media` SET `gallery`= 1 WHERE imageId IN($galleryIdsImplode)";
 
-                $result = $adapter->update($query);
+                $result = $this->getAdapter()->update($query);
 
             }
 
@@ -81,7 +81,7 @@ class Controller_Product_Media extends Controller_Core_Action
             if (array_key_exists("base", $media)) 
             {
                 $query = "UPDATE `product_media` SET `base`= 1 WHERE imageId = {$base}";
-                $result = $adapter->update($query);
+                $result = $this->getAdapter()->update($query);
 
             }
 
@@ -89,7 +89,7 @@ class Controller_Product_Media extends Controller_Core_Action
             if (array_key_exists("thumb", $media)) 
             {
                 $query = "UPDATE `product_media` SET `thumb`= 1 WHERE imageId = {$thumb}";
-                $result = $adapter->update($query);
+                $result = $this->getAdapter()->update($query);
 
             }
 
@@ -97,7 +97,7 @@ class Controller_Product_Media extends Controller_Core_Action
             if (array_key_exists("small", $media)) 
             {
                 $query = "UPDATE `product_media` SET `small`= 1 WHERE imageId = {$small}";
-                $result = $adapter->update($query);
+                $result = $this->getAdapter()->update($query);
             }
 
             $this->redirect(
@@ -120,11 +120,11 @@ class Controller_Product_Media extends Controller_Core_Action
       
         if (move_uploaded_file($imageAddress,'C:\xampp-php\htdocs\Cybercom\Core-PHP\Media\Product/' .$imageName)) 
         {
-            $adapter = new Model_Core_Adapter();
+            //$adapter = new Model_Core_Adapter();
             $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
 
 
-            $result = $adapter->insert($query);
+            $result = $this->getAdapter()->insert($query);
 
             $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
 
