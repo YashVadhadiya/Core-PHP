@@ -22,7 +22,7 @@ class Controller_Product extends Controller_Core_Action
             {
             throw new Exception("You can not insert data in product.", 1);
             }
-            if (!array_key_exists('id', $getSaveData))
+            if (array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
             {
                 $product->name = $getSaveData['name'];
                 $product->status = $getSaveData['status'];
@@ -68,7 +68,9 @@ class Controller_Product extends Controller_Core_Action
 
     public function addAction()
     {
-        Ccc::getBlock("Product_Add")->toHtml();
+        $id = Ccc::getModel('Product'); //->load($id);
+        //Ccc::getBlock("Product_Add")->toHtml();
+        Ccc::getBlock("Product_Edit")->addData("product", $id)->toHtml();
     }
 
     public function editAction()
@@ -78,12 +80,12 @@ class Controller_Product extends Controller_Core_Action
             if (!$id) {
                 throw new Exception("Error Processing Request", 1);
             }
-            $product = Ccc::getModel('Product')->load($id);
+            $id = Ccc::getModel('Product')->load($id);
             //$product = $product->fetchRow("SELECT * FROM product WHERE id = $id");
-            if (!$product) {
+            if (!$id) {
                 throw new Exception("Error Processing Request", 1);
             }
-            Ccc::getBlock("Product_Edit")->addData("product", $product)->toHtml();
+            Ccc::getBlock("Product_Edit")->addData("product", $id)->toHtml();
         } 
         catch (Exception $e) 
         {

@@ -5,7 +5,7 @@ class Model_Category extends Model_Core_Row
 {
     public function __construct()
     {
-        $this->setTableClassName('Category_Resource');
+        $this->setResourceClassName('Category_Resource');
     }
 }
 

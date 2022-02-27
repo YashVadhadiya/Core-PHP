@@ -4,7 +4,7 @@ class Model_Product_Media extends Model_Core_Row
 {
 	public function __construct()
 	{
-		$this->setTableClassName('Product_Media_Resource');
+		$this->setResourceClassName('Product_Media_Resource');
 		parent::__construct();
 	}
 }

@@ -28,7 +28,7 @@ class Model_Core_View
             return $this->data;    
         }
         if(!array_key_exists($key, $this->data)){
-            return null;
+            return $this;
         }
         return $this->data[$key];
     }

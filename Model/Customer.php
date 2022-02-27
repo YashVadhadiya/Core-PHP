@@ -4,7 +4,7 @@ class Model_Customer extends Model_Core_Row
 {
 	public function __construct()
 	{
-		$this->setTableClassName('Customer_Resource');
+		$this->setResourceClassName('Customer_Resource');
 	}
 }
 

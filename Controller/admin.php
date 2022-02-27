@@ -9,43 +9,58 @@ class Controller_Admin extends Controller_Core_Action
         Ccc::getBlock("Admin_Grid")->toHtml();
     }
 
-    protected function saveAdmin()
+    public function saveAction()
     {
         $admin = Ccc::getModel('Admin');
         $date = date("Y-m-d H:i:s");
         $getSaveData = $this->getRequest()->getRequest("admin");
-
-        if(!array_key_exists('id', $getSaveData))
-        {
-            $admin->firstName = $getSaveData["firstName"];
-            $admin->lastName = $getSaveData["lastName"];
-            $admin->email = $getSaveData["email"];
-            $admin->password = $getSaveData["password"];
-            $admin->status = $getSaveData["status"];
-            $result = $admin->save();
-        }
-        else
-        {
-            $admin->load($getSaveData['id']);
-            $admin->id = $getSaveData['id'];
-            $admin->firstName = $getSaveData["firstName"];
-            $admin->lastName = $getSaveData["lastName"];
-            $admin->email = $getSaveData["email"];
-            $admin->password = $getSaveData["password"];
-            $admin->status = $getSaveData["status"];
-            $admin->updatedAt = $date;
-            $result = $admin->save();
-        }
-    }
-
-    public function saveAction()
-    {
-        $admin = Ccc::getModel('Admin');
     
         try
         {
-            $id = $this->saveAdmin();
-            $this->redirect($this->getUrl("grid","admin",null,true));
+            if (!isset($getSaveData)) 
+            {
+            throw new Exception("You can not insert data in admin.", 1);
+            }
+
+            if(array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
+            {
+                $admin->firstName = $getSaveData["firstName"];
+                $admin->lastName = $getSaveData["lastName"];
+                $admin->email = $getSaveData["email"];
+                $admin->password = $getSaveData["password"];
+                $admin->status = $getSaveData["status"];
+                $result = $admin->save();
+
+                if (!$result) 
+                {
+                    throw new Exception("System is not able to insert", 1);
+                } 
+                else 
+                {
+                    $this->redirect($this->getUrl("grid", "admin", null, true));
+                }
+            }
+            else
+            {
+                $admin->load($getSaveData['id']);
+                $admin->id = $getSaveData['id'];
+                $admin->firstName = $getSaveData["firstName"];
+                $admin->lastName = $getSaveData["lastName"];
+                $admin->email = $getSaveData["email"];
+                $admin->password = $getSaveData["password"];
+                $admin->status = $getSaveData["status"];
+                $admin->updatedAt = $date;
+                $result = $admin->save();
+
+                if (!$result) 
+                {
+                    throw new Exception("System is not able to update", 1);
+                } 
+                else 
+                {
+                    $this->redirect($this->getUrl("grid", "admin", null, true));
+                }
+            }
         }
         catch (Exception $e) 
         {
@@ -55,7 +70,10 @@ class Controller_Admin extends Controller_Core_Action
 
     public function addAction()
     {
-        Ccc::getBlock("Admin_Add")->toHtml();
+        $id = Ccc::getModel("Admin");//->load($id);
+        //$id = (int) $this->getRequest()->getRequest("id");
+        //Ccc::getBlock("Admin_Add")->toHtml();
+        Ccc::getBlock("Admin_Edit")->addData("admin", $id)->toHtml();
     }
 
     public function editAction()

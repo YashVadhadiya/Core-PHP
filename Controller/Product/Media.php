@@ -111,18 +111,18 @@ class Controller_Product_Media extends Controller_Core_Action
 
     public function addAction()
     {
-        $productId = $_GET["id"];
-
-        $imageName1 = $_FILES["image"]["name"];
-        $imageAddress1 = $_FILES["image"]["tmp_name"];
-        $imageName = implode("", $imageName1);
-        $imageName = date("mjYhis") . "/" . $imageName;
-        $imageAddress = implode("", $imageAddress1);
-
+    $productId = $_GET['id'];
+    $imageName1 = $_FILES['image']['name'];
+    $imageAddress1 = $_FILES['image']['tmp_name'];
+    $imageName = implode("", $imageName1);
+    $imageName = date("mjYhis")."-".$imageName;
+    $imageAddress = implode("", $imageAddress1);
+      
         if (move_uploaded_file($imageAddress,'C:\xampp-php\htdocs\Cybercom\Core-PHP\Media\Product/' .$imageName)) 
         {
             $adapter = new Model_Core_Adapter();
             $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
+
 
             $result = $adapter->insert($query);
 

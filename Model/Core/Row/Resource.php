@@ -12,6 +12,12 @@ class Model_Core_Row_Resource
         
     }
 
+    public function getAdapter()
+    {
+        $adapter = new Model_Core_Adapter();
+        return $adapter;
+    }
+
     public function getRowClassName()
     {
         return $this->rowClassName;
@@ -55,29 +61,30 @@ class Model_Core_Row_Resource
         if(!$queryInsert){
             return false;
         }
-        $adapter = new Model_Core_Adapter();
+        
+        //$adapter = new Model_Core_Adapter();
         $key = '`'.implode("`,`", array_keys($queryInsert)).'`';
         $value = '\''.implode("','", array_values($queryInsert)).'\'';
 
         $sqlResult = "INSERT INTO `{$this->getTableName()}` ({$key}) VALUES ({$value});";
-        $result = $adapter->insert($sqlResult);
+        $result = $this->getAdapter()->insert($sqlResult);
         return $result;
     }
 
     public function delete(array $queryDelete)
     {
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
         $key = key($queryDelete);
         $value = $queryDelete[$key];
         $sqlResult = "DELETE FROM $tableName WHERE $key = $value;";
-        $result = $adapter->delete($sqlResult);
+        $result = $this->getAdapter()->delete($sqlResult);
         return $result;
     }
 
     public function update(array $queryUpdate, array $queryId)
     {
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $date = date("Y-m-d H:i:s");
         $set = [];
         $tableName = $this->getTableName();
@@ -91,23 +98,23 @@ class Model_Core_Row_Resource
         
         $sql1 = implode(",", $set);
         $update = "UPDATE $tableName SET $sql1 WHERE $key = $value;";
-        $result = $adapter->update($update);
+        $result = $this->getAdapter()->update($update);
         return $result;
     }
 
     public function fetchRow($queryFetchRow)
     {
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
-        $result = $adapter->fetchRow($queryFetchRow);
+        $result = $this->getAdapter()->fetchRow($queryFetchRow);
         return $result;
     }
 
     public function fetchAll($queryFetchAll)
     {
-        $adapter = new Model_Core_Adapter();
+        //$adapter = new Model_Core_Adapter();
         $tableName = $this->getTableName();
-        $result = $adapter->fetchAll($queryFetchAll);
+        $result = $this->getAdapter()->fetchAll($queryFetchAll);
         return $result;
     }
 }

@@ -42,7 +42,11 @@
             <th>Status</th>
             <th>Created At</th>
             <th>Updated At</th>
+            <th>Base</th>
+            <th>Thumb</th>
+            <th>Small</th>
             <th>Action</th>
+            <th>Media</th>
         </tr>
         <?php if(!$categories): ?>
         <tr>
@@ -59,6 +63,12 @@
             <td><?php echo $category->status; ?></td>
             <td><?php echo $category->createdAt?></td>
             <td><?php echo $category->updatedAt?></td>
+
+            <td><?php echo $category->baseImage ?></td>
+            <td><?php echo $category->thumbImage ?></td>
+            <td><?php echo $category->smallImage ?></td>
+
+
             <td><a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],true) ?>">Edit</a>
                 <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category->categoryId],true) ?>">Delete</a>
             </td>

@@ -13,7 +13,7 @@ class Controller_Category extends Controller_Core_Action
     {
         try 
         {
-            if (!$this->getRequest()->getPost('category')) 
+            if (!$this->getRequest()->getRequest('category')) 
             {
                 throw new Exception("Error Processing Request in getRequest category.", 1);
             }
@@ -23,6 +23,7 @@ class Controller_Category extends Controller_Core_Action
             $getSaveData = $this->getRequest()->getPost('category');
             //$category = $category->getRow();
 
+            $categoryId = $getSaveData['categoryId'];
             $categoryName = $getSaveData['categoryName'];
             $parentId = $getSaveData['parentId'];
             $status = $getSaveData['status'];
@@ -40,21 +41,26 @@ class Controller_Category extends Controller_Core_Action
                 if (!$parentId) 
                 {
                     $category->load($categoryId);
+                    $category->categoryId = $categoryId;
                     $category->categoryName = $categoryName;
-                    $category->parentId = $parentId;
+                    $category->parentId = null;
                     $category->status = $status;
+                    $category->updatedAt = $date;
                     $updateResult = $category->save();
-
+                    /*print_r($updateResult);
+                    die;*/
                     if(!$updateResult) 
                     {
                         throw new Exception("Error Processing Request in updateResult category.", 1);
                     }
                     $parentId = null;
                     $this->updatePathIntoCategory($categoryId, $parentId);
+
                 }
                 else 
                 {
                     $category->load($categoryId);
+                    $category->categoryId = $categoryId;
                     $category->categoryName = $categoryName;
                     $category->parentId = $parentId;
                     $category->status = $status;
@@ -84,6 +90,7 @@ class Controller_Category extends Controller_Core_Action
                     else 
                     {
                         $category->load($resultCategoryName);
+                        $category->categoryId = $resultCategoryName;
                         $category->path = $resultCategoryName;
                         $result = $category->save();
 
@@ -112,6 +119,7 @@ class Controller_Category extends Controller_Core_Action
                         $output = $result .'/'. $resultParentId;
 
                         $category->load($resultParentId);
+                        $category->categoryId = $resultParentId;
                         $category->path = $output;
                         $resultUpdate = $category->save();
                         
@@ -189,26 +197,34 @@ class Controller_Category extends Controller_Core_Action
         }
         
         $category->load($categoryId);
+        $category->categoryId = $categoryId;
         $category->path = $newPath;
         $updatePath = $category->save();
         
         $categories = $adapter->fetchAll("SELECT * FROM category WHERE path LIKE('$output') ORDER BY path");
         if(!$categories) 
         { 
-            echo 'No others paths found....';
+            $this->redirect($this->getUrl('grid', 'category', null, true));
+            //echo 'No others paths found....';
         }
         else 
         {
             foreach ($categories as $categoryId => $category) 
             {
-                $newParentId = $category['parentId'];
-                $newCategoryId = $category['categoryId'];
+                $res = $category->getData();
+                $parentId = $res['parentId'];
+                $categoryId = $res['categoryId'];
+
+                $newParentId = $parentId;
+                $newCategoryId = $categoryId;
                 $getParentPath = $adapter->fetchOne("SELECT path FROM category WHERE categoryId ='$newParentId'");
-                $updatedPath = $getParentPath . '/' . $category['categoryId'];
+                $updatedPath = $getParentPath . '/' . $categoryId;
 
                 $category->load($newCategoryId);
+                $category->categoryId = $newCategoryId;
                 $category->path = $updatedPath;
                 $updateResult = $category->save();
+                //return $updateResult;
             }
         }
     }

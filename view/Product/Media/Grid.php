@@ -11,7 +11,7 @@ $id= $_GET['id'];?>
 
 	<form action="<?php echo $urlAction->getUrl('save','product_media',['id' =>  $id],true) ?>" method="POST" align="center">
 		<input type="submit" name="update" value="UPDATE"> 
-	<button ><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Cancel</a></button>
+	<button ><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Back to Product Grid</a></button>
 
 		<table border=1 width=100%>
 			<tr>

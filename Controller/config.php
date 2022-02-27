@@ -9,23 +9,39 @@ class Controller_Config extends Controller_Core_Action
         Ccc::getBlock("Config_Grid")->toHtml();
     }
 
-    protected function saveConfig()
+    public function saveAction()
     {
         $config = Ccc::getModel('Config');
         $date = date("Y-m-d H:i:s");
-        $getSaveData = $this->getRequest()->getRequest("config");
+        $getSaveData = $this->getRequest()->getRequest("config"); 
 
-        if(!array_key_exists('configId', $getSaveData))
+        try
         {
+            if (!isset($getSaveData)) 
+            {
+            throw new Exception("You can not insert data in config.", 1);
+            }
+
+            if(array_key_exists('configId', $getSaveData) && $getSaveData['configId'] == null)
+            {
             $config->name = $getSaveData["name"];
             $config->code = $getSaveData["code"];
             $config->value = $getSaveData["value"];
             $config->status = $getSaveData["status"];
             $config->createdAt = $date;
             $result = $config->save();
-        }
-        else
-        {
+
+            if (!$result) 
+                {
+                    throw new Exception("System is not able to insert", 1);
+                } 
+                else 
+                {
+                    $this->redirect($this->getUrl("grid", "config", null, true));
+                }
+            }
+            else
+            {
             $config->load($getSaveData['configId']);
             $config->configId = $getSaveData["configId"];
             $config->name = $getSaveData["name"];
@@ -33,17 +49,16 @@ class Controller_Config extends Controller_Core_Action
             $config->value = $getSaveData["value"];
             $config->status = $getSaveData["status"];
             $result = $config->save();
-        }
-    }
 
-    public function saveAction()
-    {
-        $config = Ccc::getModel('Config');
-    
-        try
-        {
-            $configId = $this->saveconfig();
-            $this->redirect($this->getUrl("grid","config",null,true));
+            if (!$result) 
+                {
+                    throw new Exception("System is not able to update", 1);
+                } 
+                else 
+                {
+                    $this->redirect($this->getUrl("grid", "config", null, true));
+                }
+            }
         }
         catch (Exception $e) 
         {
@@ -53,7 +68,10 @@ class Controller_Config extends Controller_Core_Action
 
     public function addAction()
     {
-        Ccc::getBlock("Config_Add")->toHtml();
+        $configId = Ccc::getModel("Config");
+        //Ccc::getBlock("Config_Add")->toHtml();
+        Ccc::getBlock("Config_Edit")->addData("config", $configId)->toHtml();
+
     }
 
     public function editAction()
@@ -66,6 +84,7 @@ class Controller_Config extends Controller_Core_Action
                 throw new Exception("Edit is not working", 1);
             }
             $config = Ccc::getModel("Config")->load($configId);
+            //$config->fetchRow("SELECT * FROM config WHERE configId = $configId");
             
             if (!$config) {
                 throw new Exception("This is not config Id", 1);

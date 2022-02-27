@@ -5,7 +5,7 @@ class Model_Product extends Model_Core_Row
 {
 	public function __construct()
 	{
-		$this->setTableClassName('Product_Resource');
+		$this->setResourceClassName('Product_Resource');
 	}
 }
 

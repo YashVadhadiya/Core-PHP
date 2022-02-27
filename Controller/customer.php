@@ -14,7 +14,7 @@ class Controller_Customer extends Controller_Core_Action
         $customer = Ccc::getModel('Customer');
         $getSaveData = $this->getRequest()->getRequest('customer');
         $date = date('Y-m-d H:i:s');
-        if(!array_key_exists('id',$getSaveData))
+        if(array_key_exists('id',$getSaveData) && $getSaveData['id'] == null)
         {
                 $customer->firstName = $getSaveData['firstName'];
                 $customer->lastName = $getSaveData['lastName'];
@@ -107,7 +107,9 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
-        Ccc::getBlock("Customer_Add")->toHtml();
+        $customer = Ccc::getModel("Customer"); //->load($id);
+        //Ccc::getBlock("Customer_Add")->toHtml();
+        Ccc::getBlock("Customer_Edit")->addData("customer", $customer)->toHtml();
     }
     
     public function editAction()
