@@ -6,8 +6,8 @@ class Controller_Admin extends Controller_Core_Action
 {
     public function gridAction()
     {
-        $this->renderLayout();
-        //Ccc::getBlock("Admin_Grid")->toHtml();
+        //$this->renderLayout();
+        Ccc::getBlock("Admin_Grid")->toHtml();
     }
 
     public function saveAction()
