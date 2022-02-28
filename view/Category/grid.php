@@ -63,15 +63,33 @@
             <td><?php echo $category->createdAt?></td>
             <td><?php echo $category->updatedAt?></td>
 
-            <td><?php echo $category->baseImage ?></td>
-            <td><?php echo $category->thumbImage ?></td>
-            <td><?php echo $category->smallImage ?></td>
+            <td>
+                <?php if(!$category->baseImage): echo "image not selected" ?>
+                    <?php else: ?>
+                <img src="<?php echo 'Media/Category/' . $category->baseImage; ?>" width="75px" height="75px">
+            <?php endif;?>
+            </td>
+            <td>
+                <?php if(!$category->thumbImage): echo "image not selected" ?>
+                    <?php else: ?>
+                <img src="<?php echo 'Media/Category/' . $category->thumbImage; ?>" width="75px" height="75px">
+            <?php endif;?>
+            </td>
+            <td>
+                <?php if(!$category->smallImage): echo "image not selected" ?>
+                    <?php else: ?>
+                <img src="<?php echo 'Media/Category/' . $category->smallImage; ?>" width="75px" height="75px">
+            <?php endif;?>
+            </td>
 
 
-            <td><a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],true) ?>">Edit</a>
+            <td>
+                <a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],true) ?>">Edit</a>
                 <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category->categoryId],true) ?>">Delete</a>
             </td>
-            <td><a href="<?php echo$urlAction->getUrl('grid','category_media',['categoryId' =>  $category->categoryId],true) ?>">Media</a></td>
+            <td>
+                <a href="<?php echo$urlAction->getUrl('grid','category_media',['categoryId' =>  $category->categoryId],true) ?>">Media</a>
+            </td>
         </tr>
         <?php endforeach; ?>
         <?php endif; ?>

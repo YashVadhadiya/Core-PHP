@@ -1,6 +1,7 @@
 <?php $productMedias = $this->getProductMedias(); $id= $_GET['id'];?>	
 <?php $urlAction = new Controller_Core_Action(); ?>
 <html>
+<head><h2 align="center">Product Media</h2></head>
 <body>
 	<form action="<?php echo $urlAction->getUrl('save','product_media',['id' =>  $id],true) ?>" method="POST" align="center">
 		<input type="submit" name="update" value="UPDATE"> 
@@ -22,7 +23,7 @@
 				<?php foreach ($productMedias as $media): ?>		
 					<tr>
 						<td><?php echo $media->imageId ; ?></td>
-						<td><?php echo $media->image ; ?></td>
+						<td><img src="<?php echo 'Media/Product/' . $media->image; ?>" width = 75px height = 75px></td>
 						
 						<td><input type="radio" name="media[base]" value="<?php echo $media->imageId?>"<?php echo ($media->base==1) ? 'checked' : '' ; ?>></td>
 						<td><input type="radio" name="media[thumb]" value="<?php echo $media->imageId?>"<?php echo ($media->thumb==1) ? 'checked' : '' ;?>></td>

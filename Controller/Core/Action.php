@@ -89,6 +89,15 @@ class Controller_Core_Action
         $url = 'index.php?'.http_build_query($resultUrl);
         return $url;
     }
+
+    public function getBaseUrl($subUrl = null)
+    {
+        $url = "C:/xampp-php/htdocs/Cybercom/Core-PHP";
+        if($subUrl){
+            $url = $url."/".$subUrl;
+        }
+        return $url;
+    }
 }
 
 ?>

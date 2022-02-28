@@ -10,6 +10,32 @@ class Controller_Category_Media extends Controller_Core_Action
         Ccc::getBlock("Category_Media_grid")->toHtml();
     }
 
+    public function addAction()
+    {
+        $categoryId = $_GET['categoryId'];
+
+        $imageName1 = $_FILES['image']['name'];
+        $imageAddress1 = $_FILES['image']['tmp_name'];
+        $imageName = implode("", $imageName1);
+        $imageName = date('mjYhis') . '-' . $imageName;
+        $imageAddress = implode("", $imageAddress1);
+
+        if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Category/') .$imageName)) 
+        {
+            //$adapter = new Model_Core_Adapter();
+            $query = "INSERT INTO `category_media`( `categoryId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($categoryId,'$imageName',0,0,0,0,0)";
+
+            $result = $this->getAdapter()->insert($query);
+
+            $this->redirect($this->getUrl("grid", "category_media", ["categoryId" => $categoryId]), true);
+
+        } 
+        else 
+        {
+            $this->redirect($this->getUrl('grid', 'category_media',['categoryId' =>  $categoryId], true));
+        }
+    }
+    
     public function saveAction()
     {
         //$adapter = new Model_Core_Adapter();
@@ -109,31 +135,6 @@ class Controller_Category_Media extends Controller_Core_Action
         }
     }
 
-    public function addAction()
-    {
-        $categoryId = $_GET['categoryId'];
-
-        $imageName1 = $_FILES['image']['name'];
-        $imageAddress1 = $_FILES['image']['tmp_name'];
-        $imageName = implode("", $imageName1);
-        $imageName = date('mjYhis') . '-' . $imageName;
-        $imageAddress = implode("", $imageAddress1);
-
-        if (move_uploaded_file($imageAddress,'C:\xampp-php\htdocs\Cybercom\Core-PHP\Media\Category/' .$imageName)) 
-        {
-            //$adapter = new Model_Core_Adapter();
-            $query = "INSERT INTO `category_media`( `categoryId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($categoryId,'$imageName',0,0,0,0,0)";
-
-            $result = $this->getAdapter()->insert($query);
-
-            $this->redirect($this->getUrl("grid", "category_media", ["categoryId" => $categoryId]), true);
-
-        } 
-        else 
-        {
-            $this->redirect($this->getUrl('grid', 'category_media',['categoryId' =>  $categoryId], true));
-        }
-    }
 }
 
 ?>

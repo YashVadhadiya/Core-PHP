@@ -11,7 +11,7 @@ class Block_Category_Grid extends Block_Core_Template
 	public function getCategories()
 	{
 		$category = Ccc::getModel('Category');
-		$categories = $category->fetchAll("SELECT c.*,b.imageId AS baseImage, t.imageId AS thumbImage, s.imageId AS smallImage FROM category c LEFT JOIN category_media b ON c.categoryId = b.categoryId AND (b.base = 1) LEFT JOIN category_media t ON c.categoryId = t.categoryId AND (t.thumb = 1) LEFT JOIN category_media s ON c.categoryId = s.categoryId AND (s.small = 1);");
+		$categories = $category->fetchAll("SELECT c.*,b.image AS baseImage, t.image AS thumbImage, s.image AS smallImage FROM category c LEFT JOIN category_media b ON c.categoryId = b.categoryId AND (b.base = 1) LEFT JOIN category_media t ON c.categoryId = t.categoryId AND (t.thumb = 1) LEFT JOIN category_media s ON c.categoryId = s.categoryId AND (s.small = 1);");
 		return $categories;
 	}
 

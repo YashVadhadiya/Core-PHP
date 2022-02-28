@@ -10,6 +10,32 @@ class Controller_Product_Media extends Controller_Core_Action
         Ccc::getBlock("Product_Media_grid")->toHtml();
     }
 
+    public function addAction()
+    {
+    $productId = $_GET['id'];
+    $imageName1 = $_FILES['image']['name'];
+    $imageAddress1 = $_FILES['image']['tmp_name'];
+    $imageName = implode("", $imageName1);
+    $imageName = date("mjYhis")."-".$imageName;
+    $imageAddress = implode("", $imageAddress1);
+      
+        if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Product/') .$imageName)) 
+        {
+            //$adapter = new Model_Core_Adapter();
+            $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
+
+
+            $result = $this->getAdapter()->insert($query);
+
+            $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+
+        } 
+        else 
+        {
+            $this->redirect($this->getUrl('grid','product_media',['id' =>  $productId],true));
+        }
+    }
+
     public function saveAction()
     {
         //$adapter = new Model_Core_Adapter();
@@ -106,32 +132,6 @@ class Controller_Product_Media extends Controller_Core_Action
         } catch (Exception $e) 
         {
             echo $e->getMessage();
-        }
-    }
-
-    public function addAction()
-    {
-    $productId = $_GET['id'];
-    $imageName1 = $_FILES['image']['name'];
-    $imageAddress1 = $_FILES['image']['tmp_name'];
-    $imageName = implode("", $imageName1);
-    $imageName = date("mjYhis")."-".$imageName;
-    $imageAddress = implode("", $imageAddress1);
-      
-        if (move_uploaded_file($imageAddress,'C:\xampp-php\htdocs\Cybercom\Core-PHP\Media\Product/' .$imageName)) 
-        {
-            //$adapter = new Model_Core_Adapter();
-            $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
-
-
-            $result = $this->getAdapter()->insert($query);
-
-            $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
-
-        } 
-        else 
-        {
-            $this->redirect($this->getUrl('grid','product_media',['id' =>  $productId],true));
         }
     }
 }
