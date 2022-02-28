@@ -1,10 +1,10 @@
 <?php
 
-Ccc::loadClass("Model_Core_View");
+Ccc::loadClass("Block_Core_Layout");
 
 class Controller_Core_Action
 {
-    public $view = null;
+    protected $layout = null;
 
     public function redirect($url)
     {
@@ -12,18 +12,18 @@ class Controller_Core_Action
         exit();
     }
 
-    public function getView()
+    public function getLayout()
     {
-        if (!$this->view) 
+        if (!$this->layout) 
         {
-            $this->setView(new Model_Core_View());
+            $this->setLayout(new Block_Core_Layout());
         }
-        return $this->view;
+        return $this->layout;
     }
 
-    public function setView($view)
+    public function setLayout($layout)
     {
-        $this->view = $view;
+        $this->layout = $layout;
         return $this;
     }
 
@@ -43,6 +43,11 @@ class Controller_Core_Action
     {
         $adapter = new Model_Core_Adapter();
         return $adapter;
+    }
+
+    public function renderLayout()
+    {
+        return $this->getLayout()->toHtml();
     }
 
     public function getUrl($action = null, $controller = null, array $parameters = null, $reset = false) 
