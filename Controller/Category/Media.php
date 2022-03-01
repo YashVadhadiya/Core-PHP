@@ -60,12 +60,22 @@ class Controller_Category_Media extends Controller_Core_Action
                 }
                 $removeIdsImplode = implode(",", $removeIds);
 
-                $query = "DELETE FROM `category_media` WHERE imageId IN($removeIdsImplode)";
-                $result = $this->getAdapter()->delete($query);
-            }
+                $query = "SELECT imageId , image FROM `category_media` WHERE imageId IN($removeIdsImplode) ";
+                $result = $this->getAdapter()->fetchPairs($query);
 
+                $deleteQuery = "DELETE FROM `category_media` WHERE imageId IN($removeIdsImplode)";
+                $deleteResult = $this->getAdapter()->delete($deleteQuery);
+                
+                foreach($result as $key => $value){
+                
+                if($deleteResult)
+                {
+                    unlink($this->getBaseUrl('Media/Category/') . $value);
+                }
+            }
+        }
             $query = "SELECT imageId, categoryId FROM `category_media` WHERE categoryId = $categoryId";
-            $result = $this->getAdapter()->fetchPairs($query);
+            $result = $this->getAdapter()->fetchPairs($query);  
             $ids = array_keys($result);
             $implodeIds = implode(",", $ids);
 
@@ -129,7 +139,8 @@ class Controller_Category_Media extends Controller_Core_Action
             $this->redirect(
                 $this->getUrl("grid", "category_media", ["categoryId" => $categoryId])
             );
-        } catch (Exception $e) 
+    }
+    catch (Exception $e) 
         {
             echo $e->getMessage();
         }

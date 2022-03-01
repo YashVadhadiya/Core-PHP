@@ -6,7 +6,7 @@
 	<form action="<?php echo $urlAction->getUrl('save','product_media',['id' =>  $id],true) ?>" method="POST" align="center">
 		<input type="submit" name="update" value="UPDATE"> 
 		<button ><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Back to Product Grid</a></button>
-
+		<br></br>
 		<table border=1 width=100%>
 			<tr>
 				<th>Image Id</th>
@@ -39,10 +39,11 @@
 			<?php endif; ?>
 
 		</table>
+		<br></br>
 	</form>
 	
 	<form align="center" action="<?php echo $urlAction->getUrl('add','product_media',['id' =>  $id],true) ?>" method="POST" enctype="multipart/form-data">
-		<input type="file" name="image[]">
+		<input type="file" name="image[]" accept="image/*">
 		<input type="submit" name="submit" value="Upload">
 	</form>
 </body>

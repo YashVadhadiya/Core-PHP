@@ -54,16 +54,28 @@ class Controller_Product_Media extends Controller_Core_Action
             if (array_key_exists("remove", $media)) 
             {
                 $removeIds = [];
+                
                 foreach ($removeArr as $key => $value) 
                 {
                     array_push($removeIds, $value);
                 }
+
                 $removeIdsImplode = implode(",", $removeIds);
 
-                $query = "DELETE FROM `product_media` WHERE imageId IN($removeIdsImplode)";
-                $result = $this->getAdapter()->delete($query);
-            }
+                $query = "SELECT imageId , image FROM `product_media` WHERE imageId IN($removeIdsImplode) ";
+                $result = $this->getAdapter()->fetchPairs($query);
 
+                $deleteQuery = "DELETE FROM `product_media` WHERE imageId IN($removeIdsImplode)";
+                $deleteResult = $this->getAdapter()->delete($deleteQuery);
+                
+                foreach($result as $key => $value)
+                {
+                    if($deleteResult)
+                    {
+                        unlink($this->getBaseUrl('Media/product/') . $value);
+                    }
+                }
+            }
             $query = "SELECT imageId, productId FROM `product_media` WHERE productId = $productId";
             $result = $this->getAdapter()->fetchPairs($query);
             $ids = array_keys($result);
@@ -129,7 +141,7 @@ class Controller_Product_Media extends Controller_Core_Action
             $this->redirect(
                 $this->getUrl("grid", "product_media", ["id" => $productId])
             );
-        } catch (Exception $e) 
+    }catch (Exception $e) 
         {
             echo $e->getMessage();
         }

@@ -52,8 +52,8 @@
                     <td><?php echo $vendor->state; ?></td>
                     <td><?php echo $vendor->country; ?></td>
 
-                    <td><a href="<?php echo$urlAction->getUrl('edit','vendor',['id' =>  $vendor->vendorId],true) ?>">Edit</a></td>
-                    <td><a href="<?php echo$urlAction->getUrl('delete','vendor',['id' =>  $vendor->vendorId],true) ?>">Delete</a></td>
+                    <td><a href="<?php echo $urlAction->getUrl('edit','vendor',['id' =>  $vendor->vendorId],true) ?>">Edit</a></td>
+                    <td><a href="<?php echo $urlAction->getUrl('delete','vendor',['id' =>  $vendor->vendorId],true) ?>">Delete</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>

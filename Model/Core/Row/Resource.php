@@ -5,7 +5,7 @@ class Model_Core_Row_Resource
 
     protected $primaryKey = null;
 
-    protected $rowClassName = null;
+    //protected $rowClassName = null;
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Model_Core_Row_Resource
         return $adapter;
     }
 
-    public function getRowClassName()
+    /*public function getRowClassName()
     {
         return $this->rowClassName;
     }
@@ -27,7 +27,7 @@ class Model_Core_Row_Resource
     {
         $this->rowClassName = $rowClassName;
         return $this;
-    }
+    }*/
 
     public function getRow()
     {

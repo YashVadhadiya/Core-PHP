@@ -270,7 +270,20 @@ class Controller_Category extends Controller_Core_Action
         
         try 
         {
+            $query1 = "SELECT imageId, image FROM category c LEFT JOIN category_media cm ON c.categoryId = cm.categoryId  WHERE c.categoryId = $getDelete;";
+            
+            $result1 = $this->getAdapter()->fetchPairs($query1);
+            
             $result = $category->delete();
+
+            foreach($result1 as $key => $value)
+            {
+                if($result1)
+                {
+                    unlink($this->getBaseUrl('Media/Category/') . $value);
+                }
+            }
+
             if (!$result) 
             {
                 throw new Exception("Error Processing Request in not result.", 1);

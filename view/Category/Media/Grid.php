@@ -7,7 +7,7 @@ $categoryId= $_GET['categoryId'];?>
 	<form action="<?php echo $urlAction->getUrl('save','category_media',['categoryId' =>  $categoryId],true) ?>" method="POST" align="center">
 		<input type="submit" name="update" value="UPDATE"> 
 		<button ><a href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>">Back to Category Grid</a></button>
-
+<br></br>
 		<table border=1 width=100%>
 			<tr>
 				<th>Image Id</th>
@@ -40,9 +40,10 @@ $categoryId= $_GET['categoryId'];?>
 				<tr><td colspan='8'>No Record Available</td></tr>
 			<?php endif; ?>
 		</table>
+		<br></br>
 	</form>
 	<form align="center" action="<?php echo $urlAction->getUrl('add','category_media',['categoryId' =>  $categoryId],true) ?>" method="POST" enctype="multipart/form-data">
-		<input type="file" name="image[]">
+		<input type="file" name="image[]" accept="image/*">
 		<input type="submit" name="submit" value="Upload">
 	</form>
 </body>
