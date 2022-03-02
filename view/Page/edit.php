@@ -1,12 +1,6 @@
 <?php $page = $this->getPage(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-	<html>
 
-	<head>
-		<title>Page Edit</title>
-	</head>
-
-	<body>
 		<form method="POST" action="<?php echo $urlAction->getUrl('save','page',['id' =>  $page->pageId],true) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
@@ -66,6 +60,3 @@
 				</tr>
 			</table>
 		</form>
-	</body>
-
-	</html>

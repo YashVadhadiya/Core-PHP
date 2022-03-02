@@ -1,8 +1,6 @@
 <?php $vendor = $this->getVendor(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-<html>
-<head><title>Vendor Edit</title></head>
-<body>
+
 	<form method="POST" action="<?php echo$urlAction->getUrl('save','vendor',['id' =>  $vendor->vendorId],true) ?>">
 		<table border="1" width="100%" cellspacing="4">
 
@@ -86,5 +84,3 @@
 			
 		</table>	
 	</form>
-</body>
-</html>

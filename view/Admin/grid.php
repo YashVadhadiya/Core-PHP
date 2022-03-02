@@ -1,15 +1,6 @@
 <?php $admins = $this->getAdmins(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Admin Grid</title>
-</head>
-
-<body>
-
     <button name="Add"><a href="<?php echo $urlAction->getUrl('add','admin',null,true) ?>">Add admin</a></button>
     <table border='1' width='100%' cellspacing="4">
         <tr>
@@ -59,6 +50,3 @@
                     <?php endforeach; ?>
                         <?php endif; ?>
     </table>
-</body>
-
-</html>

@@ -1,17 +1,6 @@
 <?php $categories = $this->getCategories(); ?>
 <?php $getCategoryWithPath = $this->getCategoryWithPath(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Category Grid</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-</head>
-
-<body>
 
     <button name="Add"><a href="<?php echo $urlAction->getUrl('add','category',null,true) ?>">Add Category</a></button>
     <table border=1 width="100%">
@@ -74,8 +63,3 @@
         <?php endforeach; ?>
         <?php endif; ?>
     </table>
-
-
-</body>
-
-</html>

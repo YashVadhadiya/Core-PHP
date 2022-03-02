@@ -2,12 +2,7 @@
 <?php $urlAction = new Controller_Core_Action();?>
 <?php $getCategoryWithPath = $this->getCategoryWithPath(); ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Category Update</title>
-</head>
-<body>
+
 	<table border="1" width="100%">
 		<form method="post" action="<?php echo $urlAction->getUrl('save','category',['categoryId' =>  $category->categoryId],true) ?>
 ">
@@ -63,5 +58,3 @@
 		</tr>
 	</form>        
 </table>
-</body>
-</html>

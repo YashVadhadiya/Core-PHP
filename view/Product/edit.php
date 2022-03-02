@@ -1,13 +1,6 @@
 <?php $product = $this->getProduct(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Product Update</title>
-</head>
-
-<body>
     <table border="1" width="100%">
         <form action="<?php echo$urlAction->getUrl('save','product',['id' =>  $product->id],true) ?>" method="post">
             <tr>
@@ -46,9 +39,3 @@
             </tr>
         </form>
     </table>
-
-            
-
-</body>
-
-</html>
