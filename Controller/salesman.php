@@ -6,8 +6,11 @@ class Controller_Salesman extends Controller_Core_Action
 {
     public function gridAction()
     {
-        //$this->renderLayout();
-        Ccc::getBlock("Salesman_Grid")->toHtml();
+        $content = $this->getLayout()->getContent();
+        $salesmanGrid = Ccc::getBlock("Salesman_Grid");
+        $content->addChild($salesmanGrid);
+        $this->renderLayout();
+        //Ccc::getBlock("Salesman_Grid")->toHtml();
     }
 
     public function saveAction()
@@ -72,9 +75,10 @@ class Controller_Salesman extends Controller_Core_Action
     public function addAction()
     {
         $id = Ccc::getModel("Salesman");//->load($id);
-        //$id = (int) $this->getRequest()->getRequest("id");
-        //Ccc::getBlock("salesman_Add")->toHtml();
-        Ccc::getBlock("Salesman_Edit")->addData("salesman", $id)->toHtml();
+        $content = $this->getLayout()->getContent();
+        $salesmanAdd = Ccc::getBlock("Salesman_Edit")->addData("salesman", $id);
+        $content->addChild($salesmanAdd);
+        $this->renderLayout();
     }
 
     public function editAction()
@@ -93,8 +97,11 @@ class Controller_Salesman extends Controller_Core_Action
             if (!$id) {
                 throw new Exception("This is not salesman Id", 1);
             }
-            
-            Ccc::getBlock("Salesman_Edit")->addData("salesman", $id)->toHtml();
+            $content = $this->getLayout()->getContent();
+            $salesmanEdit = Ccc::getBlock("Salesman_Edit")->addData("salesman", $id);
+            $content->addChild($salesmanEdit);
+            $this->renderLayout();
+            //Ccc::getBlock("Salesman_Edit")->addData("salesman", $id)->toHtml();
         }
         catch (Exception $e) {
             echo $e->getMessage();

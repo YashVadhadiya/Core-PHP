@@ -6,7 +6,11 @@ class Controller_Config extends Controller_Core_Action
 {
     public function gridAction()
     {
-        Ccc::getBlock("Config_Grid")->toHtml();
+        $content = $this->getLayout()->getContent();
+        $configGrid = Ccc::getBlock("Config_Grid");
+        $content->addChild($configGrid);
+        $this->renderLayout();
+        //Ccc::getBlock("Config_Grid")->toHtml();
     }
 
     public function saveAction()
@@ -69,8 +73,10 @@ class Controller_Config extends Controller_Core_Action
     public function addAction()
     {
         $configId = Ccc::getModel("Config");
-        //Ccc::getBlock("Config_Add")->toHtml();
-        Ccc::getBlock("Config_Edit")->addData("config", $configId)->toHtml();
+        $content = $this->getLayout()->getContent();
+        $configAdd = Ccc::getBlock("Config_Edit")->addData("config", $id);
+        $content->addChild($configAdd);
+        $this->renderLayout();
 
     }
 
@@ -89,7 +95,11 @@ class Controller_Config extends Controller_Core_Action
             if (!$config) {
                 throw new Exception("This is not config Id", 1);
             }
-            Ccc::getBlock("Config_Edit")->addData("config", $config)->toHtml();
+            $content = $this->getLayout()->getContent();
+            $configEdit = Ccc::getBlock("Config_Edit")->addData("config", $id);
+            $content->addChild($configEdit);
+            $this->renderLayout();
+            //Ccc::getBlock("Config_Edit")->addData("config", $config)->toHtml();
         }
         catch (Exception $e) {
             echo $e->getMessage();

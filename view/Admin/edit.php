@@ -1,18 +1,12 @@
 <?php $admin = $this->getAdmin(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-	<html>
-
-	<head>
-		<title>Admin Edit</title>
-	</head>
-
-	<body>
 		<form method="POST" action="<?php echo$urlAction->getUrl('save','admin',['id' =>  $admin->id],true) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>
 					<td colspan="4">
-						<h1>Admin details</h1></td>
+						<h1>Admin details</h1>
+					</td>
 				</tr>
 				<tr>
 					<td>Id</td>
@@ -56,10 +50,7 @@
 				              <option value='2'>Disabled</option>
 				          	<?php endif;?>
 				          	
-							<!-- <option value="1" <?php //if($admin->status==1 ): ?> selected = "selected"
-								<?php //endif; ?>>Active</option>
-							<option value="2" <?php //if($admin->status==2 ): ?> selected = "selected"
-								<?php //endif; ?>>Inactive</option> -->
+							
 						</select>
 					</td>
 				</tr>
@@ -72,6 +63,3 @@
 				</tr>
 			</table>
 		</form>
-	</body>
-
-	</html>

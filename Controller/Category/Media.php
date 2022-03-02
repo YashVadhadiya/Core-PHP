@@ -7,7 +7,11 @@ class Controller_Category_Media extends Controller_Core_Action
 {
     public function gridAction()
     {
-        Ccc::getBlock("Category_Media_grid")->toHtml();
+        $content = $this->getLayout()->getContent();
+        $categoryMediaGrid = Ccc::getBlock("Category_Media_Grid");
+        $content->addChild($categoryMediaGrid);
+        $this->renderLayout();
+        //Ccc::getBlock("Category_Media_grid")->toHtml();
     }
 
     public function addAction()
@@ -66,14 +70,14 @@ class Controller_Category_Media extends Controller_Core_Action
                 $deleteQuery = "DELETE FROM `category_media` WHERE imageId IN($removeIdsImplode)";
                 $deleteResult = $this->getAdapter()->delete($deleteQuery);
                 
-                foreach($result as $key => $value){
-                
-                if($deleteResult)
+                foreach($result as $key => $value)
                 {
-                    unlink($this->getBaseUrl('Media/Category/') . $value);
+                    if($deleteResult)
+                    {
+                        unlink($this->getBaseUrl('Media/Category/') . $value);
+                    }
                 }
             }
-        }
             $query = "SELECT imageId, categoryId FROM `category_media` WHERE categoryId = $categoryId";
             $result = $this->getAdapter()->fetchPairs($query);  
             $ids = array_keys($result);
