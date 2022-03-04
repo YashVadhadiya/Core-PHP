@@ -73,13 +73,9 @@
 				<td >Status</td>
 				<td>
 					<select name="customer[status]">
-						<?php if($customer->status == 2): ?>
-				              <option value='2'>InActive</option>
-				              <option value='1'>Active</option>
-				          	<?php else: ?>
-				              <option value='1'>Active</option>
-				              <option value='2'>InActive</option>
-				          	<?php endif;?>
+						<?php foreach ($customer->getStatus() as $key => $value): ?>
+              			<option <?php if($customer->status == $key): ?> selected <?php endif; ?> value="<?php echo $key; ?>"> <?php echo $value; ?></option>
+            				<?php endforeach; ?>
 					</select>
 				</td>
 			</tr>

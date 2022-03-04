@@ -42,15 +42,9 @@
 					<td>Status</td>
 					<td>
 						<select name="admin[status]">
-							<?php if($admin->status == 2): ?>
-				              <option value='2'>Disabled</option>
-				              <option value='1'>Enabled</option>
-				          	<?php else: ?>
-				              <option value='1'>Enabled</option>
-				              <option value='2'>Disabled</option>
-				          	<?php endif;?>
-				          	
-							
+							<?php foreach ($admin->getStatus() as $key => $value): ?>
+              			<option <?php if($admin->status == $key): ?> selected <?php endif; ?> value="<?php echo $key; ?>"> <?php echo $value; ?></option>
+            				<?php endforeach; ?>
 						</select>
 					</td>
 				</tr>

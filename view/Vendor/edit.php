@@ -63,13 +63,9 @@
 				<td >Status</td>
 				<td>
 					<select name="vendor[status]">
-						<?php if($vendor->status == 2): ?>
-				              <option value='2'>InActive</option>
-				              <option value='1'>Active</option>
-				          	<?php else: ?>
-				              <option value='1'>Active</option>
-				              <option value='2'>InActive</option>
-				          	<?php endif;?>
+						<?php foreach ($vendor->getStatus() as $key => $value): ?>
+              			<option <?php if($vendor->status == $key): ?> selected <?php endif; ?> value="<?php echo $key; ?>"> <?php echo $value; ?></option>
+            				<?php endforeach; ?>
 					</select>
 				</td>
 			</tr>
