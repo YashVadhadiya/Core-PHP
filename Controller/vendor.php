@@ -7,10 +7,9 @@ class Controller_Vendor extends Controller_Core_Action
     public function gridAction()
     {
         $content = $this->getLayout()->getContent();
-        $vendorGrid = Ccc::getBlock("Vendor_Grid");
+        $vendorGrid = Ccc::getBlock('Vendor_Grid');
         $content->addChild($vendorGrid);
         $this->renderLayout();
-        //Ccc::getBlock("Vendor_Grid")->toHtml();
     }
 
     protected function saveVendor()
@@ -18,6 +17,8 @@ class Controller_Vendor extends Controller_Core_Action
         $vendor = Ccc::getModel('Vendor');
         $getSaveData = $this->getRequest()->getRequest('vendor');
         $date = date('Y-m-d H:i:s');
+        $message = Ccc::getModel('Core_Message');
+
         if(array_key_exists('vendorId',$getSaveData) && $getSaveData['vendorId'] == null)
         {
                 $vendor->firstName = $getSaveData['firstName'];
@@ -27,6 +28,18 @@ class Controller_Vendor extends Controller_Core_Action
                 $vendor->status = $getSaveData['status'];
                 $result = $vendor->save();
                 return $result;
+
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert data in vendor.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is inserted in vendor.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl('grid', 'vendor', null, true));
+                }
+
         }
         else
         {
@@ -40,6 +53,17 @@ class Controller_Vendor extends Controller_Core_Action
                 $vendor->updatedAt = $date;
                 $result = $vendor->save();
                 return $getSaveData['vendorId'];
+
+                if (!$result) 
+                {
+                    $message->addMessage('You can not update data in vendor.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is updated in vendor.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl('grid', 'vendor', null, true));
+                }
         }
     }
     
@@ -48,9 +72,9 @@ class Controller_Vendor extends Controller_Core_Action
         $getSaveData = $this->getRequest()->getRequest('address');
         $address = Ccc::getModel('Vendor_Address');
         $date = date('Y-m-d H:i:s');
+        $message = Ccc::getModel('Core_Message');
 
         $addressData = $address->fetchRow("SELECT * FROM vendor_address WHERE vendorId = '$vendorId'");
-
 
         if (!$addressData):
             $address->vendorId = $vendorId;
@@ -60,6 +84,17 @@ class Controller_Vendor extends Controller_Core_Action
             $address->country = $getSaveData['country'];
             $address->postalCode = $getSaveData['postalCode'];
             $result = $address->save();
+
+            if (!$result) 
+                {
+                    $message->addMessage('You can not insert data in vendor.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is inserted in vendor.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                }
 
         else:
             $address->load($getSaveData['vendorId']);
@@ -72,19 +107,27 @@ class Controller_Vendor extends Controller_Core_Action
             $address->postalCode = $getSaveData['postalCode'];
             $result = $address->save();
 
-            if (!$result):
-                throw new Exception("System is unable to update address information.",1);
-            endif;
+            if (!$result) 
+                {
+                    $message->addMessage('You can not update data in vendor.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is updated in vendor.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                }
         endif;
     }
     
     public function saveAction()
     {
+        $message = Ccc::getModel('Core_Message');
         try 
         {
             $vendorId = $this->saveVendor();
             $this->saveAddress($vendorId);
-            $this->redirect($this->getUrl("grid", "vendor", null, true));
+            $this->redirect($this->getUrl('grid', 'vendor', null, true));
         }
         catch (Exception $e) 
         {
@@ -94,33 +137,39 @@ class Controller_Vendor extends Controller_Core_Action
 
     public function addAction()
     {
-        $vendor = Ccc::getModel("Vendor"); //->load($id);
+        $id = Ccc::getModel('Vendor');
         $content = $this->getLayout()->getContent();
-        $vendorAdd = Ccc::getBlock("Vendor_Edit")->addData("vendor", $id);
+        $vendorAdd = Ccc::getBlock('Vendor_Edit')->addData('vendor', $id);
         $content->addChild($vendorAdd);
         $this->renderLayout();
     }
     
     public function editAction()
     {
+        $message = Ccc::getModel('Core_Message');
         try 
         {
-            $id = (int) $this->getRequest()->getRequest("id");
+            $id = (int) $this->getRequest()->getRequest('id');
             if (!$id) 
             {
-                throw new Exception("Error Processing Request", 1);
+                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                //throw new Exception('Error Processing Request', 1);
             }
-            $vendor = Ccc::getModel("Vendor")->load($id);
+            $vendor = Ccc::getModel('Vendor')->load($id);
             $vendor = $vendor->fetchRow("select v.*,a.* from vendor v join vendor_address a on a.vendorId = v.vendorId WHERE v.vendorId = $id");
 
-            if (!$vendor) {
-                throw new Exception("Error  Processing Request", 1);
+            if (!$vendor) 
+            {
+                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                //throw new Exception('Error Processing Request', 1);
             }
             $content = $this->getLayout()->getContent();
-            $vendorEdit = Ccc::getBlock("Vendor_Edit")->addData("vendor", $id);
+            $vendorEdit = Ccc::getBlock('Vendor_Edit')->addData('vendor', $vendor);
             $content->addChild($vendorEdit);
             $this->renderLayout();
-            //Ccc::getBlock("Vendor_Edit")->addData("vendor", $vendor)->toHtml();
+            //Ccc::getBlock('Vendor_Edit')->addData('vendor', $vendor)->toHtml();
         } 
         catch (Exception $e) 
         {
@@ -130,17 +179,20 @@ class Controller_Vendor extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $getDelete = $this->getRequest()->getRequest("id");
-        $address = Ccc::getModel("Vendor_Address")->load($getDelete);
-        $vendor = Ccc::getModel("Vendor")->load($getDelete);
+        $getDelete = $this->getRequest()->getRequest('id');
+        $address = Ccc::getModel('Vendor_Address')->load($getDelete);
+        $vendor = Ccc::getModel('Vendor')->load($getDelete);
+        $message = Ccc::getModel('Core_Message');
         $result = $vendor->delete();
-        if ($result) {
-            $this->redirect($this->getUrl("grid", "vendor", null, true));
+        if ($result) 
+        {   
+            $message->addMessage('Data Deleted Succesfully.', Model_Core_Message::SUCCESS);
+            $this->redirect($this->getUrl('grid', 'vendor', null, true));
         }
     }
     
     public function errorAction()
     {
-        echo "error";
+        echo 'error';
     }
 } ?>
