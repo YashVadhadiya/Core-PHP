@@ -1,10 +1,5 @@
 <?php $config = $this->getConfig(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-	<html>
-
-	<head>
-		<title>Config Edit</title>
-	</head>
 
 	<body>
 		<form method="POST" action="<?php echo $urlAction->getUrl('save','config',['configId' =>  $config->configId],true) ?>">
@@ -61,6 +56,3 @@
 				</tr>
 			</table>
 		</form>
-	</body>
-
-	</html>

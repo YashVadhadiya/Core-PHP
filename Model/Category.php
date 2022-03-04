@@ -6,8 +6,8 @@ class Model_Category extends Model_Core_Row
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 2;
     const STATUS_DEFAULT = 1;
-    const STATUS_ENABLED_LBL = 'Active';
-    const STATUS_DISABLED_LBL = 'InActive';   
+    const STATUS_ENABLED_LBL = 'Enabled';
+    const STATUS_DISABLED_LBL = 'Disabled';   
 
     public function __construct()
     {

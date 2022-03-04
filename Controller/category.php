@@ -6,7 +6,11 @@ class Controller_Category extends Controller_Core_Action
 {
     public function gridAction()
     {
-        Ccc::getBlock('Category_Grid')->toHtml();
+        $content = $this->getLayout()->getContent();
+        $categoryGrid = Ccc::getBlock("Category_Grid");
+        $content->addChild($categoryGrid);
+        $this->renderLayout();
+        //Ccc::getBlock('Category_Grid')->toHtml();
     }
 
     public function saveAction()
@@ -234,8 +238,12 @@ class Controller_Category extends Controller_Core_Action
     public function addAction()
     {
         $categoryId = Ccc::getModel("Category");
+        $content = $this->getLayout()->getContent();
+        $categoryAdd = Ccc::getBlock("Category_Edit")->addData("category", $categoryId);
+        $content->addChild($categoryAdd);
+        $this->renderLayout();
         //Ccc::getBlock('Category_Add')->toHtml();
-        Ccc::getBlock('Category_Edit')->addData('category', $categoryId)->toHtml();
+        //Ccc::getBlock('Category_Edit')->addData('category', $categoryId)->toHtml();
     }
 
     public function editAction()
@@ -254,7 +262,11 @@ class Controller_Category extends Controller_Core_Action
             {
                 throw new Exception("Error Processing Request in category", 1);
             }
-            Ccc::getBlock('Category_Edit')->addData('category', $category)->toHtml();
+            $content = $this->getLayout()->getContent();
+            $categoryEdit = Ccc::getBlock("Category_Edit")->addData("category", $id);
+            $content->addChild($categoryEdit);
+            $this->renderLayout();
+            //Ccc::getBlock('Category_Edit')->addData('category', $category)->toHtml();
             
             }
             catch(Exception $e)

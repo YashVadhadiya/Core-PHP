@@ -6,7 +6,11 @@ class Controller_Customer extends Controller_Core_Action
 {
     public function gridAction()
     {
-        Ccc::getBlock("Customer_Grid")->toHtml();
+        $content = $this->getLayout()->getContent();
+        $customerGrid = Ccc::getBlock("Customer_Grid");
+        $content->addChild($customerGrid);
+        $this->renderLayout();
+        //Ccc::getBlock("Customer_Grid")->toHtml();
     }
 
     protected function saveCustomer()
@@ -107,9 +111,11 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
-        $customer = Ccc::getModel("Customer"); //->load($id);
-        //Ccc::getBlock("Customer_Add")->toHtml();
-        Ccc::getBlock("Customer_Edit")->addData("customer", $customer)->toHtml();
+        $customer = Ccc::getModel("Customer");
+        $content = $this->getLayout()->getContent();
+        $customerAdd = Ccc::getBlock("Customer_Edit")->addData("customer", $id);
+        $content->addChild($customerAdd);
+        $this->renderLayout();
     }
     
     public function editAction()
@@ -127,8 +133,11 @@ class Controller_Customer extends Controller_Core_Action
             if (!$customer) {
                 throw new Exception("Error Processing Request", 1);
             }
-            
-            Ccc::getBlock("Customer_Edit")->addData("customer", $customer)->toHtml();
+            $content = $this->getLayout()->getContent();
+            $customerEdit = Ccc::getBlock("Customer_Edit")->addData("customer", $id);
+            $content->addChild($customerEdit);
+            $this->renderLayout();
+            //Ccc::getBlock("Customer_Edit")->addData("customer", $customer)->toHtml();
         } 
         catch (Exception $e) 
         {

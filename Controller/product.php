@@ -7,7 +7,11 @@ class Controller_Product extends Controller_Core_Action
 {
     public function gridAction()
     {
-        Ccc::getBlock("Product_Grid")->toHtml();
+        $content = $this->getLayout()->getContent();
+        $productGrid = Ccc::getBlock("Product_Grid");
+        $content->addChild($productGrid);
+        $this->renderLayout();
+        //Ccc::getBlock("Product_Grid")->toHtml();
     }
 
     public function saveAction()
@@ -69,8 +73,10 @@ class Controller_Product extends Controller_Core_Action
     public function addAction()
     {
         $id = Ccc::getModel('Product'); //->load($id);
-        //Ccc::getBlock("Product_Add")->toHtml();
-        Ccc::getBlock("Product_Edit")->addData("product", $id)->toHtml();
+        $content = $this->getLayout()->getContent();
+        $productAdd = Ccc::getBlock("Product_Edit")->addData("product", $id);
+        $content->addChild($productAdd);
+        $this->renderLayout();
     }
 
     public function editAction()
@@ -85,7 +91,11 @@ class Controller_Product extends Controller_Core_Action
             if (!$id) {
                 throw new Exception("Error Processing Request", 1);
             }
-            Ccc::getBlock("Product_Edit")->addData("product", $id)->toHtml();
+            $content = $this->getLayout()->getContent();
+            $productEdit = Ccc::getBlock("Product_Edit")->addData("product", $id);
+            $content->addChild($productEdit);
+            $this->renderLayout();
+            //Ccc::getBlock("Product_Edit")->addData("product", $id)->toHtml();
         } 
         catch (Exception $e) 
         {

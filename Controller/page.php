@@ -6,8 +6,11 @@ class Controller_Page extends Controller_Core_Action
 {
     public function gridAction()
     {
-        //$this->renderLayout();
-        Ccc::getBlock("Page_Grid")->toHtml();
+        $content = $this->getLayout()->getContent();
+        $pageGrid = Ccc::getBlock("Page_Grid");
+        $content->addChild($pageGrid);
+        $this->renderLayout();
+        //Ccc::getBlock("Page_Grid")->toHtml();
     }
 
     public function saveAction()
@@ -70,9 +73,10 @@ class Controller_Page extends Controller_Core_Action
     public function addAction()
     {
         $id = Ccc::getModel("Page");//->load($id);
-        //$id = (int) $this->getRequest()->getRequest("id");
-        //Ccc::getBlock("page_Add")->toHtml();
-        Ccc::getBlock("Page_Edit")->addData("page", $id)->toHtml();
+        $content = $this->getLayout()->getContent();
+        $pageAdd = Ccc::getBlock("Page_Edit")->addData("page", $id);
+        $content->addChild($pageAdd);
+        $this->renderLayout();
     }
 
     public function editAction()
@@ -91,8 +95,11 @@ class Controller_Page extends Controller_Core_Action
             if (!$id) {
                 throw new Exception("This is not page Id", 1);
             }
-            
-            Ccc::getBlock("Page_Edit")->addData("page", $id)->toHtml();
+            $content = $this->getLayout()->getContent();
+            $pageEdit = Ccc::getBlock("Page_Edit")->addData("page", $id);
+            $content->addChild($pageEdit);
+            $this->renderLayout();
+            //Ccc::getBlock("Page_Edit")->addData("page", $id)->toHtml();
         }
         catch (Exception $e) {
             echo $e->getMessage();

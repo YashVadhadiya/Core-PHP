@@ -1,16 +1,6 @@
 <?php $admins = $this->getAdmins(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Admin Grid</title>
-</head>
-
-<body>
-
     <button name="Add"><a href="<?php echo $urlAction->getUrl('add','admin',null,true) ?>">Add admin</a></button>
     <table border='1' width='100%' cellspacing="4">
         <tr>
@@ -60,6 +50,3 @@
                     <?php endforeach; ?>
                         <?php endif; ?>
     </table>
-</body>
-
-</html>

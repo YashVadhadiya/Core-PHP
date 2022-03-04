@@ -1,12 +1,5 @@
 <?php $customers = $this->getCustomers(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-
-<html>
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Customer Grid</title>
-</head>
-<body>
     
     <button name="Add"><a href="<?php echo $urlAction->getUrl('add','customer',null,true) ?>">Add Customer</a></button>
 
@@ -62,5 +55,3 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </table>
-</body>
-</html>
