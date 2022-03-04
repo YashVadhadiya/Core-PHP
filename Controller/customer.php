@@ -7,10 +7,9 @@ class Controller_Customer extends Controller_Core_Action
     public function gridAction()
     {
         $content = $this->getLayout()->getContent();
-        $customerGrid = Ccc::getBlock("Customer_Grid");
+        $customerGrid = Ccc::getBlock('Customer_Grid');
         $content->addChild($customerGrid);
         $this->renderLayout();
-        //Ccc::getBlock("Customer_Grid")->toHtml();
     }
 
     protected function saveCustomer()
@@ -18,28 +17,53 @@ class Controller_Customer extends Controller_Core_Action
         $customer = Ccc::getModel('Customer');
         $getSaveData = $this->getRequest()->getRequest('customer');
         $date = date('Y-m-d H:i:s');
+        $message = Ccc::getModel('Core_Message');
+
+
         if(array_key_exists('id',$getSaveData) && $getSaveData['id'] == null)
         {
-                $customer->firstName = $getSaveData['firstName'];
-                $customer->lastName = $getSaveData['lastName'];
-                $customer->email = $getSaveData['email'];
-                $customer->phone = $getSaveData['phone'];
-                $customer->status = $getSaveData['status'];
-                $result = $customer->save();
-                return $result;
+            $customer->firstName = $getSaveData['firstName'];
+            $customer->lastName = $getSaveData['lastName'];
+            $customer->email = $getSaveData['email'];
+            $customer->phone = $getSaveData['phone'];
+            $customer->status = $getSaveData['status'];
+            $result = $customer->save();
+            return $result;
+
+            if (!$result) 
+                {
+                    $message->addMessage('You can not insert data in customer.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is inserted in customer.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl('grid', 'customer', null, true));
+                }
         }
         else
         {
-                $customer->load($getSaveData['id']);
-                $customer->id = $getSaveData['id'];
-                $customer->firstName = $getSaveData['firstName'];
-                $customer->lastName = $getSaveData['lastName'];
-                $customer->email = $getSaveData['email'];
-                $customer->phone = $getSaveData['phone'];
-                $customer->status = $getSaveData['status'];
-                $customer->updatedAt = $date;
-                $result = $customer->save();
-                return $getSaveData['id'];
+            $customer->load($getSaveData['id']);
+            $customer->id = $getSaveData['id'];
+            $customer->firstName = $getSaveData['firstName'];
+            $customer->lastName = $getSaveData['lastName'];
+            $customer->email = $getSaveData['email'];
+            $customer->phone = $getSaveData['phone'];
+            $customer->status = $getSaveData['status'];
+            $customer->updatedAt = $date;
+            $result = $customer->save();
+            return $getSaveData['id'];
+
+            if (!$result) 
+                {
+                    $message->addMessage('You can not update data in customer.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is updated in customer.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl('grid', 'customer', null, true));
+                }
         }
     }
     
@@ -48,14 +72,15 @@ class Controller_Customer extends Controller_Core_Action
         $getSaveData = $this->getRequest()->getRequest('address');
         $address = Ccc::getModel('Customer_Address');
         $date = date('Y-m-d H:i:s');
+        $message = Ccc::getModel('Core_Message');
         
         $billing = 0;
         $shipping = 0;
-        if (array_key_exists("billing", $getSaveData) && $getSaveData["billing"] == 1) 
+        if (array_key_exists('billing', $getSaveData) && $getSaveData['billing'] == 1) 
         {
             $billing = 1;
         }
-        if (array_key_exists("shipping", $getSaveData) && $getSaveData["shipping"] == 1) 
+        if (array_key_exists('shipping', $getSaveData) && $getSaveData['shipping'] == 1) 
         {
             $shipping = 1;
         }
@@ -64,9 +89,7 @@ class Controller_Customer extends Controller_Core_Action
 
 
         if (!$addressData):
-            $E = $address->customerId = $customerId;
-            /*var_dump($E);
-            die;*/
+            $address->customerId = $customerId;
             $address->address = $getSaveData['address'];
             $address->city = $getSaveData['city'];
             $address->state = $getSaveData['state'];
@@ -75,6 +98,17 @@ class Controller_Customer extends Controller_Core_Action
             $address->billing = $getSaveData['billing'];
             $address->shipping = $getSaveData['shipping'];
             $result = $address->save();
+
+            if (!$result) 
+                {
+                    $message->addMessage('You can not insert data in customer.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is inserted in customer.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                }
 
         else:
             $address->load($getSaveData['id']);
@@ -89,19 +123,27 @@ class Controller_Customer extends Controller_Core_Action
             $address->shipping = $getSaveData['shipping'];
             $result = $address->save();
 
-            if (!$result):
-                throw new Exception("System is unable to update address information.",1);
-            endif;
+            if (!$result) 
+                {
+                    $message->addMessage('You can not update data in customer.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                } 
+            else 
+                {
+                    $message->addMessage('Data is updated in customer.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                }
         endif;
     }
     
     public function saveAction()
     {
+        $message = Ccc::getModel('Core_Message');
         try 
         {
             $customerId = $this->saveCustomer();
             $this->saveAddress($customerId);
-            $this->redirect($this->getUrl("grid", "customer", null, true));
+            $this->redirect($this->getUrl('grid', 'customer', null, true));
         }
         catch (Exception $e) 
         {
@@ -111,33 +153,40 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
-        $customer = Ccc::getModel("Customer");
+        $id = Ccc::getModel('Customer');
         $content = $this->getLayout()->getContent();
-        $customerAdd = Ccc::getBlock("Customer_Edit")->addData("customer", $id);
+        $customerAdd = Ccc::getBlock('Customer_Edit')->addData('customer', $id);
         $content->addChild($customerAdd);
         $this->renderLayout();
     }
     
     public function editAction()
     {
+        $message = Ccc::getModel('Core_Message');
+
         try 
         {
-            $id = (int) $this->getRequest()->getRequest("id");
+            $id = (int) $this->getRequest()->getRequest('id');
             if (!$id) 
             {
-                throw new Exception("Error Processing Request", 1);
+                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'customer', null, true));
+                //throw new Exception('Error Processing Request', 1);
             }
-            $customer = Ccc::getModel("Customer")->load($id);
+            $customer = Ccc::getModel('Customer')->load($id);
             $customer = $customer->fetchRow("select c.*,a.* from customer c join address a on a.customerId = c.id WHERE c.id = $id");
 
-            if (!$customer) {
-                throw new Exception("Error Processing Request", 1);
+            if (!$id) 
+            {
+                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'customer', null, true));
+                //throw new Exception('Error Processing Request', 1);
             }
             $content = $this->getLayout()->getContent();
-            $customerEdit = Ccc::getBlock("Customer_Edit")->addData("customer", $id);
+            $customerEdit = Ccc::getBlock('Customer_Edit')->addData('customer', $customer);
             $content->addChild($customerEdit);
             $this->renderLayout();
-            //Ccc::getBlock("Customer_Edit")->addData("customer", $customer)->toHtml();
+            //Ccc::getBlock('Customer_Edit')->addData('customer', $customer)->toHtml();
         } 
         catch (Exception $e) 
         {
@@ -147,17 +196,20 @@ class Controller_Customer extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $getDelete = $this->getRequest()->getRequest("id");
-        $address = Ccc::getModel("Customer_Address")->load($getDelete);
-        $customer = Ccc::getModel("Customer")->load($getDelete);
+        $getDelete = $this->getRequest()->getRequest('id');
+        $address = Ccc::getModel('Customer_Address')->load($getDelete);
+        $customer = Ccc::getModel('Customer')->load($getDelete);
+        $message = Ccc::getModel('Core_Message');
         $result = $customer->delete();
-        if ($result) {
-            $this->redirect($this->getUrl("grid", "customer", null, true));
+        if ($result) 
+        {   
+            $message->addMessage('Data Deleted Succesfully.', Model_Core_Message::SUCCESS);
+            $this->redirect($this->getUrl('grid', 'customer', null, true));
         }
     }
     
     public function errorAction()
     {
-        echo "error";
+        echo 'error';
     }
 } ?>

@@ -1,68 +1,73 @@
 <?php
-Ccc::loadClass("Controller_Core_Action");
-Ccc::loadClass("Model_Core_Request");
+Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Core_Request');
 
 class Controller_Salesman extends Controller_Core_Action
 {
     public function gridAction()
     {
         $content = $this->getLayout()->getContent();
-        $salesmanGrid = Ccc::getBlock("Salesman_Grid");
+        $salesmanGrid = Ccc::getBlock('Salesman_Grid');
         $content->addChild($salesmanGrid);
         $this->renderLayout();
-        //Ccc::getBlock("Salesman_Grid")->toHtml();
     }
 
     public function saveAction()
     {
         $salesman = Ccc::getModel('Salesman');
-        $date = date("Y-m-d H:i:s");
-        $getSaveData = $this->getRequest()->getRequest("salesman");
+        $date = date('Y-m-d H:i:s');
+        $getSaveData = $this->getRequest()->getRequest('salesman');
+        $message = Ccc::getModel('Core_Message');
     
         try
         {
             if (!isset($getSaveData)) 
             {
-            throw new Exception("You can not insert data in salesman.", 1);
+                $message->addMessage('You can not insert data in salesman ID.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'salesman', null, true));
             }
 
             if(array_key_exists('salesmanId', $getSaveData) && $getSaveData['salesmanId'] == null)
             {
-                $salesman->firstName = $getSaveData["firstName"];
-                $salesman->lastName = $getSaveData["lastName"];
-                $salesman->email = $getSaveData["email"];
-                $salesman->phone = $getSaveData["phone"];
-                $salesman->status = $getSaveData["status"];
+                $salesman->firstName = $getSaveData['firstName'];
+                $salesman->lastName = $getSaveData['lastName'];
+                $salesman->email = $getSaveData['email'];
+                $salesman->phone = $getSaveData['phone'];
+                $salesman->status = $getSaveData['status'];
                 $result = $salesman->save();
 
                 if (!$result) 
                 {
-                    throw new Exception("System is not able to insert", 1);
+                    $message->addMessage('System is not able to insert.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'salesman', null, true));
                 } 
                 else 
                 {
-                    $this->redirect($this->getUrl("grid", "salesman", null, true));
+                    $message->addMessage('Data is inserted.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'salesman', null, true));
                 }
             }
             else
             {
                 $salesman->load($getSaveData['salesmanId']);
                 $salesman->salesmanId = $getSaveData['salesmanId'];
-                $salesman->firstName = $getSaveData["firstName"];
-                $salesman->lastName = $getSaveData["lastName"];
-                $salesman->email = $getSaveData["email"];
-                $salesman->phone = $getSaveData["phone"];
-                $salesman->status = $getSaveData["status"];
+                $salesman->firstName = $getSaveData['firstName'];
+                $salesman->lastName = $getSaveData['lastName'];
+                $salesman->email = $getSaveData['email'];
+                $salesman->phone = $getSaveData['phone'];
+                $salesman->status = $getSaveData['status'];
                 $salesman->updatedAt = $date;
                 $result = $salesman->save();
 
                 if (!$result) 
                 {
-                    throw new Exception("System is not able to update", 1);
+                    $message->addMessage('System is not able to update.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'salesman', null, true));
                 } 
                 else 
                 {
-                    $this->redirect($this->getUrl("grid", "salesman", null, true));
+                    $message->addMessage('Data is updated.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'salesman', null, true));
                 }
             }
         }
@@ -74,34 +79,36 @@ class Controller_Salesman extends Controller_Core_Action
 
     public function addAction()
     {
-        $id = Ccc::getModel("Salesman");//->load($id);
+        $id = Ccc::getModel('Salesman');
         $content = $this->getLayout()->getContent();
-        $salesmanAdd = Ccc::getBlock("Salesman_Edit")->addData("salesman", $id);
+        $salesmanAdd = Ccc::getBlock('Salesman_Edit')->addData('salesman', $id);
         $content->addChild($salesmanAdd);
         $this->renderLayout();
     }
 
     public function editAction()
     {
+        $message = Ccc::getModel('Core_Message');
         try
         {
-            $id = (int) $this->getRequest()->getRequest("id");
+            $id = (int) $this->getRequest()->getRequest('id');
             if (!$id)
             {
-                throw new Exception("Edit is not working", 1);
+                $message->addMessage('Edit is not working.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'salesman', null, true));
             }
             
-            $id = Ccc::getModel("Salesman")->load($id);
-            //$salesman->fetchRow("SELECT * FROM salesman WHERE id = $id");
+            $id = Ccc::getModel('Salesman')->load($id);
             
-            if (!$id) {
-                throw new Exception("This is not salesman Id", 1);
+            if (!$id) 
+            {
+                $message->addMessage('This is not salesman Id.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'salesman', null, true));
             }
             $content = $this->getLayout()->getContent();
-            $salesmanEdit = Ccc::getBlock("Salesman_Edit")->addData("salesman", $id);
+            $salesmanEdit = Ccc::getBlock('Salesman_Edit')->addData('salesman', $id);
             $content->addChild($salesmanEdit);
             $this->renderLayout();
-            //Ccc::getBlock("Salesman_Edit")->addData("salesman", $id)->toHtml();
         }
         catch (Exception $e) {
             echo $e->getMessage();
@@ -110,18 +117,20 @@ class Controller_Salesman extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $getDelete = $this->getRequest()->getRequest("id");
-        $salesman = Ccc::getModel("Salesman")->load($getDelete);
+        $getDelete = $this->getRequest()->getRequest('id');
+        $salesman = Ccc::getModel('Salesman')->load($getDelete);
+        $message = Ccc::getModel('Core_Message');
         $result = $salesman->delete();
     
         if ($result)
         {
-            $this->redirect($this->getUrl("grid", "salesman", null, true));
+            $message->addMessage('Successfully deleted salesman Id.', Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'salesman', null, true));
         }
     }
     public function errorAction()
     {
-        echo "error";
+        echo 'error';
     }
 } 
 ?>

@@ -11,7 +11,6 @@ class Controller_Product_Media extends Controller_Core_Action
         $productMediaGrid = Ccc::getBlock("Product_Media_Grid");
         $content->addChild($productMediaGrid);
         $this->renderLayout();
-        //Ccc::getBlock("Product_Media_grid")->toHtml();
     }
 
     public function addAction()
@@ -22,32 +21,36 @@ class Controller_Product_Media extends Controller_Core_Action
     $imageName = implode("", $imageName1);
     $imageName = date("mjYhis")."-".$imageName;
     $imageAddress = implode("", $imageAddress1);
-      
+    $message = Ccc::getModel('Core_Message');
+    
         if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Product/') .$imageName)) 
         {
-            //$adapter = new Model_Core_Adapter();
             $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
-
-
             $result = $this->getAdapter()->insert($query);
-
-            $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
-
+            if (!$result) 
+                {
+                    $message->addMessage('You can not insert image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                } 
+            else 
+                {
+                    $message->addMessage('Image is inserted in media.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                }
         } 
-        else 
-        {
-            $this->redirect($this->getUrl('grid','product_media',['id' =>  $productId],true));
-        }
     }
 
     public function saveAction()
     {
-        //$adapter = new Model_Core_Adapter();
+        $message = Ccc::getModel('Core_Message');
         try {
             $request = $this->getRequest();
             $productId = $request->getRequest("id");
-            if (!$request->isPost()) {
-                throw new Exception("Invalid Request", 1);
+            if (!$request->isPost()) 
+            {
+                $message->addMessage('Invalid Request Id.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'product_media', null, true));
+                //throw new Exception("Invalid Request", 1);
             }
 
             $rows = $request->getPost();
@@ -71,7 +74,17 @@ class Controller_Product_Media extends Controller_Core_Action
 
                 $deleteQuery = "DELETE FROM `product_media` WHERE imageId IN($removeIdsImplode)";
                 $deleteResult = $this->getAdapter()->delete($deleteQuery);
-                
+                if (!$deleteResult) 
+                {
+                    $message->addMessage('Image is not deleted.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is deleted.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                }
+
                 foreach($result as $key => $value)
                 {
                     if($deleteResult)
@@ -80,6 +93,7 @@ class Controller_Product_Media extends Controller_Core_Action
                     }
                 }
             }
+
             $query = "SELECT imageId, productId FROM `product_media` WHERE productId = $productId";
             $result = $this->getAdapter()->fetchPairs($query);
             $ids = array_keys($result);
@@ -124,6 +138,16 @@ class Controller_Product_Media extends Controller_Core_Action
             {
                 $query = "UPDATE `product_media` SET `base`= 1 WHERE imageId = {$base}";
                 $result = $this->getAdapter()->update($query);
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert base image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                }
 
             }
 
@@ -132,6 +156,16 @@ class Controller_Product_Media extends Controller_Core_Action
             {
                 $query = "UPDATE `product_media` SET `thumb`= 1 WHERE imageId = {$thumb}";
                 $result = $this->getAdapter()->update($query);
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert thumb image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                }
 
             }
 
@@ -140,6 +174,16 @@ class Controller_Product_Media extends Controller_Core_Action
             {
                 $query = "UPDATE `product_media` SET `small`= 1 WHERE imageId = {$small}";
                 $result = $this->getAdapter()->update($query);
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert small image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                }
             }
 
             $this->redirect(

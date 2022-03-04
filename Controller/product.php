@@ -1,30 +1,31 @@
 <?php
 
-Ccc::loadClass("Controller_Core_Action");
-Ccc::loadClass("Model_Core_Request");
+Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Core_Request');
 
 class Controller_Product extends Controller_Core_Action
 {
     public function gridAction()
     {
         $content = $this->getLayout()->getContent();
-        $productGrid = Ccc::getBlock("Product_Grid");
+        $productGrid = Ccc::getBlock('Product_Grid');
         $content->addChild($productGrid);
         $this->renderLayout();
-        //Ccc::getBlock("Product_Grid")->toHtml();
     }
 
     public function saveAction()
     {
         $product = Ccc::getModel('Product');
-        $date = date("Y-m-d H:i:s");
-        $getSaveData = $this->getRequest()->getRequest("product");
+        $date = date('Y-m-d H:i:s');
+        $getSaveData = $this->getRequest()->getRequest('product');
+        $message = Ccc::getModel('Core_Message');
 
         try
         {
             if (!isset($getSaveData)) 
             {
-            throw new Exception("You can not insert data in product.", 1);
+                $message->addMessage('You can not insert data in product.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'product', null, true));
             }
             if (array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
             {
@@ -36,11 +37,13 @@ class Controller_Product extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    throw new Exception("System is not able to insert", 1);
+                    $message->addMessage('System is not able to insert.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'product', null, true));
                 } 
                 else 
                 {
-                    $this->redirect($this->getUrl("grid", "product", null, true));
+                    $message->addMessage('Data is inserted.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl('grid', 'product', null, true));
                 }
             } 
             else 
@@ -56,11 +59,13 @@ class Controller_Product extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    throw new Exception("System is not able to update", 1);
+                    $message->addMessage('System is not able to update.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl('grid', 'product', null, true));
                 } 
                 else 
                 {
-                    $this->redirect($this->getUrl("grid", "product", null, true));
+                    $message->addMessage('Data is updated.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl('grid', 'product', null, true));
                 }
             }
         } 
@@ -72,30 +77,35 @@ class Controller_Product extends Controller_Core_Action
 
     public function addAction()
     {
-        $id = Ccc::getModel('Product'); //->load($id);
+        $id = Ccc::getModel('Product');
         $content = $this->getLayout()->getContent();
-        $productAdd = Ccc::getBlock("Product_Edit")->addData("product", $id);
+        $productAdd = Ccc::getBlock('Product_Edit')->addData('product', $id);
         $content->addChild($productAdd);
         $this->renderLayout();
     }
 
     public function editAction()
     {
+        $message = Ccc::getModel('Core_Message');
         try {
-            $id = (int) $this->getRequest()->getRequest("id");
-            if (!$id) {
-                throw new Exception("Error Processing Request", 1);
+
+            $id = (int) $this->getRequest()->getRequest('id');
+            if (!$id) 
+            {
+                $message->addMessage('Error Processing Invalid ID.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'product', null, true));
             }
             $id = Ccc::getModel('Product')->load($id);
-            //$product = $product->fetchRow("SELECT * FROM product WHERE id = $id");
-            if (!$id) {
-                throw new Exception("Error Processing Request", 1);
+
+            if (!$id) 
+            {
+                $message->addMessage('Error Processing Invalid ID.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'product', null, true));
             }
             $content = $this->getLayout()->getContent();
-            $productEdit = Ccc::getBlock("Product_Edit")->addData("product", $id);
+            $productEdit = Ccc::getBlock('Product_Edit')->addData('product', $id);
             $content->addChild($productEdit);
             $this->renderLayout();
-            //Ccc::getBlock("Product_Edit")->addData("product", $id)->toHtml();
         } 
         catch (Exception $e) 
         {
@@ -105,7 +115,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function deleteAction()
     {
-        $getDelete = $this->getRequest()->getRequest("id");
+        $getDelete = $this->getRequest()->getRequest('id');
         $product = Ccc::getModel('Product')->load($getDelete);
         
         $query1 = "SELECT imageId,image FROM product p LEFT JOIN product_media pm ON p.id = pm.productId  WHERE p.id = $getDelete;";
@@ -113,7 +123,7 @@ class Controller_Product extends Controller_Core_Action
         $result1 = $this->getAdapter()->fetchPairs($query1);
 
         $result = $product->delete();
-        
+        $message = Ccc::getModel('Core_Message');
         foreach($result1 as $key => $value){
             if($result)
             {
@@ -124,14 +134,15 @@ class Controller_Product extends Controller_Core_Action
 
         if (!$result) 
         {
-            echo "error";
+            echo 'error';
         }
-        $this->redirect($this->getUrl("grid", "product", null, true));
+        $message->addMessage('Id deleted successfully.', Model_Core_Message::SUCCESS);
+        $this->redirect($this->getUrl('grid', 'product', null, true));
     }
 
     public function errorAction()
     {
-        echo "error";
+        echo 'error';
     }
 }
 ?>

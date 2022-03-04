@@ -5,6 +5,8 @@ Ccc::loadClass("Block_Core_Layout");
 class Controller_Core_Action
 {
     protected $layout = null;
+    
+    protected $message = null; 
 
     public function redirect($url)
     {
@@ -102,6 +104,21 @@ class Controller_Core_Action
             $url = $url."/".$subUrl;
         }
         return $url;
+    }
+
+    public function getMessages()
+    {
+        if(!$this->message)
+        {
+            $this->setMessage(new Block_Core_Message());
+        }
+        return $this->message;
+    }
+
+     public function addMessage($message)
+    {
+        $this->message = $message;
+        return $this;
     }
 }
 

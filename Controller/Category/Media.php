@@ -11,25 +11,32 @@ class Controller_Category_Media extends Controller_Core_Action
         $categoryMediaGrid = Ccc::getBlock("Category_Media_Grid");
         $content->addChild($categoryMediaGrid);
         $this->renderLayout();
-        //Ccc::getBlock("Category_Media_grid")->toHtml();
     }
 
     public function addAction()
     {
         $categoryId = $_GET['categoryId'];
-
         $imageName1 = $_FILES['image']['name'];
         $imageAddress1 = $_FILES['image']['tmp_name'];
         $imageName = implode("", $imageName1);
         $imageName = date('mjYhis') . '-' . $imageName;
         $imageAddress = implode("", $imageAddress1);
+        $message = Ccc::getModel('Core_Message');
 
         if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Category/') .$imageName)) 
         {
-            //$adapter = new Model_Core_Adapter();
             $query = "INSERT INTO `category_media`( `categoryId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($categoryId,'$imageName',0,0,0,0,0)";
-
             $result = $this->getAdapter()->insert($query);
+            if (!$result) 
+                {
+                    $message->addMessage('You can not insert image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                } 
+            else 
+                {
+                    $message->addMessage('Image is inserted in media.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                }
 
             $this->redirect($this->getUrl("grid", "category_media", ["categoryId" => $categoryId]), true);
 
@@ -42,12 +49,14 @@ class Controller_Category_Media extends Controller_Core_Action
     
     public function saveAction()
     {
-        //$adapter = new Model_Core_Adapter();
+        $message = Ccc::getModel('Core_Message');
         try {
             $request = $this->getRequest();
             $categoryId = $request->getRequest("categoryId");
-            if (!$request->isPost()) {
-                throw new Exception("Invalid Request", 1);
+            if (!$request->isPost()) 
+            {   $message->addMessage('Invalid Request Id.', Model_Core_Message::ERROR);
+                $this->redirect($this->getUrl('grid', 'category_media', null, true));
+                //throw new Exception("Invalid Request", 1);
             }
 
             $rows = $request->getPost();
@@ -69,6 +78,16 @@ class Controller_Category_Media extends Controller_Core_Action
 
                 $deleteQuery = "DELETE FROM `category_media` WHERE imageId IN($removeIdsImplode)";
                 $deleteResult = $this->getAdapter()->delete($deleteQuery);
+                if (!$deleteResult) 
+                {
+                    $message->addMessage('Image is not deleted.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is deleted.', Model_Core_Message::SUCCESS);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                }
                 
                 foreach($result as $key => $value)
                 {
@@ -122,7 +141,16 @@ class Controller_Category_Media extends Controller_Core_Action
             {
                 $query = "UPDATE `category_media` SET `base`= 1 WHERE imageId = {$base}";
                 $result = $this->getAdapter()->update($query);
-
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert base image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                }
             }
 
             $thumb = $rows["media"]["thumb"];
@@ -130,7 +158,16 @@ class Controller_Category_Media extends Controller_Core_Action
             {
                 $query = "UPDATE `category_media` SET `thumb`= 1 WHERE imageId = {$thumb}";
                 $result = $this->getAdapter()->update($query);
-
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert base image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                }
             }
 
             $small = $rows["media"]["small"];
@@ -138,6 +175,16 @@ class Controller_Category_Media extends Controller_Core_Action
             {
                 $query = "UPDATE `category_media` SET `small`= 1 WHERE imageId = {$small}";
                 $result = $this->getAdapter()->update($query);
+                if (!$result) 
+                {
+                    $message->addMessage('You can not insert base image in media.', Model_Core_Message::ERROR);
+                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                } 
+                else 
+                {
+                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    //$this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                }
             }
 
             $this->redirect(
