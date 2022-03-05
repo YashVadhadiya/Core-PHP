@@ -31,13 +31,12 @@ class Controller_Vendor extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('You can not insert data in vendor.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                    throw new Exception("You can not insert data in vendor.", 1);
                 } 
             else 
                 {
                     $message->addMessage('Data is inserted in vendor.', Model_Core_Message::SUCCESS);
-                    //$this->redirect($this->getUrl('grid', 'vendor', null, true));
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
                 }
 
         }
@@ -56,13 +55,12 @@ class Controller_Vendor extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('You can not update data in vendor.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                    throw new Exception("You can not update data in vendor.", 1);
                 } 
             else 
                 {
                     $message->addMessage('Data is updated in vendor.', Model_Core_Message::SUCCESS);
-                    //$this->redirect($this->getUrl('grid', 'vendor', null, true));
+                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
                 }
         }
     }
@@ -87,8 +85,7 @@ class Controller_Vendor extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not insert data in vendor.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                    throw new Exception("You can not insert data in vendor.", 1);
                 } 
             else 
                 {
@@ -109,8 +106,7 @@ class Controller_Vendor extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not update data in vendor.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
+                    throw new Exception("You can not update data in vendor.", 1);
                 } 
             else 
                 {
@@ -131,7 +127,8 @@ class Controller_Vendor extends Controller_Core_Action
         }
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'vendor', null, true));
         }
     }
 
@@ -152,28 +149,24 @@ class Controller_Vendor extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id) 
             {
-                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'vendor', null, true));
-                //throw new Exception('Error Processing Request', 1);
+                throw new Exception('Error Processing Request', 1);
             }
-            $vendor = Ccc::getModel('Vendor')->load($id);
-            $vendor = $vendor->fetchRow("select v.*,a.* from vendor v join vendor_address a on a.vendorId = v.vendorId WHERE v.vendorId = $id");
+            $vendorRow = Ccc::getModel('Vendor');
+            $vendor = $vendorRow->fetchRow("SELECT v.*,a.* from vendor v join vendor_address a on a.vendorId = v.vendorId WHERE v.vendorId = $id");
 
             if (!$vendor) 
             {
-                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'vendor', null, true));
-                //throw new Exception('Error Processing Request', 1);
+                throw new Exception('Error Processing Request', 1);
             }
             $content = $this->getLayout()->getContent();
             $vendorEdit = Ccc::getBlock('Vendor_Edit')->addData('vendor', $vendor);
             $content->addChild($vendorEdit);
             $this->renderLayout();
-            //Ccc::getBlock('Vendor_Edit')->addData('vendor', $vendor)->toHtml();
         } 
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'vendor', null, true));
         }
     }
 

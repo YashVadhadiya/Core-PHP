@@ -32,13 +32,12 @@ class Controller_Customer extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not insert data in customer.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                    throw new Exception("You can not insert data in customer.", 1);
                 } 
             else 
                 {
                     $message->addMessage('Data is inserted in customer.', Model_Core_Message::SUCCESS);
-                    //$this->redirect($this->getUrl('grid', 'customer', null, true));
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
                 }
         }
         else
@@ -56,13 +55,12 @@ class Controller_Customer extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not update data in customer.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                    throw new Exception("You can not update data in customer.", 1);
                 } 
             else 
                 {
                     $message->addMessage('Data is updated in customer.', Model_Core_Message::SUCCESS);
-                    //$this->redirect($this->getUrl('grid', 'customer', null, true));
+                    $this->redirect($this->getUrl('grid', 'customer', null, true));
                 }
         }
     }
@@ -101,8 +99,7 @@ class Controller_Customer extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not insert data in customer.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                    throw new Exception("You can not insert data in customer.", 1);
                 } 
             else 
                 {
@@ -125,8 +122,7 @@ class Controller_Customer extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not update data in customer.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
+                    throw new Exception("You can not update data in customer.", 1);
                 } 
             else 
                 {
@@ -147,7 +143,8 @@ class Controller_Customer extends Controller_Core_Action
         }
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'customer', null, true));
         }
     }
 
@@ -169,28 +166,24 @@ class Controller_Customer extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id) 
             {
-                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'customer', null, true));
-                //throw new Exception('Error Processing Request', 1);
+                throw new Exception('Error Processing Request', 1);
             }
-            $customer = Ccc::getModel('Customer')->load($id);
-            $customer = $customer->fetchRow("select c.*,a.* from customer c join address a on a.customerId = c.id WHERE c.id = $id");
+            $customerRow = Ccc::getModel('Customer');
+            $customer = $customerRow->fetchRow("SELECT c.*,a.* from customer c join address a on a.customerId = c.id WHERE c.id = '$id'");
 
-            if (!$id) 
+            if (!$customer) 
             {
-                $message->addMessage('Error Processing Request.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'customer', null, true));
-                //throw new Exception('Error Processing Request', 1);
+                throw new Exception('Error Processing Request', 1);
             }
             $content = $this->getLayout()->getContent();
             $customerEdit = Ccc::getBlock('Customer_Edit')->addData('customer', $customer);
             $content->addChild($customerEdit);
             $this->renderLayout();
-            //Ccc::getBlock('Customer_Edit')->addData('customer', $customer)->toHtml();
         } 
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'customer', null, true));
         }
     }
 

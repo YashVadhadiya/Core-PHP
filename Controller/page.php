@@ -22,9 +22,7 @@ class Controller_Page extends Controller_Core_Action
         {
             if (!isset($getSaveData)) 
             {
-                $message->addMessage('You can not insert data in page.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'admin', null, true));
-                //throw new Exception('You can not insert data in page.', 1);
+                throw new Exception('You can not insert data in page.', 1);
             }
 
             if(array_key_exists('pageId', $getSaveData) && $getSaveData['pageId'] == null)
@@ -37,9 +35,7 @@ class Controller_Page extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('System is not able to insert.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'admin', null, true));
-                    //throw new Exception('System is not able to insert', 1);
+                    throw new Exception('System is not able to insert', 1);
                 } 
                 else 
                 {
@@ -60,9 +56,7 @@ class Controller_Page extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('System is not able to update.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'admin', null, true));
-                    //throw new Exception('System is not able to update', 1);
+                    throw new Exception('System is not able to update', 1);
                 } 
                 else 
                 {
@@ -73,13 +67,14 @@ class Controller_Page extends Controller_Core_Action
         }
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'page', null, true));
         }
     }
 
     public function addAction()
     {
-        $id = Ccc::getModel('Page');//->load($id);
+        $id = Ccc::getModel('Page');
         $content = $this->getLayout()->getContent();
         $pageAdd = Ccc::getBlock('Page_Edit')->addData('page', $id);
         $content->addChild($pageAdd);
@@ -94,28 +89,24 @@ class Controller_Page extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id)
             {
-                $message->addMessage('Edit is not working.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'admin', null, true));
-                //throw new Exception('Edit is not working', 1);
+                throw new Exception('Edit is not working', 1);
             }
             
             $id = Ccc::getModel('Page')->load($id);
-            //$page->fetchRow('SELECT * FROM page WHERE id = $id');
             
             if (!$id) 
             {
-                $message->addMessage('This is not page Id.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'admin', null, true));
-                //throw new Exception('This is not page Id', 1);
+                throw new Exception('This is not page Id', 1);
             }
             $content = $this->getLayout()->getContent();
             $pageEdit = Ccc::getBlock('Page_Edit')->addData('page', $id);
             $content->addChild($pageEdit);
             $this->renderLayout();
-            //Ccc::getBlock('Page_Edit')->addData('page', $id)->toHtml();
         }
-        catch (Exception $e) {
-            echo $e->getMessage();
+        catch (Exception $e) 
+        {
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'page', null, true));
         }
     }
 
