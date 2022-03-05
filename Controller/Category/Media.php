@@ -84,7 +84,6 @@ class Controller_Category_Media extends Controller_Core_Action
                 else 
                 {
                     $message->addMessage('Image is deleted.', Model_Core_Message::SUCCESS);
-                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
                 }
                 
                 foreach($result as $key => $value)
