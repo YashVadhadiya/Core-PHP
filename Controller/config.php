@@ -37,8 +37,7 @@ class Controller_Config extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('You can not insert data in config.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'config', null, true));
+                    throw new Exception("You can not insert data in config.", 1);
                 } 
             else 
                 {
@@ -58,8 +57,7 @@ class Controller_Config extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    $message->addMessage('System is not able to update.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'config', null, true));
+                    throw new Exception("System is not able to update.", 1);
                 } 
                 else 
                 {
@@ -70,7 +68,8 @@ class Controller_Config extends Controller_Core_Action
         }
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'config', null, true));           
         }
     }
 
@@ -92,24 +91,23 @@ class Controller_Config extends Controller_Core_Action
             $configId = (int)$this->getRequest()->getRequest('configId');
             if (!$configId)
             {
-                $message->addMessage('Edit is not working.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'config', null, true));
                 throw new Exception('Edit is not working', 1);
             }
             $config = Ccc::getModel('Config')->load($configId);
             
             if (!$config) 
             {
-                $message->addMessage('This is not config Id.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'config', null, true));
+                throw new Exception("This is not config Id.", 1);
             }
             $content = $this->getLayout()->getContent();
             $configEdit = Ccc::getBlock('Config_Edit')->addData('config', $config);
             $content->addChild($configEdit);
             $this->renderLayout();
         }
-        catch (Exception $e) {
-            echo $e->getMessage();
+        catch (Exception $e)
+        {
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'config', null, true));        
         }
     }
 

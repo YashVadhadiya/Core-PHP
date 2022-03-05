@@ -37,8 +37,7 @@ class Controller_Product extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('System is not able to insert.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'product', null, true));
+                    throw new Exception("System is not able to insert.", 1);
                 } 
                 else 
                 {
@@ -59,8 +58,7 @@ class Controller_Product extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('System is not able to update.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'product', null, true));
+                    throw new Exception("System is not able to update.", 1);
                 } 
                 else 
                 {
@@ -71,7 +69,8 @@ class Controller_Product extends Controller_Core_Action
         } 
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'product', null, true));
         }
     }
 
@@ -92,15 +91,13 @@ class Controller_Product extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id) 
             {
-                $message->addMessage('Error Processing Invalid ID.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'product', null, true));
+                throw new Exception("Error Processing Invalid ID.", 1);
             }
             $id = Ccc::getModel('Product')->load($id);
 
             if (!$id) 
             {
-                $message->addMessage('Error Processing Invalid ID.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'product', null, true));
+                throw new Exception("Error Processing Invalid ID.", 1);
             }
             $content = $this->getLayout()->getContent();
             $productEdit = Ccc::getBlock('Product_Edit')->addData('product', $id);
@@ -109,7 +106,8 @@ class Controller_Product extends Controller_Core_Action
         } 
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'product', null, true));
         }
     }
 

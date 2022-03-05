@@ -24,8 +24,7 @@ class Controller_Admin extends Controller_Core_Action
         {
             if (!isset($getSaveData)) 
             {
-                $message->addMessage('You can not insert data in admin.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'admin', null, true));
+                throw new Exception("You can not insert data in admin.", 1);
             }
 
             if(array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
@@ -39,8 +38,7 @@ class Controller_Admin extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('System is not able to insert.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'admin', null, true));
+                    throw new Exception("System is not able to insert.", 1);
                 } 
                 else 
                 {
@@ -62,8 +60,7 @@ class Controller_Admin extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    $message->addMessage('System is not able to update.', Model_Core_Message::ERROR);
-                    $this->redirect($this->getUrl('grid', 'admin', null, true));
+                    throw new Exception("System is not able to update", 1);
                 } 
                 else 
                 {
@@ -74,7 +71,8 @@ class Controller_Admin extends Controller_Core_Action
         }
         catch (Exception $e) 
         {
-            echo $e->getMessage();
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'admin', null, true));
         }
     }
 
@@ -95,16 +93,14 @@ class Controller_Admin extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id)
             {
-                $message->addMessage('Enable to load admin Id.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'admin', null, true));
+                throw new Exception("Enable to load admin Id.", 1);
             }
             
             $id = Ccc::getModel('Admin')->load($id);
             
             if (!$id) 
             {
-                $message->addMessage('Invalid Id.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'admin', null, true));
+                throw new Exception("Invalid Id.", 1);
             }
             
             $content = $this->getLayout()->getContent();
@@ -112,8 +108,10 @@ class Controller_Admin extends Controller_Core_Action
             $content->addChild($adminEdit);
             $this->renderLayout();
         }
-        catch (Exception $e) {
-            echo $e->getMessage();
+        catch (Exception $e) 
+        {
+            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getUrl('grid', 'admin', null, true));    
         }
     }
 
@@ -125,7 +123,7 @@ class Controller_Admin extends Controller_Core_Action
         $message = Ccc::getModel('Core_Message');
         if ($result)
         {
-            $message->addMessage('Admin id is deleted.', Model_Core_Message::ERROR);
+            $message->addMessage('Admin id is deleted.', Model_Core_Message::SUCCESS);
             $this->redirect($this->getUrl('grid', 'admin', null, true));
         }
     }
