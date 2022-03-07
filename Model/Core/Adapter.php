@@ -1,7 +1,7 @@
 <?php
 class Model_Core_Adapter
 {
-    public $config = ['host' => 'localhost:3305', 'user' => 'root', 'password' => '', 'dbname' => 'crud_oop'];
+    public $config = ['host' => 'localhost:3305', 'user' => 'root', 'password' => '', 'dbname' => 'project_yash'];
     
     private $connect = NULL;
     
