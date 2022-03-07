@@ -85,7 +85,7 @@ class Controller_Product_Media extends Controller_Core_Action
                 {
                     if($deleteResult)
                     {
-                        unlink($this->getBaseUrl('Media/product/') . $value);
+                        unlink($this->getBaseUrl('Media/Product/') . $value);
                     }
                 }
             }
