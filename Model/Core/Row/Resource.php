@@ -5,8 +5,6 @@ class Model_Core_Row_Resource
 
     protected $primaryKey = null;
 
-    //protected $rowClassName = null;
-
     public function __construct()
     {
         
@@ -17,17 +15,6 @@ class Model_Core_Row_Resource
         $adapter = new Model_Core_Adapter();
         return $adapter;
     }
-
-    /*public function getRowClassName()
-    {
-        return $this->rowClassName;
-    }
-
-    public function setRowClassName($rowClassName)
-    {
-        $this->rowClassName = $rowClassName;
-        return $this;
-    }*/
 
     public function getRow()
     {
@@ -62,7 +49,7 @@ class Model_Core_Row_Resource
             return false;
         }
         
-        //$adapter = new Model_Core_Adapter();
+        
         $key = '`'.implode("`,`", array_keys($queryInsert)).'`';
         $value = '\''.implode("','", array_values($queryInsert)).'\'';
 
@@ -73,7 +60,7 @@ class Model_Core_Row_Resource
 
     public function delete(array $queryDelete)
     {
-        //$adapter = new Model_Core_Adapter();
+        
         $tableName = $this->getTableName();
         $key = key($queryDelete);
         $value = $queryDelete[$key];
@@ -84,7 +71,7 @@ class Model_Core_Row_Resource
 
     public function update(array $queryUpdate, array $queryId)
     {
-        //$adapter = new Model_Core_Adapter();
+        
         $date = date("Y-m-d H:i:s");
         $set = [];
         $tableName = $this->getTableName();
@@ -104,7 +91,7 @@ class Model_Core_Row_Resource
 
     public function fetchRow($queryFetchRow)
     {
-        //$adapter = new Model_Core_Adapter();
+        
         $tableName = $this->getTableName();
         $result = $this->getAdapter()->fetchRow($queryFetchRow);
         return $result;
@@ -112,7 +99,7 @@ class Model_Core_Row_Resource
 
     public function fetchAll($queryFetchAll)
     {
-        //$adapter = new Model_Core_Adapter();
+        
         $tableName = $this->getTableName();
         $result = $this->getAdapter()->fetchAll($queryFetchAll);
         return $result;

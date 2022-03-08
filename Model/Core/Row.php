@@ -21,17 +21,6 @@ class Model_Core_Row
         return $this;       
     }
 
-    /*public function getTableClassName()
-    {
-        return $this->tableClassName;
-    }
-
-    public function setTableClassName($tableClassName)
-    {
-        $this->tableClassName = $tableClassName;
-        return $this;   
-    }*/
-
     public function getResourceClassName()
     {
         return $this->resourceClassName;

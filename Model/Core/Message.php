@@ -6,7 +6,6 @@ class Model_Core_Message
 	const ERROR = 'error' ;
 	const WARNING = 'warning';
 	protected $session = null;
-	//protected $messages = []; 
 
 	public function setSession($session)
 	{

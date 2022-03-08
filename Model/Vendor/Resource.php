@@ -4,7 +4,7 @@ class Model_Vendor_Resource extends Model_Core_Row_Resource
 {
     public function __construct()
     {
-        $this->setTableName('vendor')->setPrimaryKey('vendorId');//->setRowClassName('Vendor_Resource');
+        $this->setTableName('vendor')->setPrimaryKey('vendorId');
     }
 }
 ?>

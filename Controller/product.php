@@ -19,21 +19,26 @@ class Controller_Product extends Controller_Core_Action
         $date = date('Y-m-d H:i:s');
         $getSaveData = $this->getRequest()->getRequest('product');
         $message = Ccc::getModel('Core_Message');
+        $categoryProduct = Ccc::getModel('Category_Product');
+        $getSave = $this->getRequest()->getRequest('categoryProduct');
 
         try
         {
-            if (!isset($getSaveData)) 
+            if (!isset($getSaveData))
             {
-                $message->addMessage('You can not insert data in product.', Model_Core_Message::ERROR);
-                $this->redirect($this->getUrl('grid', 'product', null, true));
+                throw new Exception("You can not insert data in product.", 1);
             }
             if (array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
             {
+                $categoryIds = $getSaveData['category'];
                 $product->name = $getSaveData['name'];
                 $product->status = $getSaveData['status'];
                 $product->price = $getSaveData['price'];
                 $product->quantity = $getSaveData['quantity'];
+                $product->sku = $getSaveData['sku'];
                 $result = $product->save();
+                
+                $product->saveCategories($categoryIds, $result);
 
                 if (!$result) 
                 {
@@ -47,15 +52,21 @@ class Controller_Product extends Controller_Core_Action
             } 
             else 
             {
+                $categoryIds = $getSaveData['category'];
+
                 $product->load($getSaveData['id']);
                 $product->id = $getSaveData['id'];
                 $product->name = $getSaveData['name'];
                 $product->status = $getSaveData['status'];
                 $product->price = $getSaveData['price'];
                 $product->quantity = $getSaveData['quantity'];
+                $product->sku = $getSaveData['sku'];
                 $product->updatedAt = $date;
                 $result = $product->save();
+                $productId = $result;
 
+                $product->saveCategories($categoryIds);
+                
                 if (!$result) 
                 {
                     throw new Exception("System is not able to update.", 1);
@@ -79,6 +90,7 @@ class Controller_Product extends Controller_Core_Action
         $id = Ccc::getModel('Product');
         $content = $this->getLayout()->getContent();
         $productAdd = Ccc::getBlock('Product_Edit')->addData('product', $id);
+        $productAdd->addData('categoryProductPair',[]);
         $content->addChild($productAdd);
         $this->renderLayout();
     }
@@ -93,14 +105,19 @@ class Controller_Product extends Controller_Core_Action
             {
                 throw new Exception("Error Processing Invalid ID.", 1);
             }
-            $id = Ccc::getModel('Product')->load($id);
+            $product = Ccc::getModel('Product')->load($id);
+            $categoryProduct = Ccc::getModel('Category_Product')->fetchAll("SELECT categoryId FROM category_product WHERE productId = $id");
 
-            if (!$id) 
+            if (!$product) 
             {
                 throw new Exception("Error Processing Invalid ID.", 1);
             }
             $content = $this->getLayout()->getContent();
-            $productEdit = Ccc::getBlock('Product_Edit')->addData('product', $id);
+            $productEdit = Ccc::getBlock('Product_Edit');
+            $categoryPath = Ccc::getModel('Category');
+            $productEdit->addData("product", $product);
+            $productEdit->addData('categoryProductPair',$this->getAdapter()->fetchPairs("SELECT entityId, categoryId FROM category_product WHERE productId = {$id}"));
+            $productEdit->addData('categoryPath',$categoryPath);
             $content->addChild($productEdit);
             $this->renderLayout();
         } 

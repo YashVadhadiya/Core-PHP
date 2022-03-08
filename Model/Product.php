@@ -32,6 +32,31 @@ class Model_Product extends Model_Core_Row
 
         return self::STATUS_DEFAULT;
     }
+
+    public function saveCategories($categoryIds , $productId = null)
+    {
+        $adapter = new Model_Core_Adapter();
+        $query = "DELETE FROM category_product WHERE productId = {$this->id}";
+        $adapter->delete($query);   
+        if($productId)
+        {
+            foreach ($categoryIds as $categoryId) 
+                {       
+                    $categoryProduct = Ccc::getModel('Category_Product');
+                    $categoryProduct->productId = $productId;
+                    $categoryProduct->categoryId = $categoryId;
+                    $categoryProduct->save();
+                }
+
+        }
+        foreach ($categoryIds as $categoryId) 
+        {  
+            $categoryProduct = Ccc::getModel('Category_Product');
+            $categoryProduct->productId = $this->id;
+            $categoryProduct->categoryId = $categoryId;
+            $categoryProduct->save();
+        }
+    }
 }
 
 ?>

@@ -10,6 +10,7 @@
 			<th>Name</th>
 			<th>Price</th>
 			<th>Quantity</th>
+			<th>SKU</th>
 			<th>Status</th>
 			<th>Created At</th>
 			<th>Updated At</th>
@@ -30,6 +31,7 @@
 					<td><?php echo $product->name; ?></td>
 					<td><?php echo $product->price; ?></td>
 					<td><?php echo $product->quantity; ?></td>
+					<td><?php echo $product->sku; ?></td>
 					<td><?php echo $product->getStatus($product->status); ?></td>
 					<td><?php echo $product->createdAt?></td>
 					<td><?php echo $product->updatedAt?></td>

@@ -45,11 +45,6 @@
 							<?php foreach ($salesman->getStatus() as $key => $value): ?>
               			<option <?php if($salesman->status == $key): ?> selected <?php endif; ?> value="<?php echo $key; ?>"> <?php echo $value; ?></option>
             				<?php endforeach; ?>
-				          	
-							<!-- <option value="1" <?php //if($salesman->status==1 ): ?> selected = "selected"
-								<?php //endif; ?>>Active</option>
-							<option value="2" <?php //if($salesman->status==2 ): ?> selected = "selected"
-								<?php //endif; ?>>Inactive</option> -->
 						</select>
 					</td>
 				</tr>
