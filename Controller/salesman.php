@@ -33,6 +33,7 @@ class Controller_Salesman extends Controller_Core_Action
                 $salesman->email = $getSaveData['email'];
                 $salesman->phone = $getSaveData['phone'];
                 $salesman->status = $getSaveData['status'];
+                $salesman->percentage = $getSaveData['percentage'];
                 $result = $salesman->save();
 
                 if (!$result) 
@@ -54,6 +55,7 @@ class Controller_Salesman extends Controller_Core_Action
                 $salesman->email = $getSaveData['email'];
                 $salesman->phone = $getSaveData['phone'];
                 $salesman->status = $getSaveData['status'];
+                $salesman->percentage = $getSaveData['percentage'];
                 $salesman->updatedAt = $date;
                 $result = $salesman->save();
 

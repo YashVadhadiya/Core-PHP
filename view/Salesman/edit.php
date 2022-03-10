@@ -49,6 +49,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td>Percentage</td>
+					<td>
+						<input type="number" name="salesman[percentage]" value="<?php echo $salesman->percentage; ?>">
+					</td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" value="Save" name="edit">

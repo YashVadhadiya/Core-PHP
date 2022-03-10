@@ -20,7 +20,7 @@
             <th>State</th>
             <th>Country</th>
             <th>Billing</th>
-            <th>Shipping</th>   
+            <th>Shipping</th>  
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -49,6 +49,7 @@
                     <td><?php echo $customer->billing; ?></td>
                     <td><?php echo $customer->shipping; ?></td>
 
+                    
                     <td><a href="<?php echo$urlAction->getUrl('edit','customer',['id' =>  $customer->id],true) ?>">Edit</a></td>
                     <td><a href="<?php echo$urlAction->getUrl('delete','customer',['id' =>  $customer->id],true) ?>">Delete</a></td>
                 </tr>

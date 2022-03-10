@@ -132,20 +132,17 @@ class Controller_Product extends Controller_Core_Action
     {
         $getDelete = $this->getRequest()->getRequest('id');
         $product = Ccc::getModel('Product')->load($getDelete);
-        
-        $query1 = "SELECT imageId,image FROM product p LEFT JOIN product_media pm ON p.id = pm.productId  WHERE p.id = $getDelete;";
-
-        $result1 = $this->getAdapter()->fetchPairs($query1);
-
-        $result = $product->delete();
         $message = Ccc::getModel('Core_Message');
-        foreach($result1 as $key => $value){
+        $query1 = "SELECT imageId,image FROM product p LEFT JOIN product_media pm ON p.id = pm.productId  WHERE p.id = $getDelete;";
+        $result1 = $this->getAdapter()->fetchPairs($query1);
+        $result = $product->delete();
+        foreach($result1 as $key => $value)
+        {
             if($result)
             {
                 unlink($this->getBaseUrl('Media/Product/') . $value);
             }
         }
-
 
         if (!$result) 
         {

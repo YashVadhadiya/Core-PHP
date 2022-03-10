@@ -10,8 +10,10 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Status</th>
+            <th>Percentage</th>
             <th>Created At</th>
             <th>Updated At</th>
+            <th>Customer</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -43,11 +45,16 @@
                         </td>
 
                         <td>
+                            <?php echo $salesman->percentage; ?>
+                        </td>
+
+                        <td>
                             <?php echo $salesman->createdAt; ?>
                         </td>
                         <td>
                             <?php echo $salesman->updatedAt; ?>
                         </td>
+                        <td><a href="<?php echo $urlAction->getUrl('grid','salesman_customer',['id' =>  $salesman->salesmanId],true) ?>">Customer</a></td>
                         <td><a href="<?php echo $urlAction->getUrl('edit','salesman',['id' =>  $salesman->salesmanId],true) ?>">Edit</a></td>
                         <td><a href="<?php echo $urlAction->getUrl('delete','salesman',['id' =>  $salesman->salesmanId],true) ?>">Delete</a></td>
                     </tr>

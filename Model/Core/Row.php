@@ -10,6 +10,12 @@ class Model_Core_Row
         
     }
 
+    public function getAdapter()
+    {
+        $adapter = new Model_Core_Adapter();
+        return $adapter;
+    }
+
     public function getData()
     {
         return $this->data;
