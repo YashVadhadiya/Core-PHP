@@ -21,7 +21,7 @@ class Controller_Product_Media extends Controller_Core_Action
     $imageName = implode("", $imageName1);
     $imageName = date("mjYhis")."-".$imageName;
     $imageAddress = implode("", $imageAddress1);
-    $message = Ccc::getModel('Core_Message');
+    $message = $this->getMessage();
     
         if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Product/') .$imageName)) 
         {
@@ -41,7 +41,7 @@ class Controller_Product_Media extends Controller_Core_Action
 
     public function saveAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $media = Ccc::getModel('Product_Media');
         try {
             $request = $this->getRequest();

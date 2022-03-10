@@ -17,7 +17,7 @@ class Controller_Page extends Controller_Core_Action
         $page = Ccc::getModel('Page');
         $date = date('Y-m-d H:i:s');
         $getSaveData = $this->getRequest()->getRequest('page');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try
         {
             if (!isset($getSaveData)) 
@@ -83,7 +83,7 @@ class Controller_Page extends Controller_Core_Action
 
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try
         {
             $id = (int) $this->getRequest()->getRequest('id');
@@ -114,7 +114,7 @@ class Controller_Page extends Controller_Core_Action
     {
         $getDelete = $this->getRequest()->getRequest('id');
         $page = Ccc::getModel('Page')->load($getDelete);
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $result = $page->delete();
     
         if ($result)

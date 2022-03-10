@@ -16,7 +16,7 @@ class Controller_Salesman_Customer extends Controller_Core_Action
     {
         try
         {
-            $message = Ccc::getModel('Core_Message');
+            $message = $this->getMessage();
             $getSaveData = $this->getRequest()->getRequest('salesmanCustomer');
             $customer = Ccc::getModel('Customer');
             $customerIds = $getSaveData['customerWithoutSalesman']; 

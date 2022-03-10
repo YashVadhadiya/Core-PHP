@@ -17,7 +17,7 @@ class Controller_Vendor extends Controller_Core_Action
         $vendor = Ccc::getModel('Vendor');
         $getSaveData = $this->getRequest()->getRequest('vendor');
         $date = date('Y-m-d H:i:s');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
 
         if(array_key_exists('vendorId',$getSaveData) && $getSaveData['vendorId'] == null)
         {
@@ -70,7 +70,7 @@ class Controller_Vendor extends Controller_Core_Action
         $getSaveData = $this->getRequest()->getRequest('address');
         $address = Ccc::getModel('Vendor_Address');
         $date = date('Y-m-d H:i:s');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
 
         $addressData = $address->fetchRow("SELECT * FROM vendor_address WHERE vendorId = '$vendorId'");
 
@@ -118,7 +118,7 @@ class Controller_Vendor extends Controller_Core_Action
     
     public function saveAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try 
         {
             $vendorId = $this->saveVendor();
@@ -143,7 +143,7 @@ class Controller_Vendor extends Controller_Core_Action
     
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try 
         {
             $id = (int) $this->getRequest()->getRequest('id');
@@ -175,7 +175,7 @@ class Controller_Vendor extends Controller_Core_Action
         $getDelete = $this->getRequest()->getRequest('id');
         $address = Ccc::getModel('Vendor_Address')->load($getDelete);
         $vendor = Ccc::getModel('Vendor')->load($getDelete);
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $result = $vendor->delete();
         if ($result) 
         {   

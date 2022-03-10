@@ -14,7 +14,7 @@ class Controller_Customer_Price extends Controller_Core_Action
 
     public function saveAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try
         {
             if (!$this->getRequest()->getRequest('price')) 

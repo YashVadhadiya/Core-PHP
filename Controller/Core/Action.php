@@ -106,16 +106,16 @@ class Controller_Core_Action
         return $url;
     }
 
-    public function getMessages()
+    public function getMessage()
     {
         if(!$this->message)
         {
-            $this->setMessage(new Block_Core_Message());
+            $this->setMessage(Ccc::getModel('Admin_Message'));
         }
         return $this->message;
     }
 
-     public function addMessage($message)
+     public function setMessage($message)
     {
         $this->message = $message;
         return $this;

@@ -17,7 +17,7 @@ class Controller_Customer extends Controller_Core_Action
         $customer = Ccc::getModel('Customer');
         $getSaveData = $this->getRequest()->getRequest('customer');
         $date = date('Y-m-d H:i:s');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
 
 
         if(array_key_exists('id',$getSaveData) && $getSaveData['id'] == null)
@@ -70,7 +70,7 @@ class Controller_Customer extends Controller_Core_Action
         $getSaveData = $this->getRequest()->getRequest('address');
         $address = Ccc::getModel('Customer_Address');
         $date = date('Y-m-d H:i:s');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         
         $billing = 0;
         $shipping = 0;
@@ -134,7 +134,7 @@ class Controller_Customer extends Controller_Core_Action
     
     public function saveAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try 
         {
             $customerId = $this->saveCustomer();
@@ -159,7 +159,7 @@ class Controller_Customer extends Controller_Core_Action
     
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
 
         try 
         {
@@ -192,7 +192,7 @@ class Controller_Customer extends Controller_Core_Action
         $getDelete = $this->getRequest()->getRequest('id');
         $address = Ccc::getModel('Customer_Address')->load($getDelete);
         $customer = Ccc::getModel('Customer')->load($getDelete);
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $result = $customer->delete();
         if ($result) 
         {   

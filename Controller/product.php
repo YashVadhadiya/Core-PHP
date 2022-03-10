@@ -18,7 +18,7 @@ class Controller_Product extends Controller_Core_Action
         $product = Ccc::getModel('Product');
         $date = date('Y-m-d H:i:s');
         $getSaveData = $this->getRequest()->getRequest('product');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $categoryProduct = Ccc::getModel('Category_Product');
         $getSave = $this->getRequest()->getRequest('categoryProduct');
 
@@ -97,7 +97,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try {
 
             $id = (int) $this->getRequest()->getRequest('id');
@@ -132,7 +132,7 @@ class Controller_Product extends Controller_Core_Action
     {
         $getDelete = $this->getRequest()->getRequest('id');
         $product = Ccc::getModel('Product')->load($getDelete);
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $query1 = "SELECT imageId,image FROM product p LEFT JOIN product_media pm ON p.id = pm.productId  WHERE p.id = $getDelete;";
         $result1 = $this->getAdapter()->fetchPairs($query1);
         $result = $product->delete();

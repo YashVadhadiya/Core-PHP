@@ -17,7 +17,7 @@ class Controller_Config extends Controller_Core_Action
         $config = Ccc::getModel('Config');
         $date = date('Y-m-d H:i:s');
         $getSaveData = $this->getRequest()->getRequest('config'); 
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
 
         try
         {
@@ -85,7 +85,7 @@ class Controller_Config extends Controller_Core_Action
 
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try
         {
             $configId = (int)$this->getRequest()->getRequest('configId');
@@ -116,7 +116,7 @@ class Controller_Config extends Controller_Core_Action
         $getDelete = $this->getRequest()->getRequest('configId');
         $config = Ccc::getModel('Config')->load($getDelete);
         $result = $config->delete();
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
     
         if ($result)
         {

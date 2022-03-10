@@ -17,7 +17,7 @@ class Controller_Salesman extends Controller_Core_Action
         $salesman = Ccc::getModel('Salesman');
         $date = date('Y-m-d H:i:s');
         $getSaveData = $this->getRequest()->getRequest('salesman');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
     
         try
         {
@@ -88,7 +88,7 @@ class Controller_Salesman extends Controller_Core_Action
 
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try
         {
             $id = (int) $this->getRequest()->getRequest('id');
@@ -119,7 +119,7 @@ class Controller_Salesman extends Controller_Core_Action
     {
         $getDelete = $this->getRequest()->getRequest('id');
         $salesman = Ccc::getModel('Salesman')->load($getDelete);
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $result = $salesman->delete();
     
         if ($result)

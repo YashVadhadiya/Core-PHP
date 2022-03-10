@@ -15,7 +15,7 @@ class Controller_Category extends Controller_Core_Action
     public function saveAction()
     {
         $category = Ccc::getModel('Category');
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try 
         {
             if (!$this->getRequest()->getRequest('category')) 
@@ -182,7 +182,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function updatePathIntoCategory($categoryId, $parentId)
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         $category = Ccc::getModel('Category');
         $query = "SELECT path FROM category WHERE categoryId = '$categoryId'";
         $result = $this->getAdapter()->fetchOne($query);
@@ -244,7 +244,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function editAction()
     {
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
 
         try{
             $categoryId = (int)$this->getRequest()->getRequest('categoryId');
@@ -277,7 +277,7 @@ class Controller_Category extends Controller_Core_Action
     {
         $getDelete = $this->getRequest()->getRequest("categoryId");
         $category = Ccc::getModel('Category')->load($getDelete);
-        $message = Ccc::getModel('Core_Message');
+        $message = $this->getMessage();
         try 
         {
             $query1 = "SELECT imageId, image FROM category c LEFT JOIN category_media cm ON c.categoryId = cm.categoryId  WHERE c.categoryId = $getDelete;";
