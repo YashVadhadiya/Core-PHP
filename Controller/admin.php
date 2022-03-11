@@ -148,9 +148,5 @@ class Controller_Admin extends Controller_Core_Action
             $this->redirect($this->getUrl('grid', 'admin', null, true));
         }
     }
-    public function errorAction()
-    {
-        echo 'error';
-    }
 } 
 ?>

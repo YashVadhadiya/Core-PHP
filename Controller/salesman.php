@@ -128,9 +128,5 @@ class Controller_Salesman extends Controller_Core_Action
             $this->redirect($this->getUrl('grid', 'salesman', null, true));
         }
     }
-    public function errorAction()
-    {
-        echo 'error';
-    }
 } 
 ?>

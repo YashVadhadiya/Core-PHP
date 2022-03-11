@@ -183,9 +183,4 @@ class Controller_Vendor extends Controller_Core_Action
             $this->redirect($this->getUrl('grid', 'vendor', null, true));
         }
     }
-    
-    public function errorAction()
-    {
-        echo 'error';
-    }
 } ?>

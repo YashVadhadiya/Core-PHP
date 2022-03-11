@@ -123,9 +123,5 @@ class Controller_Page extends Controller_Core_Action
             $this->redirect($this->getUrl('grid', 'page', null, true));
         }
     }
-    public function errorAction()
-    {
-        echo 'error';
-    }
 } 
 ?>

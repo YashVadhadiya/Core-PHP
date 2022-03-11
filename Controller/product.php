@@ -151,10 +151,5 @@ class Controller_Product extends Controller_Core_Action
         $message->addMessage('Id deleted successfully.', Model_Core_Message::SUCCESS);
         $this->redirect($this->getUrl('grid', 'product', null, true));
     }
-
-    public function errorAction()
-    {
-        echo 'error';
-    }
 }
 ?>

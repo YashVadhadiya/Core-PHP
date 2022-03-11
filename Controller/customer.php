@@ -200,9 +200,6 @@ class Controller_Customer extends Controller_Core_Action
             $this->redirect($this->getUrl('grid', 'customer', null, true));
         }
     }
-    
-    public function errorAction()
-    {
-        echo 'error';
-    }
-} ?>
+} 
+
+?>

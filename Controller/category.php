@@ -308,10 +308,5 @@ class Controller_Category extends Controller_Core_Action
         }
     }
 
-    public function errorAction()
-    {
-        echo "error";
-    }
-
     }
 ?>

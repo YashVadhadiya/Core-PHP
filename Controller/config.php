@@ -124,9 +124,5 @@ class Controller_Config extends Controller_Core_Action
             $this->redirect($this->getUrl('grid', 'config', null, true));
         }
     }
-    public function errorAction()
-    {
-        echo 'error';
-    }
 } 
 ?>
