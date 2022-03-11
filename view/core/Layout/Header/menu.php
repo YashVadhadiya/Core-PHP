@@ -30,6 +30,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="<?php echo $urlAction->getUrl('grid','vendor',null,true) ?>" name="vendor">Vendor</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?php echo $urlAction->getUrl('logout','admin_login',null,true) ?>" name="logout">Logout</a>
+                </li>
             </ul>
         </div>
     </nav>

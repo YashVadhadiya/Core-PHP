@@ -4,28 +4,6 @@ Ccc::loadClass('Model_Core_Request');
 
 class Controller_Admin extends Controller_Core_Action
 {
-    /*public function testAction()
-    {
-        echo "<pre>";
-        $adminSession = Ccc::getModel('Admin_Session');
-        $coreSession = Ccc::getModel('Core_Session');
-        $message1 = Ccc::getModel('Core_Message');
-        $message = $this->getMessage();
-        print_r($message);
-        print_r($message1);
-
-        $adminMessage = Ccc::getModel('Admin_Message');
-        $adminMessage = $this->getMessage();
-        print_r($adminMessage);
-
-        $adminMessage->addMessage("helloooo");
-        //$adminMessage->addMessage("heoo");
-
-        print_r($adminSession);
-        print_r($coreSession);
-        print_r($_SESSION);
-    }*/
-
     public function gridAction()
     {
         $content = $this->getLayout()->getContent();
@@ -53,7 +31,7 @@ class Controller_Admin extends Controller_Core_Action
                 $admin->firstName = $getSaveData['firstName'];
                 $admin->lastName = $getSaveData['lastName'];
                 $admin->email = $getSaveData['email'];
-                $admin->password = $getSaveData['password'];
+                $admin->password = md5($getSaveData['password']);
                 $admin->status = $getSaveData['status'];
                 $result = $admin->save();
 
@@ -74,7 +52,7 @@ class Controller_Admin extends Controller_Core_Action
                 $admin->firstName = $getSaveData['firstName'];
                 $admin->lastName = $getSaveData['lastName'];
                 $admin->email = $getSaveData['email'];
-                $admin->password = $getSaveData['password'];
+                $admin->password = md5($getSaveData['password']);
                 $admin->status = $getSaveData['status'];
                 $admin->updatedAt = $date;
                 $result = $admin->save();
