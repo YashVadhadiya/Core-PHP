@@ -10,4 +10,3 @@ class Model_Config_Resource extends Model_Core_Row_Resource
     }
 }
 
-?>

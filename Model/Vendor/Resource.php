@@ -7,4 +7,3 @@ class Model_Vendor_Resource extends Model_Core_Row_Resource
         $this->setTableName('vendor')->setPrimaryKey('vendorId');
     }
 }
-?>

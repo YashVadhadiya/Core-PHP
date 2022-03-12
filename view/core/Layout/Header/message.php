@@ -1,11 +1,13 @@
 <?php 
-$msg = Ccc::getBlock('Core_Message');
-$msg1 = $msg->getMessages();
-if($msg1)
+$message = Ccc::getBlock('Core_Message');
+$messages = $message->getMessages();
+
+if($messages)
 {
-  	foreach ($msg1 as $key => $value)
+  	foreach ($messages as $key => $value)
   	{ 
 		 print_r($value); 
 	}
+		
 } 
 ?>

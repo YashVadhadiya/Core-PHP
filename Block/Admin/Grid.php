@@ -16,4 +16,3 @@ class Block_Admin_Grid extends Block_Core_Template
 	}
 }
 
-?>

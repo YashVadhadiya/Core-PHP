@@ -34,4 +34,3 @@ class Model_Salesman extends Model_Core_Row
     }
 }
 
-?>

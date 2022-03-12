@@ -9,4 +9,3 @@ class Model_Page_Resource extends Model_Core_Row_Resource
     }
 }
 
-?>

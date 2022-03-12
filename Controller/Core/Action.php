@@ -1,6 +1,6 @@
-<?php
+<?php Ccc::loadClass("Block_Core_Layout"); ?>
 
-Ccc::loadClass("Block_Core_Layout");
+<?php
 
 class Controller_Core_Action
 {
@@ -72,7 +72,6 @@ class Controller_Core_Action
         return Ccc::getFront()->getRequest();
     }
 
-
     public function setRequest($request)
     {
         $this->request = $request;
@@ -87,7 +86,7 @@ class Controller_Core_Action
 
     public function renderLayout()
     {
-        return $this->getLayout()->toHtml();
+        echo $this->getLayout()->toHtml();//setHeader('Content-type', 'text/html')->renderLayout($this->getLayout()->toHtml());
     }
 
     public function getUrl($action = null, $controller = null, array $parameters = null, $reset = false) 
@@ -157,6 +156,17 @@ class Controller_Core_Action
     {
         $this->message = $message;
         return $this;
+    }
+
+    protected function setTitle($title)
+    {
+        $this->getLayout()->getHead()->setTitle($title);
+        return $this;
+    }
+
+    public function getResponse()
+    {
+        return Ccc::getFront()->getResponse();
     }
 }
 

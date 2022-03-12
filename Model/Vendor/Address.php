@@ -8,4 +8,3 @@ class Model_Vendor_Address extends Model_Core_Row
 	}
 }
 
-?>

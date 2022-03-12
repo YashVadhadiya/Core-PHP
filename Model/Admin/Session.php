@@ -1,4 +1,4 @@
-<?php Ccc::loadClass('Model_Core_Session')?>
+<?php Ccc::loadClass('Model_Core_Session') ?>
 <?php
 
 	class Model_Admin_Session extends Model_Core_Session

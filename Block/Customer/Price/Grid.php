@@ -26,4 +26,3 @@ class Block_Customer_Price_Grid extends Block_Core_Template
 }
 
 
-?>

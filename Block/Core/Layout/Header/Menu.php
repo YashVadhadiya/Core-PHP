@@ -8,4 +8,3 @@ class Block_Core_Layout_Header_Menu extends Block_Core_Template
 	}
 }
 
-?>

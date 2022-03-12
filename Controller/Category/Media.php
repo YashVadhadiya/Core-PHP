@@ -1,7 +1,8 @@
+<?phpCcc::loadClass("Controller_Core_Action"); ?>
+<?phpCcc::loadClass("Model_Category_Media");?>
+<?phpCcc::loadClass("Model_Core_Request");?>
+
 <?php
-Ccc::loadClass("Controller_Core_Action");
-Ccc::loadClass("Model_Category_Media");
-Ccc::loadClass("Model_Core_Request");
 
 class Controller_Category_Media extends Controller_Core_Action
 {
@@ -29,33 +30,26 @@ class Controller_Category_Media extends Controller_Core_Action
             $result = $this->getAdapter()->insert($query);
             if (!$result) 
                 {
-                    throw new Exception("You can not insert image in media.", 1);
+                    throw new Exception("You can not insert image in media.");
                 } 
             else 
                 {
-                    $message->addMessage('Image is inserted in media.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Inserted Succesfully.');
                     $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
                 }
-
-            $this->redirect($this->getUrl("grid", "category_media", ["categoryId" => $categoryId]), true);
-
         } 
-        else 
-        {
-            $this->redirect($this->getUrl('grid', 'category_media',['categoryId' =>  $categoryId], true));
-        }
     }
     
     public function saveAction()
     {
-        $message = Ccc::getModel('Core_Message');
-        $media = Ccc::getModel('Product_Media');
+        $message = $this->getMessage();
+        $media = Ccc::getModel('Category_Media');
         try {
             $request = $this->getRequest();
             $categoryId = $request->getRequest("categoryId");
             if (!$request->isPost()) 
             {
-                throw new Exception("Invalid Request", 1);
+                throw new Exception("Invalid Request");
             }
 
             $rows = $request->getPost();
@@ -79,11 +73,11 @@ class Controller_Category_Media extends Controller_Core_Action
                 $deleteResult = $this->getAdapter()->delete($deleteQuery);
                 if (!$deleteResult) 
                 {
-                    throw new Exception("Image is not deleted.", 1);
+                    throw new Exception("Image is not deleted.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is deleted.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Deleted Successfully.');
                 }
                 
                 foreach($result as $key => $value)
@@ -140,11 +134,11 @@ class Controller_Category_Media extends Controller_Core_Action
                 $result = $this->getAdapter()->update($query);
                 if (!$result) 
                 {
-                    throw new Exception("You can not insert base image in media.", 1);
+                    throw new Exception("You can not insert base image in media.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is selected.');
                 }
             }
 
@@ -155,11 +149,11 @@ class Controller_Category_Media extends Controller_Core_Action
                 $result = $this->getAdapter()->update($query);
                 if (!$result) 
                 {
-                    throw new Exception("You can not insert base image in media.", 1);
+                    throw new Exception("You can not insert base image in media.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is selected.');
                 }
             }
 
@@ -170,11 +164,11 @@ class Controller_Category_Media extends Controller_Core_Action
                 $result = $this->getAdapter()->update($query);
                 if (!$result) 
                 {
-                    throw new Exception("You can not insert base image in media.", 1);
+                    throw new Exception("You can not insert base image in media.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is selected.');
                 }
             }
 

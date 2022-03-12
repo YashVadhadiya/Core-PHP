@@ -1,7 +1,5 @@
-<?php 
-
-Ccc::loadClass('Controller_Core_Action');
-
+<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php
 class Controller_Customer_Price extends Controller_Core_Action 
 {
     public function gridAction()
@@ -19,7 +17,7 @@ class Controller_Customer_Price extends Controller_Core_Action
         {
             if (!$this->getRequest()->getRequest('price')) 
             {
-                throw new Exception("Invalid Request", 1);
+                throw new Exception("Invalid Request");
             }
             $getSaveData = $this->getRequest()->getRequest();
             $customerId = (int)$this->getRequest()->getRequest('customerId');
@@ -32,7 +30,7 @@ class Controller_Customer_Price extends Controller_Core_Action
                     $result = $customerPrice->save();
                     if(!$result)
                     {
-                        throw new Exception("Customer Price not updated.", 1);
+                        throw new Exception("Customer Price not updated.");
                     }
                 }
             }
@@ -50,7 +48,7 @@ class Controller_Customer_Price extends Controller_Core_Action
             }
 
             $salesmanId = (int)$this->getRequest()->getRequest('id');
-            $message->addMessage('Customer Price saved successfully.', Model_Core_Message::SUCCESS);
+            $message->addMessage('Customer Price saved successfully.');
             $this->redirect($this->getUrl('grid',null,['id'=>$salesmanId,'customerId'=>$customerId],true));
         }
         catch (Exception $e) 

@@ -1,4 +1,4 @@
-<?php Ccc::loadClass('Model_Core_Message')?>
+<?php Ccc::loadClass('Model_Core_Message') ?>
 <?php
 
 	class Model_Admin_Message extends Model_Core_Message

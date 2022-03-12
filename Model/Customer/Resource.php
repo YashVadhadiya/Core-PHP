@@ -7,4 +7,3 @@ class Model_Customer_Resource extends Model_Core_Row_Resource
         $this->setTableName('customer')->setPrimaryKey('id');
     }
 }
-?>

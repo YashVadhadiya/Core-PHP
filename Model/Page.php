@@ -34,4 +34,3 @@ class Model_Page extends Model_Core_Row
     }
 }
 
-?>

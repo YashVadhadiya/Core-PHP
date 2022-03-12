@@ -14,4 +14,3 @@ class Block_Admin_Edit extends Block_Core_Template
 	}
 }
 
-?>

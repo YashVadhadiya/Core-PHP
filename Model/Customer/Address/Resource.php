@@ -8,4 +8,3 @@ class Model_Customer_Address_Resource extends Model_Core_Row_Resource
         $this->setTableName('address')->setPrimaryKey('addressId');
     }
 }
-?>

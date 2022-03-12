@@ -33,4 +33,3 @@ class Model_Vendor extends Model_Core_Row
     }
 }
 
-?>

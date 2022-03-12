@@ -1,8 +1,8 @@
-<?php
-Ccc::loadClass("Controller_Core_Action");
-Ccc::loadClass("Model_Product_Media");
-Ccc::loadClass("Model_Core_Request");
+<?php Ccc::loadClass("Controller_Core_Action");?>
+<?php Ccc::loadClass("Model_Product_Media");?>
+<?php Ccc::loadClass("Model_Core_Request");?>
 
+<?php
 class Controller_Product_Media extends Controller_Core_Action
 {
     public function gridAction()
@@ -29,11 +29,11 @@ class Controller_Product_Media extends Controller_Core_Action
             $result = $this->getAdapter()->insert($query);
             if (!$result) 
                 {
-                    throw new Exception("You can not insert image in media.", 1);
+                    throw new Exception("You can not insert image in media.");
                 } 
             else 
                 {
-                    $message->addMessage('Image is inserted in media.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is inserted in media.');
                     $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
                 }
         } 
@@ -48,7 +48,7 @@ class Controller_Product_Media extends Controller_Core_Action
             $productId = $request->getRequest("id");
             if (!$request->isPost()) 
             {
-                throw new Exception("Invalid Request", 1);
+                throw new Exception("Invalid Request");
             }
 
             $rows = $request->getPost();
@@ -74,11 +74,11 @@ class Controller_Product_Media extends Controller_Core_Action
                 $deleteResult = $this->getAdapter()->delete($deleteQuery);
                 if (!$deleteResult) 
                 {
-                    throw new Exception("Image is not deleted.", 1);
+                    throw new Exception("Image is not deleted.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is deleted.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is deleted.');
                 }
 
                 foreach($result as $key => $value)
@@ -136,11 +136,11 @@ class Controller_Product_Media extends Controller_Core_Action
                 $result = $this->getAdapter()->update($query);
                 if (!$result) 
                 {
-                    throw new Exception("You can not insert base image in media.", 1);
+                    throw new Exception("You can not insert base image in media.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is selected.');
                 }
 
             }
@@ -152,11 +152,11 @@ class Controller_Product_Media extends Controller_Core_Action
                 $result = $this->getAdapter()->update($query);
                 if (!$result) 
                 {
-                    throw new Exception("You can not insert thumb image in media.", 1);
+                    throw new Exception("You can not insert thumb image in media.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is selected.');
                 }
 
             }
@@ -168,11 +168,11 @@ class Controller_Product_Media extends Controller_Core_Action
                 $result = $this->getAdapter()->update($query);
                 if (!$result) 
                 {
-                    throw new Exception("You can not insert base image in media.", 1);
+                    throw new Exception("You can not insert base image in media.");
                 } 
                 else 
                 {
-                    $message->addMessage('Image is selected.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Image is selected.');
                 }
             }
 

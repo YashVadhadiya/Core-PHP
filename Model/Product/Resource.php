@@ -8,4 +8,3 @@ class Model_Product_Resource extends Model_Core_Row_Resource
         $this->setTableName('product')->setPrimaryKey('id');
     }
 }
-?>

@@ -1,9 +1,15 @@
 <?php
 class Model_Core_Adapter
 {
-    public $config = ['host' => 'localhost:3305', 'user' => 'root', 'password' => '', 'dbname' => 'project_yash'];
+    public $config = [];
     
     private $connect = NULL;
+
+    public function __construct()
+    { 
+        $this->config  = Ccc::getConfig('connection');
+    }
+
     
     public function connect()
     {
@@ -143,5 +149,3 @@ class Model_Core_Adapter
 }
 
 $adapter = new Model_Core_Adapter();
-
-?>

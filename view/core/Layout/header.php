@@ -8,5 +8,5 @@ $header->addChild($menuGrid);
 $header->addChild($message);
 ?>
 <?php foreach ($header->getChildren() as $key => $child): ?>
-<?php $child->toHtml(); ?>
+<?php echo $child->toHtml(); ?>
 <?php endforeach; ?>

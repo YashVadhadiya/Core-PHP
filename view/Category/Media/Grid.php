@@ -2,8 +2,8 @@
 $categoryId= $_GET['categoryId'];?>	
 <?php $urlAction = new Controller_Core_Action(); ?>
 <html>
-<head><h2 align="center">Category Media</h2></head>
-<body>
+<!-- <head><h2 align="center">Category Media</h2></head>
+ --><body>
 	<form action="<?php echo $urlAction->getUrl('save','category_media',['categoryId' =>  $categoryId],true) ?>" method="POST" align="center">
 		<input type="submit" name="update" value="UPDATE"> 
 		<button ><a href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>">Back to Category Grid</a></button>

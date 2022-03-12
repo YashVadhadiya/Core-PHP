@@ -8,4 +8,3 @@ class Model_Vendor_Address_Resource extends Model_Core_Row_Resource
         $this->setTableName('vendor_address')->setPrimaryKey('vendorAddressId');
     }
 }
-?>

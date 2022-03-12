@@ -16,4 +16,3 @@ class Block_Vendor_Grid extends Block_Core_Template
 	}
 }
 
-?>

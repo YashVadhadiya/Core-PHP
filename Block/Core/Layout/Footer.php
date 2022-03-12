@@ -8,4 +8,3 @@ class Block_Core_Layout_Footer extends Block_Core_Template
 	}
 }
 
-?>

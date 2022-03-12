@@ -1,8 +1,8 @@
 <?php $productMedias = $this->getProductMedias(); $id= $_GET['id'];?>	
 <?php $urlAction = new Controller_Core_Action(); ?>
 <html>
-<head><h2 align="center">Product Media</h2></head>
-<body>
+<!-- <head><h2 align="center">Product Media</h2></head>
+ --><body>
 	<form action="<?php echo $urlAction->getUrl('save','product_media',['id' =>  $id],true) ?>" method="POST" align="center">
 		<input type="submit" name="update" value="UPDATE"> 
 		<button ><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Back to Product Grid</a></button>

@@ -54,5 +54,3 @@ class Model_Core_Request
  
 }
 $request = new Model_Core_Request();
-
-?>

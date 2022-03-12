@@ -1,7 +1,6 @@
+<?php Ccc::loadClass('Controller_Core_Action');?>
+<?php Ccc::loadClass('Model_Core_Request');?>
 <?php
-Ccc::loadClass('Controller_Core_Action');
-Ccc::loadClass('Model_Core_Request');
-
 class Controller_Config extends Controller_Core_Action
 {
     public function gridAction()
@@ -23,7 +22,7 @@ class Controller_Config extends Controller_Core_Action
         {
             if (!isset($getSaveData)) 
             {
-            throw new Exception('You can not insert data in config.', 1);
+            throw new Exception('You can not insert data in config.');
             }
 
             if(array_key_exists('configId', $getSaveData) && $getSaveData['configId'] == null)
@@ -37,11 +36,11 @@ class Controller_Config extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    throw new Exception("You can not insert data in config.", 1);
+                    throw new Exception("You can not insert data in config.");
                 } 
             else 
                 {
-                    $message->addMessage('Data is inserted in config.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Inserted Succesfully.');
                     $this->redirect($this->getUrl('grid', 'config', null, true));
                 }
             }
@@ -57,11 +56,11 @@ class Controller_Config extends Controller_Core_Action
 
             if (!$result) 
                 {
-                    throw new Exception("System is not able to update.", 1);
+                    throw new Exception("System is not able to update.");
                 } 
                 else 
                 {
-                    $message->addMessage('Data is updated.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Updated Successfully.');
                     $this->redirect($this->getUrl('grid', 'config', null, true));
                 }
             }
@@ -77,7 +76,7 @@ class Controller_Config extends Controller_Core_Action
     {
         $configId = Ccc::getModel('Config');
         $content = $this->getLayout()->getContent();
-        $configAdd = Ccc::getBlock('Config_Edit')->addData('config', $configId);
+        $configAdd = Ccc::getBlock('Config_Edit')->setData(['config' => $configId]);
         $content->addChild($configAdd);
         $this->renderLayout();
 
@@ -91,16 +90,16 @@ class Controller_Config extends Controller_Core_Action
             $configId = (int)$this->getRequest()->getRequest('configId');
             if (!$configId)
             {
-                throw new Exception('Edit is not working', 1);
+                throw new Exception('Edit is not working');
             }
             $config = Ccc::getModel('Config')->load($configId);
             
             if (!$config) 
             {
-                throw new Exception("This is not config Id.", 1);
+                throw new Exception("Invalid Id.");
             }
             $content = $this->getLayout()->getContent();
-            $configEdit = Ccc::getBlock('Config_Edit')->addData('config', $config);
+            $configEdit = Ccc::getBlock('Config_Edit')->setData(['config' => $config]);
             $content->addChild($configEdit);
             $this->renderLayout();
         }
@@ -120,7 +119,7 @@ class Controller_Config extends Controller_Core_Action
     
         if ($result)
         {
-            $message->addMessage('Config Id is deleted.', Model_Core_Message::SUCCESS);
+            $message->addMessage('Deleted Successfully.');
             $this->redirect($this->getUrl('grid', 'config', null, true));
         }
     }

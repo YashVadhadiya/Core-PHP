@@ -1,8 +1,8 @@
 <?php $urlAction = new Controller_Core_Action() ?>
-<head>
+<!-- <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Grid</title>
-</head>
+</head> -->
 
 <body>
     <!-- this is nav bar code -->

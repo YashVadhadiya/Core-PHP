@@ -8,4 +8,3 @@ class Block_Core_Layout_Content extends Block_Core_Template
 	}
 }
 
-?>

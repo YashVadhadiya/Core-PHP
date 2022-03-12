@@ -1,7 +1,7 @@
-<?php
-Ccc::loadClass('Controller_Core_Action');
-Ccc::loadClass('Model_Core_Request');
+<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Model_Core_Request'); ?>
 
+<?php
 class Controller_Salesman_Customer extends Controller_Core_Action
 {
     public function gridAction()
@@ -24,7 +24,7 @@ class Controller_Salesman_Customer extends Controller_Core_Action
 
             if(!$result)
             {
-                throw new Exception("Error Processing Request", 1);
+                throw new Exception("Error Processing Request");
             }
             $message->addMessage('Customer Added Succesfully');
             $this->redirect($this->getUrl('grid', 'salesman_customer', null, false));

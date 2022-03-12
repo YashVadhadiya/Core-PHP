@@ -9,4 +9,3 @@ class Model_Salesman_Resource extends Model_Core_Row_Resource
     }
 }
 
-?>

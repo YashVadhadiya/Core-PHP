@@ -47,4 +47,3 @@ class Model_Customer extends Model_Core_Row
     }
 }
 
-?>

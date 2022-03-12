@@ -15,4 +15,3 @@ class Block_Config_Grid extends Block_Core_Template
 	}
 }
 
-?>

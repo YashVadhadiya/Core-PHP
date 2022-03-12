@@ -34,4 +34,3 @@ class Model_Admin extends Model_Core_Row
     }
 }
 
-?>

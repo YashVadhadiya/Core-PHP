@@ -1,8 +1,6 @@
+<?php Ccc::loadClass('Controller_Core_Action');?>
+<?php Ccc::loadClass('Model_Core_Request');?>
 <?php
-
-Ccc::loadClass('Controller_Core_Action');
-Ccc::loadClass('Model_Core_Request');
-
 class Controller_Product extends Controller_Core_Action
 {
     public function gridAction()
@@ -26,7 +24,7 @@ class Controller_Product extends Controller_Core_Action
         {
             if (!isset($getSaveData))
             {
-                throw new Exception("You can not insert data in product.", 1);
+                throw new Exception("You can not insert data in product.");
             }
             if (array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
             {
@@ -42,11 +40,11 @@ class Controller_Product extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    throw new Exception("System is not able to insert.", 1);
+                    throw new Exception("System is not able to insert.");
                 } 
                 else 
                 {
-                    $message->addMessage('Data is inserted.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Inserted Succesfully.');
                     $this->redirect($this->getUrl('grid', 'product', null, true));
                 }
             } 
@@ -69,11 +67,11 @@ class Controller_Product extends Controller_Core_Action
                 
                 if (!$result) 
                 {
-                    throw new Exception("System is not able to update.", 1);
+                    throw new Exception("System is not able to update.");
                 } 
                 else 
                 {
-                    $message->addMessage('Data is updated.', Model_Core_Message::SUCCESS);
+                    $message->addMessage('Updated Successfully.');
                     $this->redirect($this->getUrl('grid', 'product', null, true));
                 }
             }
@@ -89,8 +87,8 @@ class Controller_Product extends Controller_Core_Action
     {
         $id = Ccc::getModel('Product');
         $content = $this->getLayout()->getContent();
-        $productAdd = Ccc::getBlock('Product_Edit')->addData('product', $id);
-        $productAdd->addData('categoryProductPair',[]);
+        $productAdd = Ccc::getBlock('Product_Edit')->setData(['product' => $id, 'categoryProductPair' => []]);
+        //$productAdd->setData(['categoryProductPair' => []]);
         $content->addChild($productAdd);
         $this->renderLayout();
     }
@@ -103,21 +101,21 @@ class Controller_Product extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id) 
             {
-                throw new Exception("Error Processing Invalid ID.", 1);
+                throw new Exception("Error Processing Invalid ID.");
             }
             $product = Ccc::getModel('Product')->load($id);
             $categoryProduct = Ccc::getModel('Category_Product')->fetchAll("SELECT categoryId FROM category_product WHERE productId = $id");
 
             if (!$product) 
             {
-                throw new Exception("Error Processing Invalid ID.", 1);
+                throw new Exception("Error Processing Invalid ID.");
             }
             $content = $this->getLayout()->getContent();
             $productEdit = Ccc::getBlock('Product_Edit');
             $categoryPath = Ccc::getModel('Category');
-            $productEdit->addData("product", $product);
-            $productEdit->addData('categoryProductPair',$this->getAdapter()->fetchPairs("SELECT entityId, categoryId FROM category_product WHERE productId = {$id}"));
-            $productEdit->addData('categoryPath',$categoryPath);
+            $productEdit->setData(['product' => $product, 'categoryProductPair' => $this->getAdapter()->fetchPairs("SELECT entityId, categoryId FROM category_product WHERE productId = {$id}"), 'categoryPath' => $categoryPath]);
+            //$productEdit->setData(['categoryProductPair' => $this->getAdapter()->fetchPairs("SELECT entityId, categoryId FROM category_product WHERE productId = {$id}")]);
+            //$productEdit->setData('categoryPath' => $categoryPath);
             $content->addChild($productEdit);
             $this->renderLayout();
         } 
@@ -148,7 +146,7 @@ class Controller_Product extends Controller_Core_Action
         {
             echo 'error';
         }
-        $message->addMessage('Id deleted successfully.', Model_Core_Message::SUCCESS);
+        $message->addMessage('Deleted Successfully.');
         $this->redirect($this->getUrl('grid', 'product', null, true));
     }
 }

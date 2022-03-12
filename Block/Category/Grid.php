@@ -25,4 +25,3 @@ class Block_Category_Grid extends Block_Core_Template
 
 }
 
-?>
