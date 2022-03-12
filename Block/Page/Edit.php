@@ -14,4 +14,3 @@ class Block_Page_Edit extends Block_Core_Template
 	}
 }
 
-?>

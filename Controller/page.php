@@ -1,7 +1,6 @@
+<?php Ccc::loadClass('Controller_Core_Action');?>
+<?php Ccc::loadClass('Model_Core_Request');?>
 <?php
-Ccc::loadClass('Controller_Core_Action');
-Ccc::loadClass('Model_Core_Request');
-
 class Controller_Page extends Controller_Core_Action
 {
     public function gridAction()
@@ -22,7 +21,7 @@ class Controller_Page extends Controller_Core_Action
         {
             if (!isset($getSaveData)) 
             {
-                throw new Exception('You can not insert data in page.', 1);
+                throw new Exception('You can not insert data in page.');
             }
 
             if(array_key_exists('pageId', $getSaveData) && $getSaveData['pageId'] == null)
@@ -35,12 +34,12 @@ class Controller_Page extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    throw new Exception('System is not able to insert', 1);
+                    throw new Exception('System is not able to insert');
                 } 
                 else 
                 {
-                    $message->addMessage('System is able to insert.', Model_Core_Message::SUCCESS);
-                    $this->redirect($this->getUrl('grid', 'page', null, true));
+                    $message->addMessage('Inserted Succesfully.');
+                    $this->redirect($this->getUrl('grid', 'page', null, false));
                 }
             }
             else
@@ -56,19 +55,19 @@ class Controller_Page extends Controller_Core_Action
 
                 if (!$result) 
                 {
-                    throw new Exception('System is not able to update', 1);
+                    throw new Exception('System is not able to update');
                 } 
                 else 
                 {
-                    $message->addMessage('Data is update.', Model_Core_Message::SUCCESS);
-                    $this->redirect($this->getUrl('grid', 'page', null, true));
+                    $message->addMessage('Updated Successfully.');
+                    $this->redirect($this->getUrl('grid', 'page', ['id' => null], false));
                 }
             }
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'page', null, true));
+            $this->redirect($this->getUrl('grid', 'page', ['id' => null], false));
         }
     }
 
@@ -76,7 +75,7 @@ class Controller_Page extends Controller_Core_Action
     {
         $id = Ccc::getModel('Page');
         $content = $this->getLayout()->getContent();
-        $pageAdd = Ccc::getBlock('Page_Edit')->addData('page', $id);
+        $pageAdd = Ccc::getBlock('Page_Edit')->setData(['page' => $id]);
         $content->addChild($pageAdd);
         $this->renderLayout();
     }
@@ -89,17 +88,17 @@ class Controller_Page extends Controller_Core_Action
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id)
             {
-                throw new Exception('Edit is not working', 1);
+                throw new Exception('Edit is not working');
             }
             
             $id = Ccc::getModel('Page')->load($id);
             
             if (!$id) 
             {
-                throw new Exception('This is not page Id', 1);
+                throw new Exception('This is not page Id');
             }
             $content = $this->getLayout()->getContent();
-            $pageEdit = Ccc::getBlock('Page_Edit')->addData('page', $id);
+            $pageEdit = Ccc::getBlock('Page_Edit')->setData(['page' => $id]);
             $content->addChild($pageEdit);
             $this->renderLayout();
         }
@@ -119,8 +118,8 @@ class Controller_Page extends Controller_Core_Action
     
         if ($result)
         {
-            $message->addMessage('Deleted page Id.', Model_Core_Message::SUCCESS);
-            $this->redirect($this->getUrl('grid', 'page', null, true));
+            $message->addMessage('Deleted Successfully.');
+            $this->redirect($this->getUrl('grid', 'page', null, false));
         }
     }
 } 

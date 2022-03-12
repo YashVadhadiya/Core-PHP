@@ -1,12 +1,12 @@
 <?php $page = $this->getPage(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
 
-		<form method="POST" action="<?php echo $urlAction->getUrl('save','page',['id' =>  $page->pageId],true) ?>">
+		<form method="POST" action="<?php echo $urlAction->getUrl('save','page',null, false) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>
 					<td colspan="4">
-						<h1>page details</h1></td>
+						<h1>Page Details</h1></td>
 				</tr>
 				<tr>
 					<td>Id</td>
