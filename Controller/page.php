@@ -5,6 +5,7 @@ class Controller_Page extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Page Grid');
         $content = $this->getLayout()->getContent();
         $pageGrid = Ccc::getBlock('Page_Grid');
         $content->addChild($pageGrid);
@@ -19,7 +20,7 @@ class Controller_Page extends Controller_Core_Action
         $message = $this->getMessage();
         try
         {
-            if (!isset($getSaveData)) 
+            if (!$getSaveData)
             {
                 throw new Exception('You can not insert data in page.');
             }
@@ -30,6 +31,7 @@ class Controller_Page extends Controller_Core_Action
                 $page->code = $getSaveData['code'];
                 $page->content = $getSaveData['content'];
                 $page->status = $getSaveData['status'];
+                $page->createdAt = $date;
                 $result = $page->save();
 
                 if (!$result) 
@@ -73,6 +75,7 @@ class Controller_Page extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Page Add');
         $id = Ccc::getModel('Page');
         $content = $this->getLayout()->getContent();
         $pageAdd = Ccc::getBlock('Page_Edit')->setData(['page' => $id]);
@@ -82,6 +85,7 @@ class Controller_Page extends Controller_Core_Action
 
     public function editAction()
     {
+        $this->setTitle('Page Edit');
         $message = $this->getMessage();
         try
         {

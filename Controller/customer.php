@@ -5,6 +5,7 @@ class Controller_Customer extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Customer Grid');
         $content = $this->getLayout()->getContent();
         $customerGrid = Ccc::getBlock('Customer_Grid');
         $content->addChild($customerGrid);
@@ -26,6 +27,7 @@ class Controller_Customer extends Controller_Core_Action
             $customer->email = $getSaveData['email'];
             $customer->phone = $getSaveData['phone'];
             $customer->status = $getSaveData['status'];
+            $customer->createdAt = $date;
             $result = $customer->save();
             return $result;
 
@@ -149,6 +151,7 @@ class Controller_Customer extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Customer Add');
         $id = Ccc::getModel('Customer');
         $content = $this->getLayout()->getContent();
         $customerAdd = Ccc::getBlock('Customer_Edit')->setData(['customer' => $id]);
@@ -158,8 +161,8 @@ class Controller_Customer extends Controller_Core_Action
     
     public function editAction()
     {
+        $this->setTitle('Customer Edit');
         $message = $this->getMessage();
-
         try 
         {
             $id = (int) $this->getRequest()->getRequest('id');

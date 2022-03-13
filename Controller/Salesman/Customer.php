@@ -6,6 +6,7 @@ class Controller_Salesman_Customer extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Salesman Customer Grid');
         $content = $this->getLayout()->getContent();
         $salesmanCustomerGrid = Ccc::getBlock('Salesman_Customer_Grid');
         $content->addChild($salesmanCustomerGrid);

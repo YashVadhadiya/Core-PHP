@@ -5,6 +5,7 @@ class Controller_Salesman extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Salesman Grid');
         $content = $this->getLayout()->getContent();
         $salesmanGrid = Ccc::getBlock('Salesman_Grid');
         $content->addChild($salesmanGrid);
@@ -20,7 +21,7 @@ class Controller_Salesman extends Controller_Core_Action
     
         try
         {
-            if (!isset($getSaveData)) 
+            if (!$getSaveData)
             {
                 throw new Exception("You can not insert data in salesman ID.");
             }
@@ -33,6 +34,7 @@ class Controller_Salesman extends Controller_Core_Action
                 $salesman->phone = $getSaveData['phone'];
                 $salesman->status = $getSaveData['status'];
                 $salesman->percentage = $getSaveData['percentage'];
+                $salesman->createdAt = $date;
                 $result = $salesman->save();
 
                 if (!$result) 
@@ -78,6 +80,7 @@ class Controller_Salesman extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Salesman Add');
         $id = Ccc::getModel('Salesman');
         $content = $this->getLayout()->getContent();
         $salesmanAdd = Ccc::getBlock('Salesman_Edit')->setData(['salesman' => $id]);
@@ -87,6 +90,7 @@ class Controller_Salesman extends Controller_Core_Action
 
     public function editAction()
     {
+        $this->setTitle('Salesman Edit');
         $message = $this->getMessage();
         try
         {

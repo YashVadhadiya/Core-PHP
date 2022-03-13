@@ -5,6 +5,7 @@ class Controller_Product extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Product Grid');
         $content = $this->getLayout()->getContent();
         $productGrid = Ccc::getBlock('Product_Grid');
         $content->addChild($productGrid);
@@ -22,7 +23,7 @@ class Controller_Product extends Controller_Core_Action
 
         try
         {
-            if (!isset($getSaveData))
+            if (!$getSaveData)
             {
                 throw new Exception("You can not insert data in product.");
             }
@@ -34,6 +35,7 @@ class Controller_Product extends Controller_Core_Action
                 $product->price = $getSaveData['price'];
                 $product->quantity = $getSaveData['quantity'];
                 $product->sku = $getSaveData['sku'];
+                $product->createdAt = $date;
                 $result = $product->save();
                 
                 $product->saveCategories($categoryIds, $result);
@@ -85,6 +87,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Product Add');
         $id = Ccc::getModel('Product');
         $content = $this->getLayout()->getContent();
         $productAdd = Ccc::getBlock('Product_Edit')->setData(['product' => $id, 'categoryProductPair' => []]);
@@ -95,6 +98,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function editAction()
     {
+        $this->setTitle('Product Edit');
         $message = $this->getMessage();
         try {
 

@@ -21,7 +21,7 @@ class Controller_Admin extends Controller_Core_Action
     
         try
         {
-            if (!isset($getSaveData)) 
+            if (!$getSaveData)
             {
                 throw new Exception("You can not insert data in admin.");
             }
@@ -33,6 +33,7 @@ class Controller_Admin extends Controller_Core_Action
                 $admin->email = $getSaveData['email'];
                 $admin->password = md5($getSaveData['password']);
                 $admin->status = $getSaveData['status'];
+                $admin->createdAt = $date;
                 $result = $admin->save();
 
                 if (!$result) 

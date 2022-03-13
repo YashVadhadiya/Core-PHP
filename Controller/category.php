@@ -5,6 +5,7 @@ class Controller_Category extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Category Grid');
         $content = $this->getLayout()->getContent();
         $categoryGrid = Ccc::getBlock("Category_Grid");
         $content->addChild($categoryGrid);
@@ -13,18 +14,17 @@ class Controller_Category extends Controller_Core_Action
 
     public function saveAction()
     {
+        $this->setTitle('Category Add');
         $category = Ccc::getModel('Category');
         $message = $this->getMessage();
+        $date = date('Y-m-d H:i:s');
+        $getSaveData = $this->getRequest()->getRequest('category');
         try 
         {
             if (!$this->getRequest()->getRequest('category')) 
             {
                 throw new Exception("Error in category.");
             }
-
-            $date = date('Y-m-d H:i:s');
-            $getSaveData = $this->getRequest()->getRequest('category');
-
             $categoryId = $getSaveData['categoryId'];
             $categoryName = $getSaveData['categoryName'];
             $parentId = $getSaveData['parentId'];
@@ -206,8 +206,8 @@ class Controller_Category extends Controller_Core_Action
         $categories = $category->fetchAll($query);
         if(!$categories) 
         { 
-            throw new Exception("Error Processing Request");
-            
+            $message->addMessage('Updated Successfully.');
+            $this->redirect($this->getUrl('grid', 'category', null, true));
         }
         else
         {
@@ -225,7 +225,6 @@ class Controller_Category extends Controller_Core_Action
                 $category->categoryId = $newCategoryId;
                 $category->path = $updatedPath;
                 $updateResult = $category->save();
-
             }
         }
         $message->addMessage('Updated Successfully.');
@@ -234,6 +233,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Category Add');
         $categoryId = Ccc::getModel("Category");
         $content = $this->getLayout()->getContent();
         $categoryAdd = Ccc::getBlock("Category_Edit")->setData(['category' => $categoryId]);
@@ -243,8 +243,8 @@ class Controller_Category extends Controller_Core_Action
 
     public function editAction()
     {
+        $this->setTitle('Category Edit');
         $message = $this->getMessage();
-
         try{
             $categoryId = (int)$this->getRequest()->getRequest('categoryId');
             

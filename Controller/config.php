@@ -5,6 +5,7 @@ class Controller_Config extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Config Grid');
         $content = $this->getLayout()->getContent();
         $configGrid = Ccc::getBlock('Config_Grid');
         $content->addChild($configGrid);
@@ -20,7 +21,7 @@ class Controller_Config extends Controller_Core_Action
 
         try
         {
-            if (!isset($getSaveData)) 
+            if (!$getSaveData)
             {
             throw new Exception('You can not insert data in config.');
             }
@@ -52,6 +53,7 @@ class Controller_Config extends Controller_Core_Action
             $config->code = $getSaveData['code'];
             $config->value = $getSaveData['value'];
             $config->status = $getSaveData['status'];
+            $config->updatedAt = $data;
             $result = $config->save();
 
             if (!$result) 
@@ -74,6 +76,7 @@ class Controller_Config extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Config Add');
         $configId = Ccc::getModel('Config');
         $content = $this->getLayout()->getContent();
         $configAdd = Ccc::getBlock('Config_Edit')->setData(['config' => $configId]);
@@ -84,6 +87,7 @@ class Controller_Config extends Controller_Core_Action
 
     public function editAction()
     {
+        $this->setTitle('Config Edit');
         $message = $this->getMessage();
         try
         {

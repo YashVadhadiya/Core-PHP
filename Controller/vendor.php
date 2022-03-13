@@ -5,6 +5,7 @@ class Controller_Vendor extends Controller_Core_Action
 {
     public function gridAction()
     {
+        $this->setTitle('Vendor Grid');
         $content = $this->getLayout()->getContent();
         $vendorGrid = Ccc::getBlock('Vendor_Grid');
         $content->addChild($vendorGrid);
@@ -25,6 +26,7 @@ class Controller_Vendor extends Controller_Core_Action
                 $vendor->email = $getSaveData['email'];
                 $vendor->phone = $getSaveData['phone'];
                 $vendor->status = $getSaveData['status'];
+                $vendor->createdAt = $date;
                 $result = $vendor->save();
                 return $result;
 
@@ -133,6 +135,7 @@ class Controller_Vendor extends Controller_Core_Action
 
     public function addAction()
     {
+        $this->setTitle('Vendor Add');
         $id = Ccc::getModel('Vendor');
         $content = $this->getLayout()->getContent();
         $vendorAdd = Ccc::getBlock('Vendor_Edit')->setData(['vendor' => $id]);
@@ -142,6 +145,7 @@ class Controller_Vendor extends Controller_Core_Action
     
     public function editAction()
     {
+        $this->setTitle('Vendor Edit');
         $message = $this->getMessage();
         try 
         {
