@@ -82,6 +82,7 @@ class Controller_Category extends Controller_Core_Action
                     $category->categoryName = $categoryName;
                     $category->status = $status;
                     $resultCategoryName = $category->save();
+                    $resultCategoryName = $category->categoryId;
 
                     if(!$resultCategoryName)
                     {
@@ -107,6 +108,7 @@ class Controller_Category extends Controller_Core_Action
                     $category->status = $status;
                     $category->createdAt = $date;
                     $resultParentId = $category->save();
+                    $resultParentId = $category->categoryId;
 
                     if(!$resultParentId)
                     {

@@ -25,7 +25,7 @@
 
 			<tr>
 				<td >Email</td>
-				<td><input type="text" name="vendor[email]"  value="<?php echo $vendor->email ?>"></td>
+				<td><input type="mail" name="vendor[email]"  value="<?php echo $vendor->email ?>"></td>
 			</tr>
 
 			<tr>

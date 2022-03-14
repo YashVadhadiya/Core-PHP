@@ -25,7 +25,7 @@
 
 			<tr>
 				<td >Email</td>
-				<td><input type="text" name="customer[email]"  value="<?php echo $customer->email ?>"></td>
+				<td><input type="mail" name="customer[email]"  value="<?php echo $customer->email ?>"></td>
 			</tr>
 
 			<tr>
@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td >Id</td>
-				<td><input type="text" name="address[id]" value="<?php echo $customer->addressId ?>" readonly></td>
+				<td><input type="text" name="address[addressId]" value="<?php echo $customer->addressId ?>" readonly></td>
 			</tr>	
 			<tr>
 				<td>Address</td>

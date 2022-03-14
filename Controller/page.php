@@ -25,45 +25,30 @@ class Controller_Page extends Controller_Core_Action
                 throw new Exception('You can not insert data in page.');
             }
 
-            if(array_key_exists('pageId', $getSaveData) && $getSaveData['pageId'] == null)
-            {
-                $page->name = $getSaveData['name'];
-                $page->code = $getSaveData['code'];
-                $page->content = $getSaveData['content'];
-                $page->status = $getSaveData['status'];
-                $page->createdAt = $date;
-                $result = $page->save();
+            $pageId = (int)$this->getRequest()->getRequest('id');
+            $page = Ccc::getModel('Page')->load($pageId);
 
-                if (!$result) 
-                {
-                    throw new Exception('System is not able to insert');
-                } 
-                else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'page', null, false));
-                }
+            if(!$page)
+            {
+                $page = Ccc::getModel('Page');
+                $page->setData($getSaveData);
+                $page->createdAt = $date;
             }
             else
             {
-                $page->load($getSaveData['pageId']);
-                $page->pageId = $getSaveData['pageId'];
-                $page->name = $getSaveData['name'];
-                $page->code = $getSaveData['code'];
-                $page->content = $getSaveData['content'];
-                $page->status = $getSaveData['status'];
+                $page->setData($getSaveData);
                 $page->updatedAt = $date;
-                $result = $page->save();
+            }
+            $result = $page->save();
 
-                if (!$result) 
-                {
-                    throw new Exception('System is not able to update');
-                } 
-                else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'page', ['id' => null], false));
-                }
+            if (!$result) 
+            {
+                throw new Exception('System is not able to update');
+            }
+            else 
+            {
+                $message->addMessage('Data Saved.');
+                $this->redirect($this->getUrl('grid', 'page', ['id' => null], false));
             }
         }
         catch (Exception $e) 

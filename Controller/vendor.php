@@ -19,50 +19,36 @@ class Controller_Vendor extends Controller_Core_Action
         $date = date('Y-m-d H:i:s');
         $message = $this->getMessage();
 
-        if(array_key_exists('vendorId',$getSaveData) && $getSaveData['vendorId'] == null)
+        if (!$getSaveData)
         {
-                $vendor->firstName = $getSaveData['firstName'];
-                $vendor->lastName = $getSaveData['lastName'];
-                $vendor->email = $getSaveData['email'];
-                $vendor->phone = $getSaveData['phone'];
-                $vendor->status = $getSaveData['status'];
-                $vendor->createdAt = $date;
-                $result = $vendor->save();
-                return $result;
+            throw new Exception("You can not insert data in vendor ID.");
+        }
 
-                if (!$result) 
-                {
-                    throw new Exception("You can not insert data in vendor.");
-                } 
-            else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
-                }
+        $vendorId = (int)$this->getRequest()->getRequest('id');
+        $vendor = Ccc::getModel('Vendor')->load($vendorId);
 
+        if(!$vendor)
+        {
+            $vendor = Ccc::getModel('Vendor');
+            $vendor->setData($getSaveData);
+            $vendor->createdAt = $date;
         }
         else
         {
-                $vendor->load($getSaveData['vendorId']);
-                $vendor->vendorId = $getSaveData['vendorId'];
-                $vendor->firstName = $getSaveData['firstName'];
-                $vendor->lastName = $getSaveData['lastName'];
-                $vendor->email = $getSaveData['email'];
-                $vendor->phone = $getSaveData['phone'];
-                $vendor->status = $getSaveData['status'];
-                $vendor->updatedAt = $date;
-                $result = $vendor->save();
-                return $getSaveData['vendorId'];
+            $vendor->setData($getSaveData);
+            $vendor->updatedAt = $date;
+        }
+        $result = $vendor->save();
+        return $result->vendorId;
 
-                if (!$result) 
-                {
-                    throw new Exception("You can not update data in vendor.");
-                } 
-            else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
-                }
+        if (!$result) 
+        {
+            throw new Exception("You can not update data in vendor.");
+        } 
+        else 
+        {
+            $message->addMessage('Saved Successfully.');
+            $this->redirect($this->getUrl('grid', 'vendor', null, true));
         }
     }
     
@@ -75,46 +61,37 @@ class Controller_Vendor extends Controller_Core_Action
 
         $addressData = $address->fetchRow("SELECT * FROM vendor_address WHERE vendorId = '$vendorId'");
 
-        if (!$addressData):
+        if (!$getSaveData)
+        {
+            throw new Exception("You can not insert data in vendor ID.");
+        }
+
+        $addressId = (int)$this->getRequest()->getRequest('id');
+        $address = Ccc::getModel('Vendor_Address')->load($addressId);
+
+        if(!$address)
+        {
+            $address = Ccc::getModel('Vendor_Address');
+            $address->setData($getSaveData);
             $address->vendorId = $vendorId;
-            $address->address = $getSaveData['address'];
-            $address->city = $getSaveData['city'];
-            $address->state = $getSaveData['state'];
-            $address->country = $getSaveData['country'];
-            $address->postalCode = $getSaveData['postalCode'];
-            $result = $address->save();
-
-            if (!$result) 
-                {
-                    throw new Exception("You can not insert data in vendor.");
-                } 
-            else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
-                }
-
-        else:
-            $address->load($getSaveData['vendorId']);
+        }
+        else
+        {
+            $address->setData($getSaveData);
             $address->vendorId = $vendorId;
             $address->vendorAddressId = $getSaveData['vendorAddressId'];
-            $address->address = $getSaveData['address'];
-            $address->city = $getSaveData['city'];
-            $address->state = $getSaveData['state'];
-            $address->country = $getSaveData['country'];
-            $address->postalCode = $getSaveData['postalCode'];
-            $result = $address->save();
+        }
+        $result = $address->save();
 
-            if (!$result) 
-                {
-                    throw new Exception("You can not update data in vendor.");
-                } 
-            else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'vendor', null, true));
-                }
-        endif;
+        if (!$result) 
+        {
+            throw new Exception("You can not update data in vendor.");
+        } 
+        else 
+        {
+            $message->addMessage('Data Saved.');
+            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+        }
     }
     
     public function saveAction()

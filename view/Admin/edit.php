@@ -29,7 +29,7 @@
 				<tr>
 					<td>Email</td>
 					<td>
-						<input type="text" name="admin[email]" value="<?php echo $admin->email; ?>">
+						<input type="email" name="admin[email]" value="<?php echo $admin->email; ?>">
 					</td>
 				</tr>
 				<tr>

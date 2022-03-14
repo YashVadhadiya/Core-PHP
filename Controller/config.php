@@ -26,45 +26,29 @@ class Controller_Config extends Controller_Core_Action
             throw new Exception('You can not insert data in config.');
             }
 
-            if(array_key_exists('configId', $getSaveData) && $getSaveData['configId'] == null)
-            {
-            $config->name = $getSaveData['name'];
-            $config->code = $getSaveData['code'];
-            $config->value = $getSaveData['value'];
-            $config->status = $getSaveData['status'];
-            $config->createdAt = $date;
-            $result = $config->save();
+            $configId = (int)$this->getRequest()->getRequest('configId');
+            $config = Ccc::getModel('Config')->load($configId);
 
-            if (!$result) 
-                {
-                    throw new Exception("You can not insert data in config.");
-                } 
-            else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'config', null, true));
-                }
+            if(!$config)
+            {
+                $config = Ccc::getModel('Config');
+                $config->setData($getSaveData);
+                $config->createdAt = $date;
             }
             else
             {
-            $config->load($getSaveData['configId']);
-            $config->configId = $getSaveData['configId'];
-            $config->name = $getSaveData['name'];
-            $config->code = $getSaveData['code'];
-            $config->value = $getSaveData['value'];
-            $config->status = $getSaveData['status'];
-            $config->updatedAt = $data;
-            $result = $config->save();
+                $config->setData($getSaveData);
+            }
+                $result = $config->save();
 
             if (!$result) 
-                {
-                    throw new Exception("System is not able to update.");
-                } 
-                else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'config', null, true));
-                }
+            {
+                throw new Exception("System is not able to update.");
+            } 
+            else 
+            {
+                $message->addMessage('Data Saved.');
+                $this->redirect($this->getUrl('grid', 'config', null, true));
             }
         }
         catch (Exception $e) 

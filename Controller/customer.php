@@ -19,50 +19,36 @@ class Controller_Customer extends Controller_Core_Action
         $date = date('Y-m-d H:i:s');
         $message = $this->getMessage();
 
-
-        if(array_key_exists('id',$getSaveData) && $getSaveData['id'] == null)
+        if (!$getSaveData)
         {
-            $customer->firstName = $getSaveData['firstName'];
-            $customer->lastName = $getSaveData['lastName'];
-            $customer->email = $getSaveData['email'];
-            $customer->phone = $getSaveData['phone'];
-            $customer->status = $getSaveData['status'];
-            $customer->createdAt = $date;
-            $result = $customer->save();
-            return $result;
+            throw new Exception("You can not insert data in vendor ID.");
+        }
 
-            if (!$result) 
-                {
-                    throw new Exception("You can not insert data in customer.");
-                } 
-            else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
-                }
+        $customerId = (int)$this->getRequest()->getRequest('id');
+        $customer = Ccc::getModel('Customer')->load($customerId);
+
+        if(!$customer)
+        {
+            $customer = Ccc::getModel('Customer');
+            $customer->setData($getSaveData);
+            $customer->createdAt = $date;
         }
         else
         {
-            $customer->load($getSaveData['id']);
-            $customer->id = $getSaveData['id'];
-            $customer->firstName = $getSaveData['firstName'];
-            $customer->lastName = $getSaveData['lastName'];
-            $customer->email = $getSaveData['email'];
-            $customer->phone = $getSaveData['phone'];
-            $customer->status = $getSaveData['status'];
+            $customer->setData($getSaveData);
             $customer->updatedAt = $date;
-            $result = $customer->save();
-            return $getSaveData['id'];
+        }
+        $result = $customer->save();
+        return $result->id;
 
-            if (!$result) 
-                {
-                    throw new Exception("You can not update data in customer.");
-                } 
-            else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
-                }
+        if (!$result) 
+        {
+            throw new Exception("You can not update data in customer.");
+        } 
+        else 
+        {
+            $message->addMessage('Updated Successfully.');
+            $this->redirect($this->getUrl('grid', 'customer', null, true));
         }
     }
     
@@ -86,40 +72,31 @@ class Controller_Customer extends Controller_Core_Action
 
         $addressData = $address->fetchRow("SELECT * FROM address WHERE customerId = '$customerId'");
 
+        if (!$getSaveData)
+        {
+            throw new Exception("You can not insert data in vendor ID.");
+        }
 
-        if (!$addressData):
+        $addressId = (int)$this->getRequest()->getRequest('id');
+        $address = Ccc::getModel('Customer_Address')->load($addressId);
+
+        if(!$address)
+        {
+            $address = Ccc::getModel('Customer_Address');
+            $address->setData($getSaveData);
             $address->customerId = $customerId;
-            $address->address = $getSaveData['address'];
-            $address->city = $getSaveData['city'];
-            $address->state = $getSaveData['state'];
-            $address->country = $getSaveData['country'];
-            $address->postalCode = $getSaveData['postalCode'];
             $address->billing = $getSaveData['billing'];
             $address->shipping = $getSaveData['shipping'];
-            $result = $address->save();
-
-            if (!$result) 
-                {
-                    throw new Exception("You can not insert data in customer.");
-                } 
-            else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'customer', null, true));
-                }
-
-        else:
-            $address->load($getSaveData['id']);
+        }
+        else
+        {
+            $address->setData($getSaveData);
             $address->customerId = $customerId;
             $address->addressId = $getSaveData['id'];
-            $address->address = $getSaveData['address'];
-            $address->city = $getSaveData['city'];
-            $address->state = $getSaveData['state'];
-            $address->country = $getSaveData['country'];
-            $address->postalCode = $getSaveData['postalCode'];
             $address->billing = $getSaveData['billing'];
             $address->shipping = $getSaveData['shipping'];
-            $result = $address->save();
+        }
+        $result = $address->save();
 
             if (!$result) 
                 {
@@ -127,10 +104,9 @@ class Controller_Customer extends Controller_Core_Action
                 } 
             else 
                 {
-                    $message->addMessage('Updated Successfully.');
+                    $message->addMessage('Data Saved.');
                     $this->redirect($this->getUrl('grid', 'customer', null, true));
                 }
-        endif;
     }
     
     public function saveAction()

@@ -26,49 +26,30 @@ class Controller_Salesman extends Controller_Core_Action
                 throw new Exception("You can not insert data in salesman ID.");
             }
 
-            if(array_key_exists('salesmanId', $getSaveData) && $getSaveData['salesmanId'] == null)
-            {
-                $salesman->firstName = $getSaveData['firstName'];
-                $salesman->lastName = $getSaveData['lastName'];
-                $salesman->email = $getSaveData['email'];
-                $salesman->phone = $getSaveData['phone'];
-                $salesman->status = $getSaveData['status'];
-                $salesman->percentage = $getSaveData['percentage'];
-                $salesman->createdAt = $date;
-                $result = $salesman->save();
+            $salesmanId = (int)$this->getRequest()->getRequest('id');
+            $salesman = Ccc::getModel('Salesman')->load($salesmanId);
 
-                if (!$result) 
-                {
-                    throw new Exception("System is not able to insert.");
-                } 
-                else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'salesman', null, true));
-                }
+            if(!$salesman)
+            {
+                $salesman = Ccc::getModel('Salesman');
+                $salesman->setData($getSaveData);
+                $salesman->createdAt = $date;
             }
             else
             {
-                $salesman->load($getSaveData['salesmanId']);
-                $salesman->salesmanId = $getSaveData['salesmanId'];
-                $salesman->firstName = $getSaveData['firstName'];
-                $salesman->lastName = $getSaveData['lastName'];
-                $salesman->email = $getSaveData['email'];
-                $salesman->phone = $getSaveData['phone'];
-                $salesman->status = $getSaveData['status'];
-                $salesman->percentage = $getSaveData['percentage'];
+                $salesman->setData($getSaveData);
                 $salesman->updatedAt = $date;
+            }
                 $result = $salesman->save();
 
-                if (!$result) 
-                {
-                    throw new Exception("System is not able to update.");
-                } 
-                else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'salesman', null, true));
-                }
+            if (!$result) 
+            {
+                throw new Exception("System is not able to update.");
+            } 
+            else 
+            {
+                $message->addMessage('Data Saved.');
+                $this->redirect($this->getUrl('grid', 'salesman', null, true));
             }
         }
         catch (Exception $e) 

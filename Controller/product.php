@@ -27,6 +27,29 @@ class Controller_Product extends Controller_Core_Action
             {
                 throw new Exception("You can not insert data in product.");
             }
+
+            /*$productId = (int)$this->getRequest()->getRequest('id');
+            $product = Ccc::getModel('Product')->load($productId);
+
+            if(!$product)
+            {
+                $product = Ccc::getModel('Product');
+                $product->setData($getSaveData);
+                $product->createdAt = $date;
+                $categoryIds = $getSaveData['category'];
+                $result = $product->save();
+                $product->saveCategories($categoryIds, $result);
+            }
+            else
+            {
+                $product->setData($getSaveData);
+                $categoryIds = $getSaveData['category'];
+                $product->updatedAt = $date;
+                $result = $product->save();
+                $productId = $result;
+            }
+                $result = $product->save();*/
+
             if (array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
             {
                 $categoryIds = $getSaveData['category'];
@@ -37,7 +60,7 @@ class Controller_Product extends Controller_Core_Action
                 $product->sku = $getSaveData['sku'];
                 $product->createdAt = $date;
                 $result = $product->save();
-                
+                $result = $result->productId;
                 $product->saveCategories($categoryIds, $result);
 
                 if (!$result) 
