@@ -1,8 +1,8 @@
-<?php $categories = $this->getCategories(); ?>
-<?php $getCategoryWithPath = $this->getCategoryWithPath(); ?>
+<?php $categories = $this->getCategories(); //print_r($categories);  ?>
+<?php $getCategoryWithPath = $this->getCategoryWithPath();?>
 <?php $urlAction = new Controller_Core_Action();?>
 
-    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','category',null,true) ?>">Add Category</a></button>
+    <button name="Add"><a href="<?php echo $urlAction->getUrl('add','category',null,false) ?>">Add Category</a></button>
     <table border=1 width="100%">
 
         <tr>
@@ -25,8 +25,8 @@
         <?php foreach($categories as $category): ?>
         <tr>
             <td><?php echo $category->categoryId; ?></td>
-
-            <td><?php $pathReturn =  $getCategoryWithPath; echo $pathReturn[$category->categoryId]; ?></td>
+            <!-- <td><?php //echo $getCategoryWithPath[$category->categoryId] ?></td> -->
+            <td><?php $pathReturn = $getCategoryWithPath; echo $pathReturn[$category->categoryId]; ?></td>
 
             <td><?php echo $category->getStatus($category->status); ?></td>
             <td><?php echo $category->createdAt?></td>
@@ -53,11 +53,11 @@
 
 
             <td>
-                <a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],true) ?>">Edit</a>
-                <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category->categoryId],true) ?>">Delete</a>
+                <a href="<?php echo $urlAction->getUrl('edit','category',['categoryId' =>  $category->categoryId],false) ?>">Edit</a>
+                <a href="<?php echo $urlAction->getUrl('delete','category',['categoryId' =>  $category->categoryId],false) ?>">Delete</a>
             </td>
             <td>
-                <a href="<?php echo$urlAction->getUrl('grid','category_media',['categoryId' =>  $category->categoryId],true) ?>">Media</a>
+                <a href="<?php echo$urlAction->getUrl('grid','category_media',['categoryId' =>  $category->categoryId],false) ?>">Media</a>
             </td>
         </tr>
         <?php endforeach; ?>

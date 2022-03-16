@@ -48,7 +48,7 @@ class Controller_Vendor extends Controller_Core_Action
         else 
         {
             $message->addMessage('Saved Successfully.');
-            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+            $this->redirect($this->getUrl('grid', 'vendor', null, false));
         }
     }
     
@@ -57,9 +57,11 @@ class Controller_Vendor extends Controller_Core_Action
         $getSaveData = $this->getRequest()->getRequest('address');
         $address = Ccc::getModel('Vendor_Address');
         $date = date('Y-m-d H:i:s');
-        $message = $this->getMessage();
+        $message = $this->getMessage(); 
 
-        $addressData = $address->fetchRow("SELECT * FROM vendor_address WHERE vendorId = '$vendorId'");
+        $vendorModel = Ccc::getModel('Vendor')->load($vendorId);
+        $addressData = $vendorModel->getVendorAddress();
+        //$addressData = $address->fetchRow("SELECT * FROM vendor_address WHERE vendorId = '$vendorId'");
 
         if (!$getSaveData)
         {
@@ -90,7 +92,7 @@ class Controller_Vendor extends Controller_Core_Action
         else 
         {
             $message->addMessage('Data Saved.');
-            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+            $this->redirect($this->getUrl('grid', 'vendor', null, false));
         }
     }
     
@@ -101,21 +103,22 @@ class Controller_Vendor extends Controller_Core_Action
         {
             $vendorId = $this->saveVendor();
             $this->saveAddress($vendorId);
-            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+            $this->redirect($this->getUrl('grid', 'vendor', ['id' => null], false));
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+            $this->redirect($this->getUrl('grid', 'vendor', ['id' => null], false));
         }
     }
 
     public function addAction()
     {
         $this->setTitle('Vendor Add');
-        $id = Ccc::getModel('Vendor');
+        $vendorModel = Ccc::getModel('vendor');
         $content = $this->getLayout()->getContent();
-        $vendorAdd = Ccc::getBlock('Vendor_Edit')->setData(['vendor' => $id]);
+        $vendorAddress = $vendorModel->getVendorAddress();
+        $vendorAdd = Ccc::getBlock("Vendor_Edit")->setData(['vendor' => $vendorModel , 'vendorAddress' => $vendorAddress]);
         $content->addChild($vendorAdd);
         $this->renderLayout();
     }
@@ -131,15 +134,20 @@ class Controller_Vendor extends Controller_Core_Action
             {
                 throw new Exception('Error Processing Request');
             }
-            $vendorRow = Ccc::getModel('Vendor');
-            $vendor = $vendorRow->fetchRow("SELECT v.*,a.* from vendor v join vendor_address a on a.vendorId = v.vendorId WHERE v.vendorId = $id");
+
+            $vendorModel = Ccc::getModel('Vendor')->load($id);
+            $vendor = $vendorModel->fetchRow("SELECT * FROM `vendor` WHERE vendorId = '$id'");
+            $vendorAddress = $vendorModel->getVendorAddress();
+
+            //$vendorRow = Ccc::getModel('Vendor');
+            //$vendor = $vendorRow->fetchRow("SELECT v.*,a.* from vendor v join vendor_address a on a.vendorId = v.vendorId WHERE v.vendorId = $id");
 
             if (!$vendor) 
             {
                 throw new Exception('Error Processing Request');
             }
             $content = $this->getLayout()->getContent();
-            $vendorEdit = Ccc::getBlock('Vendor_Edit')->setData(['vendor' => $vendor]);
+            $vendorEdit = Ccc::getBlock("Vendor_Edit")->setData(['vendor' => $vendor , 'vendorAddress' => $vendorAddress]);
             $content->addChild($vendorEdit);
             $this->renderLayout();
         } 
@@ -160,7 +168,7 @@ class Controller_Vendor extends Controller_Core_Action
         if ($result) 
         {   
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+            $this->redirect($this->getUrl('grid', 'vendor', null, false));
         }
     }
 } ?>

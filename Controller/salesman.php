@@ -49,13 +49,13 @@ class Controller_Salesman extends Controller_Core_Action
             else 
             {
                 $message->addMessage('Data Saved.');
-                $this->redirect($this->getUrl('grid', 'salesman', null, true));
+                $this->redirect($this->getUrl('grid', 'salesman', null, false));
             }
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'salesman', null, true));        
+            $this->redirect($this->getUrl('grid', 'salesman', ['id' => null], false));        
         }
     }
 
@@ -109,7 +109,7 @@ class Controller_Salesman extends Controller_Core_Action
         if ($result)
         {
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl('grid', 'salesman', null, true));
+            $this->redirect($this->getUrl('grid', 'salesman', null, false));
         }
     }
 } 

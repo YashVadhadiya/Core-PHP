@@ -6,7 +6,7 @@
 
 
     <table border="1" width="100%">
-        <form action="<?php echo$urlAction->getUrl('save','product',['id' =>  $product->id],true) ?>" method="post">
+        <form action="<?php echo$urlAction->getUrl('save','product',null, false) ?>" method="post">
             <tr>
                 <td>Id</td>
                 <td><input type="text" name="product[id]" value="<?php echo $product->id; ?>" readonly></td>

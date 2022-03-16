@@ -10,7 +10,7 @@ class Block_Category_Media_Grid extends Block_Core_Template
 
 	public function getCategoryMedias()
 	{
-		$categoryId = $_GET['categoryId'];
+		$categoryId = Ccc::getFront()->getRequest()->getRequest('categoryId');
 		$categoryMedia = Ccc::getModel('Category_Media');
 		$categoryMedias = $categoryMedia->fetchAll("SELECT * FROM category_media WHERE categoryId = $categoryId");
 		return $categoryMedias;

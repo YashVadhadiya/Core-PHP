@@ -6,7 +6,7 @@
     function url(ele)
     {
         var page = ele.value;
-        var pageUrl = "http://localhost/cybercom/Core-PHP/index.php?c=page&a=grid&p=1&ppr="+ele.value;
+        var pageUrl = "<?php echo $urlAction->getUrl('grid','page',['p' => $this->getPager()->getStart()],false) ?>&ppr="+ele.value;
         window.open(pageUrl,"_self");
     }
 </script>

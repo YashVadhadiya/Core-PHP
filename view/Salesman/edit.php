@@ -1,7 +1,7 @@
 <?php $salesman = $this->getSalesman(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
 
-		<form method="POST" action="<?php echo $urlAction->getUrl('save','salesman',['id' =>  $salesman->salesmanId],true) ?>">
+		<form method="POST" action="<?php echo $urlAction->getUrl('save','salesman',null, false) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>

@@ -17,7 +17,7 @@ class Controller_Category_Media extends Controller_Core_Action
 
     public function addAction()
     {
-        $categoryId = $_GET['categoryId'];
+        $categoryId = Ccc::getFront()->getRequest()->getRequest('categoryId'); //$_GET['categoryId'];
         $imageName1 = $_FILES['image']['name'];
         $imageAddress1 = $_FILES['image']['tmp_name'];
         $imageName = implode("", $imageName1);

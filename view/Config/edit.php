@@ -2,7 +2,7 @@
 <?php $urlAction = new Controller_Core_Action();?>
 
 	<body>
-		<form method="POST" action="<?php echo $urlAction->getUrl('save','config',['configId' =>  $config->configId],true) ?>">
+		<form method="POST" action="<?php echo $urlAction->getUrl('save','config',null, false) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>
