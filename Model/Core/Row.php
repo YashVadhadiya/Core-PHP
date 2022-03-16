@@ -23,7 +23,7 @@ class Model_Core_Row
 
     public function setData(array $data)
     {
-        $this->data = $data;
+        $this->data = array_merge($this->data, $data);
         return $this;       
     }
 

@@ -1,6 +1,6 @@
 <?php $admin = $this->getAdmin(); ?>
 <?php $urlAction = new Controller_Core_Action();?>
-		<form method="POST" action="<?php echo$urlAction->getUrl('save','admin',['id' =>  $admin->id],true) ?>">
+		<form method="POST" action="<?php echo$urlAction->getUrl('save','admin',null, false) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>

@@ -133,13 +133,13 @@ class Controller_Category extends Controller_Core_Action
                 }
             }
             $message->addMessage('Inserted Succesfully.');
-            $this->redirect($this->getUrl("grid", "category", null, true));
+            $this->redirect($this->getUrl("grid", "category", null, false));
         } 
 
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'category', null, true));
+            $this->redirect($this->getUrl('grid', 'category', ['categoryId' => null], false));
         }
     }
 
@@ -230,7 +230,7 @@ class Controller_Category extends Controller_Core_Action
             }
         }
         $message->addMessage('Updated Successfully.');
-        $this->redirect($this->getUrl('grid', 'category', null, true));   
+        $this->redirect($this->getUrl('grid', 'category', null, false));   
     }
 
     public function addAction()
@@ -300,12 +300,12 @@ class Controller_Category extends Controller_Core_Action
                 throw new Exception("Error Processing Request in not result.");
             }
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl("grid", "category", null, true));
+            $this->redirect($this->getUrl("grid", "category", null, false));
         } 
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'category', null, true));
+            $this->redirect($this->getUrl('grid', 'category', null, false));
         }
     }
 

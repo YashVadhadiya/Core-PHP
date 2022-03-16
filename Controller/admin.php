@@ -72,7 +72,7 @@ class Controller_Admin extends Controller_Core_Action
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'admin', null, true));
+            $this->redirect($this->getUrl('grid', 'admin', ['id' => null], true));
         }
     }
 

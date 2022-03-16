@@ -4,8 +4,7 @@
 
 
 	<table border="1" width="100%">
-		<form method="post" action="<?php echo $urlAction->getUrl('save','category',['categoryId' =>  $category->categoryId],true) ?>
-">
+		<form method="post" action="<?php echo $urlAction->getUrl('save','category',null, false) ?>">
 			<tr>
                 <td>Id</td>
                 <td><input type="text" name="category[categoryId]" value="<?php echo $category->categoryId; ?>" readonly></td>
