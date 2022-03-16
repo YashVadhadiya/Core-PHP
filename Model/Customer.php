@@ -4,6 +4,9 @@ class Model_Customer extends Model_Core_Row
 {
 
     protected $billingAddress;
+    protected $shippingAddress;
+    protected $salesman;
+    protected $price;
     
     public function getBillingAddress($reload = false)
     {
@@ -34,7 +37,6 @@ class Model_Customer extends Model_Core_Row
         return $this;
     }
 
-    protected $shippingAddress;
     
     public function getShippingAddress($reload = false)
     {
@@ -64,7 +66,6 @@ class Model_Customer extends Model_Core_Row
         return $this;
     }
 
-    protected $salesman;
 
     public function getSalesman($reload = false)
     {
@@ -94,7 +95,6 @@ class Model_Customer extends Model_Core_Row
         return $this;
     }
 
-    protected $price;
 
     public function getPrice($reload = false)
     {

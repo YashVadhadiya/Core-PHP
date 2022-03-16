@@ -4,6 +4,10 @@ Ccc::loadClass('Model_Core_Row');
 class Model_Product extends Model_Core_Row
 {
     protected $medias;
+    protected $base;
+    protected $thumb;
+    protected $small;
+    protected $gallery;
 
     public function getMedias($reload = false)
     {
@@ -33,7 +37,7 @@ class Model_Product extends Model_Core_Row
         return $this;
     }
 
-    protected $base;
+    
 
     public function getBase($reload = false)
     {
@@ -63,7 +67,7 @@ class Model_Product extends Model_Core_Row
         return $this;
     }
 
-    protected $thumb;
+    
 
     public function getThumb($reload = false)
     {
@@ -93,7 +97,7 @@ class Model_Product extends Model_Core_Row
         return $this;
     }
 
-    protected $small;
+    
 
     public function getSmall($reload = false)
     {
@@ -123,7 +127,7 @@ class Model_Product extends Model_Core_Row
         return $this;
     }
 
-    protected $gallery;
+    
 
     public function getGallery($reload = false)
     {

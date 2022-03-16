@@ -79,7 +79,7 @@
 
 			<tr>
 				<th>Same as billing address</th>
-    				<td><input type="checkbox" id="checkbox"  value="<?php echo $billingAddress->country ?>" onclick="SetBilling(this.checked);">
+    				<td><input type="checkbox" id="checkbox" onclick="SetBilling(this.checked);">
 				</td>
 			</tr>
 
@@ -87,7 +87,6 @@
 			  function SetBilling(checked) {
 			    if(checked)
 			    {
-			      document.getElementById('shippingAddressId').value = document.getElementById('billingAddressId').value;
 			      document.getElementById('shippingAddress').value = document.getElementById('billingAddress').value;
 			      document.getElementById('shippingPostalCode').value = document.getElementById('billingPostalCode').value;
 			      document.getElementById('shippingCity').value = document.getElementById('billingCity').value;
@@ -96,7 +95,6 @@
 			    }
 			    else
 			    {
-			      document.getElementById('shippingAddressId').value = '';
 			      document.getElementById('shippingAddress').value = '';
 			      document.getElementById('shippingPostalCode').value = '';
 			      document.getElementById('shippingCity').value = '';
