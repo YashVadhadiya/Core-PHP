@@ -52,7 +52,7 @@ class Controller_Customer extends Controller_Core_Action
         }
     }
     
-    protected function saveAddress($customerId)
+    /*protected function saveAddress($customerId)
     {
         $getSaveData = $this->getRequest()->getRequest('address');
         $address = Ccc::getModel('Customer_Address');
@@ -119,6 +119,44 @@ class Controller_Customer extends Controller_Core_Action
             }
             $message->addMessage('Saved Successfully.');
         }
+    }*/
+
+    protected function saveAddress($customerId) 
+    {
+        $message = $this->getMessage();
+        $address = Ccc::getModel('Customer_Address');
+        date_default_timezone_set("Asia/Kolkata");
+        $date = date('Y-m-d H:i:s');
+        $billingRow = $this->getRequest()->getPost('billingAddress');
+        $shippingRow = (array_key_exists('sameShipping', $this->getRequest()->getPost())) ? $billingRow : $this->getRequest()->getPost('shippingAddress'); 
+        $customerModel = Ccc::getModel('customer')->load($customerId);
+        $billingAddress = $customerModel->getBillingAddress();
+        $shippingAddress = $customerModel->getShippingAddress();
+
+        if(!$billingAddress->getData())
+        {   
+            $billingAddress->customerId = $customerId;
+
+        }
+        if(!$shippingAddress->getData())
+        {
+            $shippingAddress->customerId = $customerId;
+        }
+        $billingAddress->setData($billingRow);
+        $billingAddress->billing = 1;
+        $billingAddress->shipping = 0;
+        $billingAddress->same = (array_key_exists('sameShipping', $this->getRequest()->getPost())) ? 1 : 0;
+
+        $shippingAddress->setData($shippingRow);
+        $shippingAddress->billing = 0;
+        $shippingAddress->shipping = 1;
+        $shippingAddress->same = (array_key_exists('sameShipping', $this->getRequest()->getPost())) ? 1 : 0;
+
+        $billingAddress->save();
+        $shippingAddress->save();
+
+        $message->addMessage('Customer & Address Added successfully.');
+
     }
     
     public function saveAction()

@@ -48,7 +48,7 @@ class Controller_Vendor extends Controller_Core_Action
         else 
         {
             $message->addMessage('Saved Successfully.');
-            $this->redirect($this->getUrl('grid', 'vendor', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'vendor', null, false));
         }
     }
     
@@ -92,7 +92,7 @@ class Controller_Vendor extends Controller_Core_Action
         else 
         {
             $message->addMessage('Data Saved.');
-            $this->redirect($this->getUrl('grid', 'vendor', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'vendor', null, false));
         }
     }
     
@@ -103,12 +103,12 @@ class Controller_Vendor extends Controller_Core_Action
         {
             $vendorId = $this->saveVendor();
             $this->saveAddress($vendorId);
-            $this->redirect($this->getUrl('grid', 'vendor', ['id' => null], false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'vendor', ['id' => null], false));
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'vendor', ['id' => null], false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'vendor', ['id' => null], false));
         }
     }
 
@@ -154,7 +154,7 @@ class Controller_Vendor extends Controller_Core_Action
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'vendor', null, true));
+            $this->redirect($this->getLayout()->getUrl('grid', 'vendor', null, true));
         }
     }
 
@@ -168,7 +168,7 @@ class Controller_Vendor extends Controller_Core_Action
         if ($result) 
         {   
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl('grid', 'vendor', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'vendor', null, false));
         }
     }
 } ?>

@@ -1,12 +1,12 @@
 <?php $product = $this->getProduct(); ?>
 <?php $categories = $this->getCategories(); ?>
-<?php $urlAction = new Controller_Core_Action();?>
+
 <?php $getCategoryWithPath = $this->getCategoryWithPath(); ?>
 <?php $categoryProductPair = $this->getCategoryProductPair(); ?>
 
 
     <table border="1" width="100%">
-        <form action="<?php echo$urlAction->getUrl('save','product',null, false) ?>" method="post">
+        <form action="<?php echo$this->getUrl('save','product',null, false) ?>" method="post">
             <tr>
                 <td>Id</td>
                 <td><input type="text" name="product[id]" value="<?php echo $product->id; ?>" readonly></td>
@@ -66,7 +66,7 @@
             <tr>
                 <td></td>
                 <td><input type="submit" name="submit" value="Save">
-                    <button type="button"><a href="<?php echo $urlAction->getUrl('grid','product',null,true) ?>">Cancel</a></button>
+                    <button type="button"><a href="<?php echo $this->getUrl('grid','product',null,true) ?>">Cancel</a></button>
                 </td>
             </tr>
         </form>

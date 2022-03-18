@@ -1,22 +1,22 @@
 <?php $customers = $this->getCustomers(); ?>
-<?php $urlAction = new Controller_Core_Action();?>
+
 <?php $perPageCount = $this->getPager()->getPerPageCount(); ?>
 
 <script type="text/javascript">
     function url(ele)
     {
         var page = ele.value;
-        var pageUrl = "<?php echo $urlAction->getUrl('grid','customer',['p' => $this->getPager()->getStart()],false) ?>&ppr="+ele.value;
+        var pageUrl = "<?php echo $this->getUrl('grid','customer',['p' => $this->getPager()->getStart()],false) ?>&ppr="+ele.value;
         window.open(pageUrl,"_self");
     }
 </script>
 
-<button name="Add"><a href="<?php echo $urlAction->getUrl('add','customer',['p' => $this->getPager()->getStart()]) ?>">Add customer</a></button>
-<button name='Start'><a href="<?php echo $urlAction->getUrl('grid','customer',['p' => $this->getPager()->getStart()]) ?>">Start</a></button>
+<button name="Add"><a href="<?php echo $this->getUrl('add','customer',['p' => $this->getPager()->getStart()]) ?>">Add customer</a></button>
+<button name='Start'><a href="<?php echo $this->getUrl('grid','customer',['p' => $this->getPager()->getStart()]) ?>">Start</a></button>
     <?php if($this->getPager()->getPrev() == null):?>
 <button name='Prev' disabled ><a>Previous</a></button>
     <?php else: ?>
-<button name='Previous'><a href="<?php echo $urlAction->getUrl('grid','customer',['p' => $this->getPager()->getPrev()]) ?>">Previous</a></button>
+<button name='Previous'><a href="<?php echo $this->getUrl('grid','customer',['p' => $this->getPager()->getPrev()]) ?>">Previous</a></button>
     <?php endif;?>
 
 <select name="page" id="page" onchange="url(this)">
@@ -33,13 +33,13 @@
     <?php endforeach; ?>
 </select>
 
-<button name='Current'><a href="<?php echo $urlAction->getUrl('grid','customer',['p' => $this->getPager()->getCurrent()]) ?>">Current</a></button>    
+<button name='Current'><a href="<?php echo $this->getUrl('grid','customer',['p' => $this->getPager()->getCurrent()]) ?>">Current</a></button>    
     <?php if($this->getPager()->getNext() == null):?>
 <button name='next' disabled ><a>Next</a></button>
     <?php else: ?>
-<button name='Next'><a href="<?php echo $urlAction->getUrl('grid','customer',['p' => $this->getPager()->getNext()]) ?>">Next</a></button>
+<button name='Next'><a href="<?php echo $this->getUrl('grid','customer',['p' => $this->getPager()->getNext()]) ?>">Next</a></button>
     <?php endif;?>
-<button name='End'><a href="<?php echo $urlAction->getUrl('grid','customer',['p' => $this->getPager()->getEnd()]) ?>">End</a></button>
+<button name='End'><a href="<?php echo $this->getUrl('grid','customer',['p' => $this->getPager()->getEnd()]) ?>">End</a></button>
 
     <table border='1' width='100%' cellspacing="4">
         <tr>
@@ -88,8 +88,8 @@
                     <td><?php echo $customer->shipping; ?></td>
 
                     
-                    <td><a href="<?php echo$urlAction->getUrl('edit','customer',['id' =>  $customer->id],false) ?>">Edit</a></td>
-                    <td><a href="<?php echo$urlAction->getUrl('delete','customer',['id' =>  $customer->id],false) ?>">Delete</a></td>
+                    <td><a href="<?php echo$this->getUrl('edit','customer',['id' =>  $customer->id],false) ?>">Edit</a></td>
+                    <td><a href="<?php echo$this->getUrl('delete','customer',['id' =>  $customer->id],false) ?>">Delete</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>

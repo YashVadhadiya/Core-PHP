@@ -1,7 +1,7 @@
 <?php $salesman = $this->getSalesman(); ?>
-<?php $urlAction = new Controller_Core_Action();?>
 
-		<form method="POST" action="<?php echo $urlAction->getUrl('save','salesman',null, false) ?>">
+
+		<form method="POST" action="<?php echo $this->getUrl('save','salesman',null, false) ?>">
 			<table border="1" width="100%" cellspacing="4">
 				<!-- this is used for personal data -->
 				<tr>
@@ -58,7 +58,7 @@
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" value="Save" name="edit">
-						<button type="button"><a href="<?php echo $urlAction->getUrl('grid','salesman',null,true) ?>">Cancel</a></button>
+						<button type="button"><a href="<?php echo $this->getUrl('grid','salesman',null,true) ?>">Cancel</a></button>
 					</td>
 				</tr>
 			</table>

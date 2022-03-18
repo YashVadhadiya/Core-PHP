@@ -1,10 +1,10 @@
 <?php $vendorAddress = $this->getVendor(); ?>
-<?php $urlAction = new Controller_Core_Action();?>
+
 
 <?php $vendor = $vendorAddress['vendor']; //print_r($vendor);?>
 <?php $address = $vendorAddress['vendorAddress']; //print_r($vendorAddress); die;?>
 
-	<form method="POST" action="<?php echo $urlAction->getUrl('save','vendor',null, false) ?>">
+	<form method="POST" action="<?php echo $this->getUrl('save','vendor',null, false) ?>">
 		<table border="1" width="100%" cellspacing="4">
 
 			<!-- this is used for personal data -->
@@ -77,7 +77,7 @@
 				<td >&nbsp;</td>
 				<td>
 					<input type="submit" value="Edit" name="edit">
-					<button type="button"><a href="<?php echo $urlAction->getUrl('grid','vendor',null,true) ?>">Cancel</a></button>
+					<button type="button"><a href="<?php echo $this->getUrl('grid','vendor',null,true) ?>">Cancel</a></button>
 				</td>
 			</tr>
 			

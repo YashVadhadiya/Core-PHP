@@ -1,9 +1,9 @@
 <?php $categoryMedias = $this->getCategoryMedias(); ?>	
-<?php $urlAction = new Controller_Core_Action(); ?>
+<?php //$this = new Controller_Core_Action(); ?>
 
-<form action="<?php echo $urlAction->getUrl('save','category_media',null,false) ?>" method="POST" align="center">
+<form action="<?php echo $this->getUrl('save','category_media',null,false) ?>" method="POST" align="center">
 	<input type="submit" name="update" value="UPDATE"> 
-	<button ><a href="<?php echo $urlAction->getUrl('grid','category',null,true) ?>">Back to Category Grid</a></button>
+	<button ><a href="<?php echo $this->getUrl('grid','category',null,true) ?>">Back to Category Grid</a></button>
 <br></br>
 	<table border=1 width=100%>
 		<tr>
@@ -39,7 +39,7 @@
 	</table>
 	<br></br>
 </form>
-<form align="center" action="<?php echo $urlAction->getUrl('add','category_media',null,false) ?>" method="POST" enctype="multipart/form-data">
+<form align="center" action="<?php echo $this->getUrl('add','category_media',null,false) ?>" method="POST" enctype="multipart/form-data">
 	<input type="file" name="image[]" accept="image/*">
 	<input type="submit" name="submit" value="Upload">
 </form>

@@ -50,12 +50,12 @@ class Controller_Customer_Price extends Controller_Core_Action
 
             $salesmanId = (int)$this->getRequest()->getRequest('id');
             $message->addMessage('Customer Price saved successfully.');
-            $this->redirect($this->getUrl('grid',null,['id'=>$salesmanId,'customerId'=>$customerId],true));
+            $this->redirect($this->getLayout()->getUrl('grid',null,['id'=>$salesmanId,'customerId'=>$customerId],true));
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid'));
+            $this->redirect($this->getLayout()->getUrl('grid'));
         }
 
 

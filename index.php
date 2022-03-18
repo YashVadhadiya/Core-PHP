@@ -3,7 +3,7 @@
 <?php Ccc::loadClass('Controller_Core_Action');?>
 <?php Ccc::loadClass('Model_Core_Request');?>
 <?php date_default_timezone_set("Asia/Kolkata");?>
-<?php $urlAction = new Controller_Core_Action();?>
+<?php //$urlAction = new Controller_Core_Action();?>
 
 <?php
 class Ccc

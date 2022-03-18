@@ -4,7 +4,7 @@ $products = $productsWithPercentage['products'];
 $percentage = $productsWithPercentage['percentage'];
 $prices = $this->getPrices();
 ?>
-<?php $urlAction = new Controller_Core_Action();?>
+
 
 <table border="1" width="100%" cellspacing="4">
     <tr>
@@ -15,7 +15,7 @@ $prices = $this->getPrices();
         <th>Salesman Price</th>
         <th>Customer Price</th>
     </tr>
-    <form action="<?php echo $urlAction->getUrl('save','customer_price'); ?>" method="POST">
+    <form action="<?php echo $this->getUrl('save','customer_price'); ?>" method="POST">
         <?php 
             
             if(!$products):

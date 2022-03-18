@@ -25,7 +25,7 @@ class Controller_Category_Media extends Controller_Core_Action
         $imageAddress = implode("", $imageAddress1);
         $message = Ccc::getModel('Core_Message');
 
-        if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Category/') .$imageName)) 
+        if (move_uploaded_file($imageAddress, $this->getLayout()->getBaseUrl('Media/Category/') .$imageName)) 
         {
             $query = "INSERT INTO `category_media`( `categoryId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($categoryId,'$imageName',0,0,0,0,0)";
             $result = $this->getAdapter()->insert($query);
@@ -36,7 +36,7 @@ class Controller_Category_Media extends Controller_Core_Action
             else 
                 {
                     $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));
+                    $this->redirect($this->getLayout()->getUrl("grid", "category_media", ["id" => $categoryId]));
                 }
         } 
     }
@@ -85,7 +85,7 @@ class Controller_Category_Media extends Controller_Core_Action
                 {
                     if($deleteResult)
                     {
-                        unlink($this->getBaseUrl('Media/Category/') . $value);
+                        unlink($this->getLayout()->getBaseUrl('Media/Category/') . $value);
                     }
                 }
             }
@@ -180,7 +180,7 @@ class Controller_Category_Media extends Controller_Core_Action
     catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl("grid", "category_media", ["id" => $categoryId]));    
+            $this->redirect($this->getLayout()->getUrl("grid", "category_media", ["id" => $categoryId]));    
         }
     }
 

@@ -48,13 +48,13 @@ class Controller_Config extends Controller_Core_Action
             else 
             {
                 $message->addMessage('Data Saved.');
-                $this->redirect($this->getUrl('grid', 'config', null, false));
+                $this->redirect($this->getLayout()->getUrl('grid', 'config', null, false));
             }
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'config', ['configId' => null], false));           
+            $this->redirect($this->getLayout()->getUrl('grid', 'config', ['configId' => null], false));           
         }
     }
 
@@ -94,7 +94,7 @@ class Controller_Config extends Controller_Core_Action
         catch (Exception $e)
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'config', null, true));        
+            $this->redirect($this->getLayout()->getUrl('grid', 'config', null, true));        
         }
     }
 
@@ -108,7 +108,7 @@ class Controller_Config extends Controller_Core_Action
         if ($result)
         {
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl('grid', 'config', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'config', null, false));
         }
     }
 } 

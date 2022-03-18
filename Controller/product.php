@@ -48,7 +48,7 @@ class Controller_Product extends Controller_Core_Action
                 else 
                 {
                     $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'product', null, false));
+                    $this->redirect($this->getLayout()->getUrl('grid', 'product', null, false));
                 }
             } 
             else 
@@ -75,14 +75,14 @@ class Controller_Product extends Controller_Core_Action
                 else 
                 {
                     $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'product', null, false));
+                    $this->redirect($this->getLayout()->getUrl('grid', 'product', null, false));
                 }
             }
         } 
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'product', ['id' => null], false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'product', ['id' => null], false));
         }
     }
 
@@ -127,7 +127,7 @@ class Controller_Product extends Controller_Core_Action
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'product', null, true));
+            $this->redirect($this->getLayout()->getUrl('grid', 'product', null, true));
         }
     }
 
@@ -143,7 +143,7 @@ class Controller_Product extends Controller_Core_Action
         {
             if($result)
             {
-                unlink($this->getBaseUrl('Media/Product/') . $value);
+                unlink($this->getLayout()->getBaseUrl('Media/Product/') . $value);
             }
         }
 
@@ -152,7 +152,7 @@ class Controller_Product extends Controller_Core_Action
             echo 'error';
         }
         $message->addMessage('Deleted Successfully.');
-        $this->redirect($this->getUrl('grid', 'product', null, false));
+        $this->redirect($this->getLayout()->getUrl('grid', 'product', null, false));
     }
 }
 ?>

@@ -17,6 +17,15 @@ class Model_Core_Adapter
         $this->setConnect($connect);
         return $connect;
     }
+
+    public function escapString($value)
+    {
+        if(!$this->getConnect())
+        {
+            $this->connect();
+        }
+        return mysqli_real_escape_string($this->getConnect(),$value);
+    }
     
     //setConnect method
     public function setConnect($connect)

@@ -1,4 +1,4 @@
-<?php $urlAction = new Controller_Core_Action();?>
+
 <?php 
 	$messages = $this->getMessages();
 	if($messages) 
@@ -9,7 +9,7 @@
 	    }
 	} 
 ?>
-<form action="<?php echo $urlAction->getUrl('loginPost'); ?>" method="POST">
+<form action="<?php echo $this->getUrl('loginPost'); ?>" method="POST">
 	<table border="1" width="100%">
 		<tr>
 			<th colspan="2">Admin Login</th>
@@ -25,7 +25,7 @@
 		<tr>
 			<td></td>
 			<td><input type="submit" name="login" value="Login">
-			<button type="button"><a href="<?php echo $urlAction->getUrl('login','admin_login',null,true) ?>">Cancel</a></button></td>
+			<button type="button"><a href="<?php echo $this->getUrl('login','admin_login',null,true) ?>">Cancel</a></button></td>
 		</tr>
 	</table>
 </form>

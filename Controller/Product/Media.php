@@ -24,7 +24,7 @@ class Controller_Product_Media extends Controller_Core_Action
     $imageAddress = implode("", $imageAddress1);
     $message = $this->getMessage();
     
-        if (move_uploaded_file($imageAddress, $this->getBaseUrl('Media/Product/') .$imageName)) 
+        if (move_uploaded_file($imageAddress, $this->getLayout()->getBaseUrl('Media/Product/') .$imageName)) 
         {
             $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
             $result = $this->getAdapter()->insert($query);
@@ -35,7 +35,7 @@ class Controller_Product_Media extends Controller_Core_Action
             else 
                 {
                     $message->addMessage('Image is inserted in media.');
-                    $this->redirect($this->getUrl("grid", "product_media", ["id" => $productId]));
+                    $this->redirect($this->getLayout()->getUrl("grid", "product_media", ["id" => $productId]));
                 }
         } 
     }
@@ -86,7 +86,7 @@ class Controller_Product_Media extends Controller_Core_Action
                 {
                     if($deleteResult)
                     {
-                        unlink($this->getBaseUrl('Media/Product/') . $value);
+                        unlink($this->getLayout()->getBaseUrl('Media/Product/') . $value);
                     }
                 }
             }
@@ -177,13 +177,11 @@ class Controller_Product_Media extends Controller_Core_Action
                 }
             }
 
-            $this->redirect(
-                $this->getUrl("grid", "product_media", ["id" => $productId])
-            );
+            $this->redirect($this->getLayout()->getUrl("grid", "product_media", ["id" => $productId]));
     }catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl("grid", "product_media", ["id" => $categoryId]));        }
+            $this->redirect($this->getLayout()->getUrl("grid", "product_media", ["id" => $categoryId]));        }
     }
 }
 

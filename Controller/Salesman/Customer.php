@@ -28,13 +28,13 @@ class Controller_Salesman_Customer extends Controller_Core_Action
                 throw new Exception("Error Processing Request");
             }
             $message->addMessage('Customer Added Succesfully');
-            $this->redirect($this->getUrl('grid', 'salesman_customer', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'salesman_customer', null, false));
             
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'salesman_customer', null, true));
+            $this->redirect($this->getLayout()->getUrl('grid', 'salesman_customer', null, true));
         }
     }
 }

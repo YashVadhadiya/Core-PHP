@@ -27,7 +27,7 @@ class Controller_Core_Action
                 if($login)
                 {
                     $message->addMessage('Alrady LoggedIn.');
-                    $this->redirect($this->getUrl('grid','product',null,true));
+                    $this->redirect($this->getLayout()->getUrl('grid','product',null,true));
                 }
             }
             else
@@ -42,7 +42,7 @@ class Controller_Core_Action
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(),Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('login','admin_login',null,true));    
+            $this->redirect($this->getLayout()->getUrl('login','admin_login',null,true));    
         }   
     }
 
@@ -86,61 +86,7 @@ class Controller_Core_Action
 
     public function renderLayout()
     {
-        echo $this->getLayout()->toHtml();//setHeader('Content-type', 'text/html')->renderLayout($this->getLayout()->toHtml());
-    }
-
-    public function getUrl($action = null, $controller = null, array $parameters = null, $reset = false) 
-    {
-        $resultUrl = [];
-        if(!$controller)
-        {
-            $resultUrl['c'] = $this->getRequest()->getRequest('c'); 
-        }
-
-        else
-        {
-            $resultUrl['c'] = $controller;
-        }
-
-        if(!$action)
-        {
-            $resultUrl['a'] = $this->getRequest()->getRequest('a'); 
-        }
-        
-        else
-        {
-            $resultUrl['a'] = $action;
-        }
-
-        if($reset)
-        {
-            if($parameters)
-            {
-                $resultUrl = array_merge($resultUrl, $parameters);
-            }
-        }
-        
-        else
-        {
-            $resultUrl = array_merge($this->getRequest()->getRequest(), $resultUrl);
-        
-            if($parameters)
-            {
-                $resultUrl = array_merge($resultUrl, $parameters);
-            }
-        }
-        
-        $url = 'index.php?'.http_build_query($resultUrl);
-        return $url;
-    }
-
-    public function getBaseUrl($subUrl = null)
-    {
-        $url = "C:/xampp-php/htdocs/Cybercom/Core-PHP";
-        if($subUrl){
-            $url = $url."/".$subUrl;
-        }
-        return $url;
+        echo $this->getLayout()->toHtml();
     }
 
     public function getMessage()

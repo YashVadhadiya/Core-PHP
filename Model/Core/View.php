@@ -73,6 +73,60 @@ class Model_Core_View
         }
         return null;
     }
+
+    public function getUrl($action = null, $controller = null, array $parameters = null, $reset = false) 
+    {
+        $resultUrl = [];
+        if(!$controller)
+        {
+            $resultUrl['c'] = Ccc::getFront()->getRequest()->getRequest('c'); 
+        }
+
+        else
+        {
+            $resultUrl['c'] = $controller;
+        }
+
+        if(!$action)
+        {
+            $resultUrl['a'] = Ccc::getFront()->getRequest()->getRequest('a'); 
+        }
+        
+        else
+        {
+            $resultUrl['a'] = $action;
+        }
+
+        if($reset)
+        {
+            if($parameters)
+            {
+                $resultUrl = array_merge($resultUrl, $parameters);
+            }
+        }
+        
+        else
+        {
+            $resultUrl = array_merge(Ccc::getFront()->getRequest()->getRequest(), $resultUrl);
+        
+            if($parameters)
+            {
+                $resultUrl = array_merge($resultUrl, $parameters);
+            }
+        }
+        
+        $url = 'index.php?'.http_build_query($resultUrl);
+        return $url;
+    }
+
+    public function getBaseUrl($subUrl = null)
+    {
+        $url = "C:/xampp-php/htdocs/Cybercom/Core-PHP";
+        if($subUrl){
+            $url = $url."/".$subUrl;
+        }
+        return $url;
+    }
 }
 
 

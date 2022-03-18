@@ -1,8 +1,8 @@
 <?php $salesmanCustomers = $this->getSalesmanCustomers(); ?>
 <?php $customerWithoutSalesmans = $this->getCustomerWithoutSalesman(); ?>
-<?php $urlAction = new Controller_Core_Action();?>
 
-<form method="POST" action="<?php echo $urlAction->getUrl('save',null, null, false) ?>">
+
+<form method="POST" action="<?php echo $this->getUrl('save',null, null, false) ?>">
 
 <table border="1" width="100%">
 	
@@ -27,7 +27,7 @@
 			<td><?php echo $salesmanCustomer->lastName; ?></td>
 			<td><?php echo $salesmanCustomer->email; ?></td>
 			<td><input type="checkbox" name="salesmanCustomer[customer][]" value="" disabled></td>
-			<td><a href="<?php echo $urlAction->getUrl('grid','customer_price',['id' => Ccc::getFront()->getRequest()->getRequest('id') , 'customerId' => $salesmanCustomer->id],true); ?>">Customer Product Price</a></td>
+			<td><a href="<?php echo $this->getUrl('grid','customer_price',['id' => Ccc::getFront()->getRequest()->getRequest('id') , 'customerId' => $salesmanCustomer->id],true); ?>">Customer Product Price</a></td>
 
 		</tr>
 	<?php endforeach; ?>
@@ -55,7 +55,7 @@
 
 		<td colspan="5">
 			<input type="submit" value="Save" name="edit">
-			<button type="button"><a href="<?php echo $urlAction->getUrl('grid','salesman',null,false) ?>">Cancel</a></button>
+			<button type="button"><a href="<?php echo $this->getUrl('grid','salesman',null,false) ?>">Cancel</a></button>
 		</td>
 </table>
 </form>

@@ -21,8 +21,8 @@ class Model_Core_Pager
 		if(!in_array($ppr,$this->getPerPageCountOptions()))
 		{
 			$this->setPerPageCount(200);
-			$action = new Controller_Core_Action();
-			$action->redirect(($action->getUrl('grid',null,['p' => 1 ,'ppr' => 10],false)));
+			$view = Ccc::getModel('Core_View');
+			$view->getUrl('grid',null,['p' => 1 ,'ppr' => 10],false);
 		}
 		else
 		{

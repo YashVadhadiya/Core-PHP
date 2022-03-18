@@ -20,7 +20,7 @@ class Controller_Admin_Login extends Controller_Core_Action
 			{
 				throw new Exception("Invalid Request.");
 			}
-			$this->redirect($this->getUrl('logout','admin_login',null,true));
+			$this->redirect($this->getLayout()->getUrl('logout','admin_login',null,true));
 		} 
 		catch (Exception $e) 
 		{
@@ -45,13 +45,13 @@ class Controller_Admin_Login extends Controller_Core_Action
 				throw new Exception("Something went wrong!!!.");
 			}
 			$message->addMessage("Logged In successfully.");
-			$this->redirect($this->getUrl('grid','product',null,true));
+			$this->redirect($this->getLayout()->getUrl('grid','product',null,true));
 		} 
 		catch (Exception $e) 
 		{
 			$message = $this->getMessage();
 			$message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getUrl('login'));
+			$this->redirect($this->getLayout()->getUrl('login'));
 		}
 	}
 

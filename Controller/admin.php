@@ -26,53 +26,40 @@ class Controller_Admin extends Controller_Core_Action
                 throw new Exception("You can not insert data in admin.");
             }
 
-            if(array_key_exists('id', $getSaveData) && $getSaveData['id'] == null)
+            $adminId = (int)$this->getRequest()->getRequest('id');
+            $admin = Ccc::getModel('Admin')->load($adminId);
+            
+            if(!$admin)
             {
-                $admin->firstName = $getSaveData['firstName'];
-                $admin->lastName = $getSaveData['lastName'];
-                $admin->email = $getSaveData['email'];
-                $admin->password = md5($getSaveData['password']);
-                $admin->status = $getSaveData['status'];
+                $admin = Ccc::getModel('Admin');
                 $admin->createdAt = $date;
-                $result = $admin->save();
-
-                if (!$result) 
-                {
-                    throw new Exception("System is not able to insert.");
-                } 
-                else 
-                {
-                    $message->addMessage('Inserted Succesfully.');
-                    $this->redirect($this->getUrl('grid', 'admin', null, true));
-                }
+                $admin->setData($getSaveData);
+                $admin->password = md5($getSaveData['password']);
             }
             else
             {
-                $admin->load($getSaveData['id']);
-                $admin->id = $getSaveData['id'];
-                $admin->firstName = $getSaveData['firstName'];
-                $admin->lastName = $getSaveData['lastName'];
-                $admin->email = $getSaveData['email'];
-                $admin->password = md5($getSaveData['password']);
-                $admin->status = $getSaveData['status'];
+                $admin->setData($getSaveData);
                 $admin->updatedAt = $date;
-                $result = $admin->save();
+                $admin->password = md5($getSaveData['password']);
+            }
 
-                if (!$result) 
-                {
-                    throw new Exception("System is not able to update");
-                } 
-                else 
-                {
-                    $message->addMessage('Updated Successfully.');
-                    $this->redirect($this->getUrl('grid', 'admin', null, true));
-                }
+            $result = $admin->save();
+
+            if (!$result) 
+            {
+                throw new Exception("System is not able to update");
+            } 
+            else 
+            {
+                $message->addMessage('Updated Successfully.');
+                $this->redirect($this->getLayout()->getUrl('grid', 'admin', null, true));
             }
         }
+        
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'admin', ['id' => null], true));
+            $this->redirect($this->getLayout()->getUrl('grid', 'admin', ['id' => null], true));
         }
     }
 
@@ -89,9 +76,9 @@ class Controller_Admin extends Controller_Core_Action
     public function editAction()
     {
         $this->setTitle('Admin Edit');
+        $message = $this->getMessage();
         try
         {
-            $message = $this->getMessage();
             $id = (int) $this->getRequest()->getRequest('id');
             if (!$id)
             {
@@ -113,7 +100,7 @@ class Controller_Admin extends Controller_Core_Action
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'admin', null, true));    
+            $this->redirect($this->getLayout()->getUrl('grid', 'admin', null, true));    
         }
     }
 
@@ -126,7 +113,7 @@ class Controller_Admin extends Controller_Core_Action
         if ($result)
         {
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl('grid', 'admin', null, true));
+            $this->redirect($this->getLayout()->getUrl('grid', 'admin', null, true));
         }
     }
 } 
