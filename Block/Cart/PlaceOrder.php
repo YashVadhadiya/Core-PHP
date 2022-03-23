@@ -14,7 +14,7 @@ class Block_Cart_PlaceOrder extends Block_Core_Template
 		$customer = $customer->getCart();
 		$cartId = $customer->cartId;
 		$cartItem = Ccc::getModel('Cart_Item');
-		$cartItem = $cartItem->fetchAll("SELECT ci.itemId,p.name,ci.quantity,p.price, ci.taxAmount, pm.image AS baseImage from cart_item ci LEFT JOIN product p on ci.productId = p.id LEFT join product_media pm on p.id = pm.productId AND (pm.base = 1) WHERE ci.cartId = {$cartId};");
+		$cartItem = $cartItem->fetchAll("SELECT ci.itemId,p.name,ci.quantity,p.price, ci.discount, ci.taxAmount, pm.image AS baseImage from cart_item ci LEFT JOIN product p on ci.productId = p.id LEFT join product_media pm on p.id = pm.productId AND (pm.base = 1) WHERE ci.cartId = {$cartId};");
 		return $cartItem;
 	}
 

@@ -9,11 +9,6 @@ class Block_Customer_Grid extends Block_Core_Template
 	}
 
 	public function getCustomers()
-	/*{
-		$customer = Ccc::getModel('Customer');
-		$customers = $customer->fetchAll("SELECT c.*, a.* from customer c left join address a on c.id = a.customerId where a.billing = 1;");
-		return $customers;
-	}*/
 	{
 		$page = Ccc::getFront()->getRequest()->getRequest('p',1);
 		$perPageCount = Ccc::getFront()->getRequest()->getRequest('ppr',10);
@@ -28,4 +23,3 @@ class Block_Customer_Grid extends Block_Core_Template
 		return $customers;
 	}
 }
-

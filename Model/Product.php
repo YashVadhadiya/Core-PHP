@@ -3,6 +3,18 @@
 Ccc::loadClass('Model_Core_Row');
 class Model_Product extends Model_Core_Row
 {
+	const STATUS_ENABLED = 1;
+    const STATUS_DISABLED = 2;
+    const STATUS_DEFAULT = 1;
+    const STATUS_ENABLED_LBL = 'Active';
+    const STATUS_DISABLED_LBL = 'InActive'; 
+
+    const DISCOUNT_PRICE = 1;
+    const DISCOUNT_PERCENTAGE = 2;
+    const DISCOUNT_DEFAULT = 1;
+    const DISCOUNT_PERCENTAGE_LBL = 'Discount Percentage'; 
+    const DISCOUNT_PRICE_LBL = 'Discount Price'; 
+    
     protected $medias;
     protected $base;
     protected $thumb;
@@ -157,11 +169,6 @@ class Model_Product extends Model_Core_Row
         return $this;
     }
 
-	const STATUS_ENABLED = 1;
-    const STATUS_DISABLED = 2;
-    const STATUS_DEFAULT = 1;
-    const STATUS_ENABLED_LBL = 'Active';
-    const STATUS_DISABLED_LBL = 'InActive';  
     
 	public function __construct()
 	{
@@ -185,6 +192,25 @@ class Model_Product extends Model_Core_Row
         }
 
         return self::STATUS_DEFAULT;
+    }
+
+    public function getDiscountMode($key = null)
+    {       
+        
+        $discounts = [self::DISCOUNT_PERCENTAGE => self::DISCOUNT_PERCENTAGE_LBL,
+                    self::DISCOUNT_PRICE => self::DISCOUNT_PRICE_LBL,];
+
+        if(!$key)
+        {
+            return $discounts;
+        }
+
+        if(array_key_exists($key , $discounts))
+        {
+            return $discounts[$key];
+        }
+
+        return self::DISCOUNT_DEFAULT;
     }
 
     public function saveCategories($categoryIds , $productId = null)

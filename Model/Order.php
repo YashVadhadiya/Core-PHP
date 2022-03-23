@@ -2,10 +2,10 @@
 Ccc::loadClass('Model_Core_Row');
 class Model_Order extends Model_Core_Row
 {	
-
 	protected $billingAddress;
 	protected $shippingAddress;
 	protected $orderItem;
+    protected $customer;
     const STATUS_PENDING = 1;
     const STATUS_PROCESSING = 2;
     const STATUS_COMPLETED = 3;
@@ -23,12 +23,145 @@ class Model_Order extends Model_Core_Row
     const STATUS_SHIPPED_LBL = 'SHIPPED'; 
     const STATUS_OUT_OF_DELIVERY_LBL = 'OUT OF DELIVERY'; 
     const STATUS_DISPATCHED_LBL = 'DISPATCHED';  
+    
+    public function getState($key = null)
+    {       
+        
+        $states = [self::STATUS_PENDING => self::STATUS_PENDING_LBL,
+                    self::STATUS_PROCESSING => self::STATUS_PROCESSING_LBL,
+                    self::STATUS_COMPLETED => self::STATUS_COMPLETED_LBL,
+                    self::STATUS_CANCELLED => self::STATUS_CANCELLED_LBL];
+
+        if(!$key)
+        {
+            return $states;
+        }
+
+        if(array_key_exists($key , $states))
+        {
+            return $states[$key];
+        }
+
+        return self::STATUS_DEFAULT;
+    }
+
+    public function getStatus($key = null)
+    {       
+        
+        $statues = [self::STATUS_PENDING => self::STATUS_PENDING_LBL,
+                    self::STATUS_COMPLETED => self::STATUS_COMPLETED_LBL,
+                    self::STATUS_PACKAGING => self::STATUS_PACKAGING_LBL,
+                    self::STATUS_SHIPPED => self::STATUS_SHIPPED_LBL,
+                    self::STATUS_OUT_OF_DELIVERY => self::STATUS_OUT_OF_DELIVERY_LBL,
+                    self::STATUS_DISPATCHED => self::STATUS_DISPATCHED_LBL];
+
+        if(!$key)
+        {
+            return $statues;
+        }
+
+        if(array_key_exists($key , $statues))
+        {
+            return $statues[$key];
+        }
+
+        return self::STATUS_DEFAULT;
+    }
 
 	public function __construct()
 	{
 		$this->setResourceClassName('Order_Resource');
 		parent::__construct();
 	}
+
+    public function getCustomer($reload = false)
+    {
+        $customer = Ccc::getModel('Order');
+        
+        if(!$this->customerId)
+        {
+            return $customer;
+        }
+
+        if($this->customer && !$reload)
+        { 
+            return $this->customer;
+        }
+        $customer = $customer->fetchRow("SELECT * from customer WHERE id = $this->customerId");
+        if(!$customer)
+        {
+            return $customer;
+        }
+        $this->setCustomer($customer);
+        return $customer;
+    }
+
+    public function setCustomer(Model_Customer $customer)
+    {
+        $this->customer = $customer;
+        return $this;
+    }
+
+    public function getShippingMethod($reload = false)
+    {
+        $shippingMethodModel = Ccc::getModel('ShippingMethod');
+        
+        if(!$this->shippingMethodId)
+        {
+            return $shippingMethodModel;
+        }
+
+        if($this->shippingMethod && !$reload)
+        { 
+            return $this->shippingMethod;
+        }
+
+        $shippingMethod = $shippingMethodModel->fetchRow("SELECT * from shipping_method WHERE methodId = {$this->shippingMethodId}");
+
+        if(!$shippingMethod)
+        {
+            return $shippingMethodModel;
+        }
+        $this->setShippingMethod($shippingMethod);
+        return $shippingMethod;
+    }
+
+    public function setShippingMethod(Model_ShippingMethod $shipping)
+    {
+        $this->shippingMethod = $shipping;
+        return $this;
+    }
+
+    public function getPaymentMethod($reload = false)
+    {
+        $paymentMethodModel = Ccc::getModel('PaymentMethod');
+        
+        if(!$this->paymentMethodId)
+        {
+            return $paymentMethodModel;
+        }
+
+        if($this->paymentMethod && !$reload)
+        { 
+            return $this->paymentMethod;
+        }
+
+        $paymentMethod = $paymentMethodModel->fetchRow("SELECT * from payment_method WHERE methodId = {$this->paymentMethodId}");
+        
+        if(!$paymentMethod)
+        {
+            return $paymentMethodModel;
+        }
+        $this->setPaymentMethod($paymentMethod);
+        return $paymentMethod;
+    }
+
+    public function setPaymentMethod(Model_PaymentMethod $payment)
+    {
+        $this->paymentMethod = $payment;
+        return $this;
+    }
+
 
 	public function getBillingAddress($reload = false)
     {
@@ -88,6 +221,34 @@ class Model_Order extends Model_Core_Row
         return $this;
     }
 
+    public function getProducts($reload = false)
+    {
+        $product = Ccc::getModel('Order');
+        
+        if(!$this->productId)
+        {
+            return $product;
+        }
+
+        if($this->product && !$reload)
+        { 
+            return $this->product;
+        }
+        $product = $product->fetchRow("SELECT * from product WHERE id = $this->productId");
+        if(!$product)
+        {
+            return $product;
+        }
+        $this->setProduct($product);
+        return $product;
+    }
+
+    public function setProduct(Model_Product $product)
+    {
+        $this->product = $product;
+        return $this;
+    }
+
     public function getOrderItem($reload = false)
     {
         $orderItemModel = Ccc::getModel('Order_Item');
@@ -116,48 +277,33 @@ class Model_Order extends Model_Core_Row
         return $this;
     }
 
-
-    public function getState($key = null)
-    {       
+    public function getCartItems($reload = false)
+    {
+        $cartItemsModel = Ccc::getModel('Cart_Item');
         
-        $states = [self::STATUS_PENDING => self::STATUS_PENDING_LBL,
-                    self::STATUS_PROCESSING => self::STATUS_PROCESSING_LBL,
-                    self::STATUS_COMPLETED => self::STATUS_COMPLETED_LBL,
-                    self::STATUS_CANCELLED => self::STATUS_CANCELLED_LBL];
-
-        if(!$key)
+        if(!$this->cartId)
         {
-            return $states;
+            return $cartItemsModel;
         }
 
-        if(array_key_exists($key , $states))
-        {
-            return $states[$key];
+        if($this->cart && !$reload)
+        { 
+            return $this->cartItemsModel;
         }
 
-        return self::STATUS_DEFAULT;
+        $cartItems = $cartItemsModel->fetchAll("SELECT * from cart_item WHERE cartId = {$this->cartId};");
+        if(!$cartItems)
+        {
+            return $this->cartItemsModel;
+        }
+        return $cartItems;
     }
 
-    public function getStatus($key = null)
-    {       
-        
-        $statues = [self::STATUS_PENDING => self::STATUS_PENDING_LBL,
-                    self::STATUS_COMPLETED => self::STATUS_COMPLETED_LBL,
-                    self::STATUS_PACKAGING => self::STATUS_PACKAGING_LBL,
-                    self::STATUS_SHIPPED => self::STATUS_SHIPPED_LBL,
-                    self::STATUS_OUT_OF_DELIVERY => self::STATUS_OUT_OF_DELIVERY_LBL,
-                    self::STATUS_DISPATCHED => self::STATUS_DISPATCHED_LBL];
-
-        if(!$key)
-        {
-            return $statues;
-        }
-
-        if(array_key_exists($key , $statues))
-        {
-            return $statues[$key];
-        }
-
-        return self::STATUS_DEFAULT;
+    public function setCartItems(Model_Cart_Item $cartItems)
+    {
+        $this->cartItems = $cartItems;
+        return $this;
     }
+
+
 }

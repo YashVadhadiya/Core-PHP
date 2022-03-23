@@ -38,6 +38,12 @@
 <button name='Next'><a href="<?php echo $this->getUrl('grid','order',['p' => $this->getPager()->getNext()]) ?>">Next</a></button>
     <?php endif;?>
 <button name='End'><a href="<?php echo $this->getUrl('grid','order',['p' => $this->getPager()->getEnd()]) ?>">End</a></button>
+<hr>
+
+<button><a href="<?php echo $this->getUrl('grid','cart',null,true) ?>" name="cart">View Carts</a></button>
+<button><a href="<?php echo $this->getUrl('add','cart',null,true) ?>" name="cart">Add To Cart</a></button>
+                    
+
         <table border="1" width="100%" cellspacing="4">
             <tr>
                 <th>Id</th>
@@ -56,6 +62,7 @@
                 <th>Created Date</th>
                 <th>Updated Date</th>
                 <th>Edit</th>
+                <th>Order Details</th>
             </tr>
             <?php if(!$orders): ?>
                 <tr>
@@ -80,6 +87,7 @@
                     <td><?php echo $order->createdAt;?></td>
                     <td><?php echo $order->updatedAt;?></td>
                     <td><a href="<?php echo $this->getUrl('edit','order',['id'=> $order->orderId],false) ?>">Edit</a></td>
+                    <td><a href="<?php echo $this->getUrl('view','order',['id'=> $order->orderId],false) ?>">Order Details</a></td>
                 </tr>
                 <?php endforeach;   ?>
         <?php endif;  ?>

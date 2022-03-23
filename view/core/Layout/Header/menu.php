@@ -25,9 +25,6 @@
                     <a class="nav-link" href="<?php echo $this->getUrl('grid','vendor',null,true) ?>" name="vendor">Vendor</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','cart',null,true) ?>" name="cart">Cart</a>
-                </li>
-                <li class="nav-item active">
                     <a class="nav-link" href="<?php echo $this->getUrl('grid','paymentMethod',null,true) ?>" name="payment">Payment</a>
                 </li>
                 <li class="nav-item active">

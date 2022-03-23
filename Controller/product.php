@@ -36,6 +36,9 @@ class Controller_Product extends Controller_Core_Action
                 $product->price = $getSaveData['price'];
                 $product->tax = $getSaveData['tax'];
                 $product->quantity = $getSaveData['quantity'];
+                $product->cost = $getSaveData['cost'];
+                $product->discount = $getSaveData['discount'];
+                $product->discountMode = $getSaveData['discountMode'];
                 $product->sku = $getSaveData['sku'];
                 $product->createdAt = $date;
                 $result = $product->save();
@@ -63,6 +66,9 @@ class Controller_Product extends Controller_Core_Action
                 $product->price = $getSaveData['price'];
                 $product->tax = $getSaveData['tax'];
                 $product->quantity = $getSaveData['quantity'];
+                $product->cost = $getSaveData['cost'];
+                $product->discount = $getSaveData['discount'];
+                $product->discountMode = $getSaveData['discountMode'];
                 $product->sku = $getSaveData['sku'];
                 $product->updatedAt = $date;
                 $result = $product->save();

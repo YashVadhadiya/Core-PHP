@@ -40,7 +40,7 @@
 <button name='End'><a href="<?php echo $this->getUrl('grid','cart',['p' => $this->getPager()->getEnd()]) ?>">End</a></button>
 <hr>
 <form action="<?php echo $this->getUrl('add','cart',null,false) ?>" method="POST">
-        <button type="submit" name="Add"><a href="<?php echo $this->getUrl('add','cart',['p' => $this->getPager()->getStart()]) ?>">Add To Cart</a></button>
+        <button type="submit" name="Add"><a href="<?php echo $this->getUrl('add','cart',['p' => $this->getPager()->getStart()]) ?>">Add To Customer's Cart</a></button>
 </form>
 
 <div id='details'>

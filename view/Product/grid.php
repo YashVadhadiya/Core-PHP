@@ -45,7 +45,10 @@
 		<tr>
 			<th>Id</th>
 			<th>Name</th>
+			<th>Cost</th>
 			<th>Price</th>
+			<th>Discount Mode</th>
+			<th>Discount</th>
 			<th>Tax</th>
 			<th>Quantity</th>
 			<th>SKU</th>
@@ -67,7 +70,10 @@
 				<tr>
 					<td><?php echo $product->id; ?></td>
 					<td><?php echo $product->name; ?></td>
+					<td><?php echo $product->cost; ?></td>
 					<td><?php echo $product->price; ?></td>
+					<td><?php echo $product->getDiscountMode($product->discountMode); ?></td>
+					<td><?php echo $product->discount; ?></td>
 					<td><?php echo $product->tax; ?></td>
 					<td><?php echo $product->quantity; ?></td>
 					<td><?php echo $product->sku; ?></td>

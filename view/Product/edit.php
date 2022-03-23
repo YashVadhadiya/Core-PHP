@@ -1,6 +1,5 @@
 <?php $product = $this->getProduct(); ?>
 <?php $categories = $this->getCategories(); ?>
-
 <?php $getCategoryWithPath = $this->getCategoryWithPath(); ?>
 <?php $categoryProductPair = $this->getCategoryProductPair(); ?>
 
@@ -14,11 +13,27 @@
             <tr>
                 <td>Name</td>
                 <td><input type="text" name="product[name]" value="<?php echo $product->name; ?>"></td>
+            </tr>            
+            <tr>
+                <td>Cost</td>
+                <td><input type="text" name="product[cost]" value="<?php echo $product->cost; ?>"></td>
             </tr>
             <tr>
                 <td>Price</td>
                 <td><input type="text" name="product[price]" value="<?php echo $product->price; ?>"></td>
             </tr>
+                <td>Discount Mode</td>
+                <td>
+                    <select name="product[discountMode]">
+                        <?php foreach ($product->getDiscountMode() as $key => $value): ?>
+                        <option <?php if($product->discountMode == $key): ?> selected <?php endif; ?> value="<?php echo $key; ?>"> <?php echo $value; ?></option>
+                            <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            </tr>
+                <td>Discount</td>
+                <td><input type="text" name="product[discount]" value="<?php echo $product->discount; ?>"></td>
             <tr>
                 <td>Tax</td>
                 <td><input type="number" name="product[tax]" value="<?php echo $product->tax; ?>"></td>

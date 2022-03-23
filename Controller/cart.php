@@ -271,9 +271,8 @@ class Controller_Cart extends Controller_Core_Action
 			$customer = $customer->getCart();
 			$cartId = $customer->cartId;
 
-			foreach ($quantities as $key => $quantity) 
+			foreach ($quantities as $key => $value) 
 			{
-			
 				foreach ($ids as $id) 
 				{
 					if($key == $id)
@@ -282,10 +281,20 @@ class Controller_Cart extends Controller_Core_Action
 						$cartItemModel = Ccc::getModel('Cart_Item');
 						$cartItemModel->cartId = $cartId;
 						$cartItemModel->productId = $id;
-						$cartItemModel->quantity = $quantity;
-						$cartItemModel->cost = $productModel->price;
+						$cartItemModel->quantity = $value;
+
+						$discount = $productModel->discount;
+						if($productModel->discountMode == 2)
+						{
+							$discount = ($productModel->price * $productModel->discount) / 100;
+						}
+
+				//print_r($value * $discount); die;
+						$cartItemModel->cost = $productModel->cost;
+						$cartItemModel->price = $productModel->price;
+						$cartItemModel->discount = $discount * $value;
 						$cartItemModel->tax = $productModel->tax;
-						$cartItemModel->taxAmount = (($productModel->price * $productModel->tax)/100) * $quantity;
+						$cartItemModel->taxAmount = (($productModel->price * $productModel->tax)/100) * $value;
 						$cartItemModel->save();
 					}
 				}
@@ -373,7 +382,14 @@ class Controller_Cart extends Controller_Core_Action
 		{
 			$totalTax = $totalTax + $value->taxAmount;
 		}
-		$grandTotal = $cartModel->total + $cartModel->shippingAmount + $totalTax;
+		
+		$totalDiscount = 0;
+		foreach($cartItemModel as $value)
+		{
+			$totalDiscount = $totalDiscount + ($value->discount * $value->quantity);
+		}
+
+		$grandTotal = ($cartModel->total + $cartModel->shippingAmount + $totalTax) - $totalDiscount;
 		
 		if(!$orderModel)
 		{
@@ -450,9 +466,18 @@ class Controller_Cart extends Controller_Core_Action
 			$orderItemModel->name = $productModel->name;
 			$orderItemModel->sku = $productModel->sku;
 			$orderItemModel->price = $productModel->price;
+			$orderItemModel->cost = $productModel->cost;
+
+			$discount = $productModel->discount;
+			if($productModel->discountMode == 2)
+			{
+				$discount = ($productModel->price * $productModel->discount) / 100;
+			}
+
+			$orderItemModel->discount = $discount * $value->quantity;
 			$orderItemModel->tax = $productModel->tax;
-			$orderItemModel->taxAmount = ($productModel->price * $productModel->tax)/100 * $value->quantity;
 			$orderItemModel->quantity = $value->quantity;
+			$orderItemModel->taxAmount = ($productModel->price * $productModel->tax) / 100 * $value->quantity;
 			$orderItemModel->createdAt = $date;
 			$orderItemModel->save();
 		}

@@ -12,6 +12,16 @@ class Controller_Order extends Controller_Core_Action
         $this->renderLayout();
     }
 
+    public function viewAction()
+    {
+        $orderId = (int)$this->getRequest()->getRequest('id');
+        $this->setTitle('Order Grid');
+        $content = $this->getLayout()->getContent();
+        $orderGrid = Ccc::getBlock('Order_View');
+        $content->addChild($orderGrid);
+        $this->renderLayout();
+    }
+    
     public function editAction()
     {
         $this->setTitle('Order Edit');
