@@ -8,7 +8,19 @@ class Model_Product_Media extends Model_Core_Row
 		parent::__construct();
 	}
 
-	protected $product; 
+	protected $product;
+    protected $mediaPath = "Media/Product";
+
+    public function getImageUrl()
+    {     
+        return Ccc::getBaseUrl($this->mediaPath.'/'.$this->image);
+    }
+
+    public function getImagePath()
+    {     
+        return Ccc::getBasePath($this->mediaPath.'/'.$this->image);
+    }
+
 
 	public function getProduct($reload = false)
     {

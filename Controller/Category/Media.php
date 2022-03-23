@@ -17,15 +17,16 @@ class Controller_Category_Media extends Controller_Core_Action
 
     public function addAction()
     {
-        $categoryId = Ccc::getFront()->getRequest()->getRequest('categoryId'); //$_GET['categoryId'];
+        $categoryId = Ccc::getFront()->getRequest()->getRequest('categoryId');
         $imageName1 = $_FILES['image']['name'];
         $imageAddress1 = $_FILES['image']['tmp_name'];
         $imageName = implode("", $imageName1);
         $imageName = date('mjYhis') . '-' . $imageName;
         $imageAddress = implode("", $imageAddress1);
         $message = Ccc::getModel('Core_Message');
+        $mediaModel = Ccc::getModel('Category_Media');
 
-        if (move_uploaded_file($imageAddress, $this->getLayout()->getBaseUrl('Media/Category/') .$imageName)) 
+        if (move_uploaded_file($imageAddress, $mediaModel->getImagePath() .$imageName)) 
         {
             $query = "INSERT INTO `category_media`( `categoryId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($categoryId,'$imageName',0,0,0,0,0)";
             $result = $this->getAdapter()->insert($query);
@@ -44,7 +45,7 @@ class Controller_Category_Media extends Controller_Core_Action
     public function saveAction()
     {
         $message = $this->getMessage();
-        $media = Ccc::getModel('Category_Media');
+        $mediaModel = Ccc::getModel('Category_Media');
         try {
             $request = $this->getRequest();
             $categoryId = $request->getRequest("categoryId");
@@ -85,7 +86,7 @@ class Controller_Category_Media extends Controller_Core_Action
                 {
                     if($deleteResult)
                     {
-                        unlink($this->getLayout()->getBaseUrl('Media/Category/') . $value);
+                        unlink($mediaModel->getImagePath() . $value);
                     }
                 }
             }
@@ -120,7 +121,6 @@ class Controller_Category_Media extends Controller_Core_Action
                 {
                     array_push($galleryIds, $value);
                 }
-                print_r($galleryIds);
                 $galleryIdsImplode = implode(",", $galleryIds);
                 $query = "UPDATE `category_media` SET `gallery`= 1 WHERE imageId IN($galleryIdsImplode)";
 
@@ -174,8 +174,7 @@ class Controller_Category_Media extends Controller_Core_Action
             }
 
             $this->redirect(
-                $this->getUrl("grid", "category_media", ["categoryId" => $categoryId])
-            );
+                $this->getLayout()->getUrl("grid", "category_media", ["categoryId" => $categoryId]));
     }
     catch (Exception $e) 
         {

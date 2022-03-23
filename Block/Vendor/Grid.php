@@ -22,16 +22,5 @@ class Block_Vendor_Grid extends Block_Core_Template
 		$vendors = $vendorModel->fetchAll($query);
 		return $vendors;
 	}
-
-	public function getPager()
-	{
-		return $this->pager;
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this->pager;
-	}
 }
 

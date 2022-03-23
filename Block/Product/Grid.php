@@ -22,16 +22,5 @@ class Block_Product_Grid extends Block_Core_Template{
 		$products = $productModel->fetchAll($query);
 		return $products;
 	}
-
-	public function getPager()
-	{
-		return $this->pager;
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this->pager;
-	}
 }
 

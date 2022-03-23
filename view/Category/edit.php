@@ -11,7 +11,7 @@
                 <td><input type="text" name="category[categoryId]" value="<?php echo $category->categoryId; ?>" readonly></td>
             </tr>
 			<tr>
-		<td width="10%">Category</td>
+		<td>Category</td>
 		<td>
 			<select name="category[parentId]">
 				<option value="">Main Category</option>

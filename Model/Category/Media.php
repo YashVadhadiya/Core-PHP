@@ -10,7 +10,19 @@ class Model_Category_Media extends Model_Core_Row
 		parent::__construct();
 	}
 
-	protected $category; 
+	protected $category;
+    
+    protected $mediaPath = "Media/Category";
+
+    public function getImageUrl()
+    {     
+        return Ccc::getBaseUrl($this->mediaPath.'/'.$this->image);
+    }
+
+    public function getImagePath()
+    {     
+        return Ccc::getBasePath($this->mediaPath.'/'.$this->image);
+    }
 
 	public function getCategory($reload = false)
     {

@@ -1,5 +1,5 @@
 <?php $pages = $this->getPages(); ?>
-<?php //$this = new Controller_Core_Action(); ?>
+
 <?php $perPageCount = $this->getPager()->getPerPageCount(); ?>
 
 <script type="text/javascript">

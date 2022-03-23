@@ -1,6 +1,6 @@
-<?php $categories = $this->getCategories(); //print_r($categories);  ?>
+<?php $categories = $this->getCategories(); ?>
 <?php $getCategoryWithPath = $this->getCategoryWithPath();?>
-
+<?php $mediaModel = Ccc::getModel('Category_Media'); ?>
 <?php $perPageCount = $this->getPager()->getPerPageCount(); ?>
 
 <script type="text/javascript">
@@ -63,7 +63,6 @@
         <?php foreach($categories as $category): ?>
         <tr>
             <td><?php echo $category->categoryId; ?></td>
-            <!-- <td><?php //echo $getCategoryWithPath[$category->categoryId] ?></td> -->
             <td><?php $pathReturn = $getCategoryWithPath; echo $pathReturn[$category->categoryId]; ?></td>
 
             <td><?php echo $category->getStatus($category->status); ?></td>
@@ -73,19 +72,19 @@
             <td>
                 <?php if(!$category->baseImage): echo "image not selected" ?>
                     <?php else: ?>
-                <img src="<?php echo 'Media/Category/' . $category->baseImage; ?>" width="75px" height="75px">
+                <img src="<?php echo $mediaModel->getImageUrl() . $category->baseImage; ?>" width="75px" height="75px">
             <?php endif;?>
             </td>
             <td>
                 <?php if(!$category->thumbImage): echo "image not selected" ?>
                     <?php else: ?>
-                <img src="<?php echo 'Media/Category/' . $category->thumbImage; ?>" width="75px" height="75px">
+                <img src="<?php echo $mediaModel->getImageUrl() . $category->thumbImage; ?>" width="75px" height="75px">
             <?php endif;?>
             </td>
             <td>
                 <?php if(!$category->smallImage): echo "image not selected" ?>
                     <?php else: ?>
-                <img src="<?php echo 'Media/Category/' . $category->smallImage; ?>" width="75px" height="75px">
+                <img src="<?php echo $mediaModel->getImageUrl() . $category->smallImage; ?>" width="75px" height="75px">
             <?php endif;?>
             </td>
 

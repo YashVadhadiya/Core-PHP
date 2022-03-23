@@ -277,6 +277,7 @@ class Controller_Category extends Controller_Core_Action
 
     public function deleteAction()
     {
+        $mediaModel = Ccc::getModel('Category_Media');
         $getDelete = $this->getRequest()->getRequest("categoryId");
         $category = Ccc::getModel('Category')->load($getDelete);
         $message = $this->getMessage();
@@ -284,15 +285,16 @@ class Controller_Category extends Controller_Core_Action
         {
             $query1 = "SELECT imageId, image FROM category c LEFT JOIN category_media cm ON c.categoryId = cm.categoryId  WHERE c.categoryId = $getDelete;";
             
-            $result1 = $this->getAdapter()->fetchPairs($query1);
             
-            $result = $category->delete();
+            $result1 = $this->getAdapter()->fetchPairs($query1);
+
+            $result = $category->delete(['categoryId' => $getDelete]);
 
             foreach($result1 as $key => $value)
             {
                 if($result1)
                 {
-                    unlink($this->getLayout()->getBaseUrl('Media/Category/') . $value);
+                    unlink($mediaModel->getImagePath() . $value);
                 }
             }
 

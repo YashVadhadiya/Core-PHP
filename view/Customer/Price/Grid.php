@@ -39,7 +39,8 @@ $prices = $this->getPrices();
         <tr>
             <td colspan="6">
                 <input type="submit" name="save" value="Save">
-                <a href="<?php echo $this->redirect($this->getUrl('grid','salesman_customer',['id'=>Ccc::getFront()->getRequest()->getRequest('id')],true)); ?>">Cancel</a>
+                <button type="button"><a href="<?php echo $this->getUrl('grid','salesman_customer',['id'=>Ccc::getFront()->getRequest()->getRequest('id')],true) ?>">Cancel</a></button>
+
             </td>
         </tr>
     </form>

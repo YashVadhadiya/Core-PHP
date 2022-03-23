@@ -34,6 +34,7 @@ class Controller_Product extends Controller_Core_Action
                 $product->name = $getSaveData['name'];
                 $product->status = $getSaveData['status'];
                 $product->price = $getSaveData['price'];
+                $product->tax = $getSaveData['tax'];
                 $product->quantity = $getSaveData['quantity'];
                 $product->sku = $getSaveData['sku'];
                 $product->createdAt = $date;
@@ -60,6 +61,7 @@ class Controller_Product extends Controller_Core_Action
                 $product->name = $getSaveData['name'];
                 $product->status = $getSaveData['status'];
                 $product->price = $getSaveData['price'];
+                $product->tax = $getSaveData['tax'];
                 $product->quantity = $getSaveData['quantity'];
                 $product->sku = $getSaveData['sku'];
                 $product->updatedAt = $date;
@@ -92,7 +94,6 @@ class Controller_Product extends Controller_Core_Action
         $id = Ccc::getModel('Product');
         $content = $this->getLayout()->getContent();
         $productAdd = Ccc::getBlock('Product_Edit')->setData(['product' => $id, 'categoryProductPair' => []]);
-        //$productAdd->setData(['categoryProductPair' => []]);
         $content->addChild($productAdd);
         $this->renderLayout();
     }
@@ -133,6 +134,7 @@ class Controller_Product extends Controller_Core_Action
 
     public function deleteAction()
     {
+        $mediaModel = Ccc::getModel('Product_Media');
         $getDelete = $this->getRequest()->getRequest('id');
         $product = Ccc::getModel('Product')->load($getDelete);
         $message = $this->getMessage();
@@ -143,7 +145,7 @@ class Controller_Product extends Controller_Core_Action
         {
             if($result)
             {
-                unlink($this->getLayout()->getBaseUrl('Media/Product/') . $value);
+                unlink($mediaModel->getImagePath() . $value);
             }
         }
 

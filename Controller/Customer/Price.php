@@ -57,8 +57,5 @@ class Controller_Customer_Price extends Controller_Core_Action
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
             $this->redirect($this->getLayout()->getUrl('grid'));
         }
-
-
     }
-    
 }

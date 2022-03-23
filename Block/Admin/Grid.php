@@ -20,16 +20,5 @@ class Block_Admin_Grid extends Block_Core_Template
 		$admins = $adminModel->fetchAll("SELECT * FROM admin LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
 		return $admins;
 	}
-
-	public function getPager()
-	{
-		return $this->pager;
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this->pager;
-	}
 }
 

@@ -20,6 +20,10 @@
                 <td><input type="text" name="product[price]" value="<?php echo $product->price; ?>"></td>
             </tr>
             <tr>
+                <td>Tax</td>
+                <td><input type="number" name="product[tax]" value="<?php echo $product->tax; ?>"></td>
+            </tr>
+            <tr>
                 <td>Quantity</td>
                 <td><input type="text" name="product[quantity]" value="<?php echo $product->quantity; ?>"></td>
             </tr>
@@ -37,7 +41,7 @@
             </tr>
 
             <tr>
-        <td width="10%">Categories</td>
+        <td>Categories</td>
         <td>
           <table border='1'>
             <tr>

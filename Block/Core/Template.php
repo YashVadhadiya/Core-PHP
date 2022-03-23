@@ -4,6 +4,18 @@ Ccc::loadClass('Model_Core_View');
 class Block_Core_Template extends Model_Core_View
 {
 	protected $children = [];
+	protected $pager;
+
+	public function getPager()
+	{
+		return $this->pager;
+	}
+
+	public function setPager($pager)
+	{
+		$this->pager = $pager;
+		return $this->pager;
+	}
 
 	public function setChildren($children)
 	{

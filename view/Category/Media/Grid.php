@@ -1,5 +1,5 @@
 <?php $categoryMedias = $this->getCategoryMedias(); ?>	
-<?php //$this = new Controller_Core_Action(); ?>
+<?php $mediaModel = Ccc::getModel('Category_Media')?>
 
 <form action="<?php echo $this->getUrl('save','category_media',null,false) ?>" method="POST" align="center">
 	<input type="submit" name="update" value="UPDATE"> 
@@ -22,7 +22,7 @@
 			<?php foreach ($categoryMedias as $media): ?>		
 				<tr>
 					<td><?php echo $media->imageId ; ?></td>
-					<td><img src="<?php echo 'Media/Category/' . $media->image; ?>" width = 75px height = 75px></td>
+					<td><img src="<?php echo $mediaModel->getImageUrl() . $media->image; ?>" width = 75px height = 75px></td>
 					
 					<td><input type="radio" name="media[base]" value="<?php echo $media->imageId?>"<?php echo ($media->base==1) ? 'checked' : '' ; ?>></td>
 					<td><input type="radio" name="media[thumb]" value="<?php echo $media->imageId?>"<?php echo ($media->thumb==1) ? 'checked' : '' ;?>></td>

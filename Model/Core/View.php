@@ -38,12 +38,6 @@ class Model_Core_View
         return $this->data[$key];
     }
 
-    /*public function addData($key, $value)
-    {
-        $this->data[$key] = $value;
-        return $this;
-    }*/
-
     public function setData(array $data)
     {
         $this->data = $data;
@@ -116,15 +110,6 @@ class Model_Core_View
         }
         
         $url = 'index.php?'.http_build_query($resultUrl);
-        return $url;
-    }
-
-    public function getBaseUrl($subUrl = null)
-    {
-        $url = "C:/xampp-php/htdocs/Cybercom/Core-PHP";
-        if($subUrl){
-            $url = $url."/".$subUrl;
-        }
         return $url;
     }
 }

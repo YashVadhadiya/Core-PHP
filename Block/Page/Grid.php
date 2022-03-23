@@ -3,8 +3,6 @@
 Ccc::loadClass('Block_Core_Template');
 class Block_Page_Grid extends Block_Core_Template
 {
-	protected $pager;
-
 	public function __construct()
 	{
 		$this->setTemplate('view/page/grid.php');
@@ -22,18 +20,5 @@ class Block_Page_Grid extends Block_Core_Template
 		$pages = $pageModel->fetchAll("SELECT * FROM page LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
 		return $pages;
 	}
-	
-	public function getPager()
-	{
-		return $this->pager;
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this->pager;
-	}
-	
-
 }
 

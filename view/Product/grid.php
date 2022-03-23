@@ -1,5 +1,5 @@
 <?php $products = $this->getProducts(); ?>
-
+<?php $mediaModel = Ccc::getModel('Product_Media'); ?>
 <?php $perPageCount = $this->getPager()->getPerPageCount(); ?>
 
 <script type="text/javascript">
@@ -46,6 +46,7 @@
 			<th>Id</th>
 			<th>Name</th>
 			<th>Price</th>
+			<th>Tax</th>
 			<th>Quantity</th>
 			<th>SKU</th>
 			<th>Status</th>
@@ -67,6 +68,7 @@
 					<td><?php echo $product->id; ?></td>
 					<td><?php echo $product->name; ?></td>
 					<td><?php echo $product->price; ?></td>
+					<td><?php echo $product->tax; ?></td>
 					<td><?php echo $product->quantity; ?></td>
 					<td><?php echo $product->sku; ?></td>
 					<td><?php echo $product->getStatus($product->status); ?></td>
@@ -76,19 +78,19 @@
 					<td>
                 		<?php if(!$product->baseImage): echo "image not selected" ?>
                     		<?php else: ?>
-                		<img src="<?php echo 'Media/Product/' . $product->baseImage; ?>" width="75px" height="75px">
+                		<img src="<?php echo $mediaModel->getImageUrl() . $product->baseImage; ?>" width="75px" height="75px">
             			<?php endif;?>
             		</td>
             		<td>
                 		<?php if(!$product->thumbImage): echo "image not selected" ?>
                     		<?php else: ?>
-                		<img src="<?php echo 'Media/Product/' . $product->thumbImage; ?>" width="75px" height="75px">
+                		<img src="<?php echo $mediaModel->getImageUrl() . $product->thumbImage; ?>" width="75px" height="75px">
             			<?php endif;?>
             		</td>
             		<td>
                 		<?php if(!$product->smallImage): echo "image not selected" ?>
                     		<?php else: ?>
-                		<img src="<?php echo 'Media/Product/' . $product->smallImage; ?>" width="75px" height="75px">
+                		<img src="<?php echo $mediaModel->getImageUrl() . $product->smallImage; ?>" width="75px" height="75px">
             			<?php endif;?>
             		</td>
 

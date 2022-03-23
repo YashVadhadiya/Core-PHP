@@ -3,14 +3,14 @@
 <?php Ccc::loadClass('Controller_Core_Action');?>
 <?php Ccc::loadClass('Model_Core_Request');?>
 <?php date_default_timezone_set("Asia/Kolkata");?>
-<?php //$urlAction = new Controller_Core_Action();?>
 
 <?php
+define('DS',DIRECTORY_SEPARATOR);
 class Ccc
 {
 	protected static $front = null;
 
-	public function getFront()
+	public static function getFront()
 	{
 		if(!self::$front)
 		{
@@ -83,6 +83,24 @@ class Ccc
 		$className = 'Block_'.$className;
 		self::loadClass($className);
 		return new $className;
+	}
+
+	public static function getBaseUrl($subUrl)
+	{
+		$url = self::getConfig('baseUrl');
+        if($subUrl){
+            $url = $url.$subUrl;
+        }
+        return $url;
+	}
+
+	public static function getBasePath($subPath)
+	{
+		$path = self::getConfig('basePath');
+        if($subPath){
+            $path = $path.$subPath;
+        }
+        return $path;
 	}
 
 	public static function init()

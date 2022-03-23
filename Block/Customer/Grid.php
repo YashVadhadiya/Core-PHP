@@ -27,16 +27,5 @@ class Block_Customer_Grid extends Block_Core_Template
 		$customers = $customerModel->fetchAll($query);
 		return $customers;
 	}
-
-	public function getPager()
-	{
-		return $this->pager;
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this->pager;
-	}
 }
 

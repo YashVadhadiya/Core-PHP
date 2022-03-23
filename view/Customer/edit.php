@@ -90,35 +90,6 @@
 			<tr>
 				<td colspan="4"><h1>Shipping Address</h1></td>
 			</tr>
-
-			<tr>
-				<th>Same as billing address</th>
-    				<td><input type="checkbox" id="checkbox" onclick="SetBilling(this.checked);">
-				</td>
-			</tr>
-
-
-			<!-- <script type="text/javascript">
-			  function SetBilling(checked) {
-			    if(checked)
-			    {
-			      document.getElementById('shippingAddress').value = document.getElementById('billingAddress').value;
-			      document.getElementById('shippingPostalCode').value = document.getElementById('billingPostalCode').value;
-			      document.getElementById('shippingCity').value = document.getElementById('billingCity').value;
-			      document.getElementById('shippingState').value = document.getElementById('billingState').value;
-			      document.getElementById('shippingCountry').value = document.getElementById('billingCountry').value;
-			    }
-			    else
-			    {
-			      document.getElementById('shippingAddress').value = '';
-			      document.getElementById('shippingPostalCode').value = '';
-			      document.getElementById('shippingCity').value = '';
-			      document.getElementById('shippingState').value = '';
-			      document.getElementById('shippingCountry').value = '';
-			    }
-			  }
-			</script> -->
-			
 				
 			<tr>
 				<td>Address</td>

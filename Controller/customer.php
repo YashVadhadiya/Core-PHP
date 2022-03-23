@@ -48,78 +48,9 @@ class Controller_Customer extends Controller_Core_Action
         else 
         {
             $message->addMessage('Updated Successfully.');
-            $this->redirect($this->getUrl('grid', 'customer', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'customer', null, false));
         }
     }
-    
-    /*protected function saveAddress($customerId)
-    {
-        $getSaveData = $this->getRequest()->getRequest('address');
-        $address = Ccc::getModel('Customer_Address');
-        $date = date('Y-m-d H:i:s');
-        $message = $this->getMessage();
-
-        $billingRow = $this->getRequest()->getRequest('billingaddress');
-        $shippingRow = $this->getRequest()->getRequest('shippingaddress');
-
-        $customerModel = Ccc::getModel('customer')->load($customerId);
-        $billingAddress = $customerModel->getBillingAddress();
-        //$shippingAddress = $customerModel->getShippingAddress();
-        //$addressData = $address->fetchRow("SELECT * FROM address WHERE customerId = '$customerId'");
-
-        if($billingAddress != null)
-        {
-            $address = Ccc::getModel('Customer_Address');
-            $address->setData($billingRow);
-            $address->customerId = $customerId;
-            $address->billing =  1;
-            $address->shipping =  0;
-            $result = $address->save();
-            
-            if(!$result)
-            {
-                throw new Exception("Not Saved.");
-            }
-            $message->addMessage('Saved Successfully.');
-        }
-        else
-        {
-            $address->setData($billingRow);
-            $result = $address->save();
-            if(!$result)
-            {
-                throw new Exception("Not Saved.");
-            }
-            $message->addMessage('Saved Successfully.');
-        }
-
-         if($billingAddress != null)
-        {
-            $address = Ccc::getModel('Customer_Address');
-            $address->setData($shippingRow);
-            $address->customerId = $customerId;
-            $address->billing =  0;
-            $address->shipping =  1;
-            $result = $address->save();
-            
-            if(!$result)
-            {
-                throw new Exception("Not Saved.");
-            }
-            $message->addMessage('Saved Successfully.');
-        }
-        else
-        {
-            $address->setData($shippingRow);
-            $result = $address->save();
-            
-            if(!$result)
-            {
-                throw new Exception("Not Saved.");
-            }
-            $message->addMessage('Saved Successfully.');
-        }
-    }*/
 
     protected function saveAddress($customerId) 
     {
@@ -166,12 +97,12 @@ class Controller_Customer extends Controller_Core_Action
         {
             $customerId = $this->saveCustomer();
             $this->saveAddress($customerId);
-            $this->redirect($this->getUrl('grid', 'customer', ['id' => null], false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'customer', ['id' => null], false));
         }
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'customer', ['id' => null], false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'customer', ['id' => null], false));
         }
     }
 
@@ -204,12 +135,6 @@ class Controller_Customer extends Controller_Core_Action
             $billingAddress = $customerModel->getBillingAddress();
             $shippingAddress = $customerModel->getShippingAddress();
 
-            /*$customerRow = Ccc::getModel('Customer');
-            $billingAddress = $address->fetchRow("SELECT * FROM address WHERE customerId = {$id} AND billing =1; ");
-            $shippingAddress = $address->fetchRow("SELECT * FROM address WHERE customerId = {$id} AND shipping =1; ");
-            $address = Ccc::getModel('Customer_Address');
-            $customer = $customerRow->fetchRow("SELECT c.*,a.* from customer c join address a on a.customerId = c.id WHERE c.id = '$id'");*/
-
             if (!$customer) 
             {
                 throw new Exception('Error Processing Request');
@@ -222,7 +147,7 @@ class Controller_Customer extends Controller_Core_Action
         catch (Exception $e) 
         {
             $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getUrl('grid', 'customer', null, true));
+            $this->redirect($this->getLayout()->getUrl('grid', 'customer', null, true));
         }
     }
 
@@ -236,7 +161,7 @@ class Controller_Customer extends Controller_Core_Action
         if ($result) 
         {   
             $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getUrl('grid', 'customer', null, false));
+            $this->redirect($this->getLayout()->getUrl('grid', 'customer', null, false));
         }
     }
 } 

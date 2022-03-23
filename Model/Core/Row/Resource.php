@@ -65,29 +65,11 @@ class Model_Core_Row_Resource
         $key = key($queryDelete);
         $value = $queryDelete[$key];
         $sqlResult = "DELETE FROM $tableName WHERE $key = $value;";
+        /*print_r($sqlResult);
+        die;*/
         $result = $this->getAdapter()->delete($sqlResult);
         return $result;
     }
-
-    /*public function update(array $queryUpdate, array $queryId)
-    {
-        
-        $date = date("Y-m-d H:i:s");
-        $set = [];
-        $tableName = $this->getTableName();
-        $key = key($queryId);
-        $value = $queryId[$this->primaryKey];
-        
-        foreach ($queryUpdate as $sqlKey => $sqlValue) 
-        {
-            $set[] = "$sqlKey ='$sqlValue'";
-        }
-        
-        $sql1 = implode(",", $set);
-        $update = "UPDATE $tableName SET $sql1 WHERE $key = $value;";
-        $result = $this->getAdapter()->update($update);
-        return $result;
-    }*/
 
     public function update($data,$id)
     {

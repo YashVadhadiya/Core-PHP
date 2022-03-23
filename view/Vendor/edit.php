@@ -1,8 +1,8 @@
 <?php $vendorAddress = $this->getVendor(); ?>
 
 
-<?php $vendor = $vendorAddress['vendor']; //print_r($vendor);?>
-<?php $address = $vendorAddress['vendorAddress']; //print_r($vendorAddress); die;?>
+<?php $vendor = $vendorAddress['vendor'];?>
+<?php $address = $vendorAddress['vendorAddress']; ?>
 
 	<form method="POST" action="<?php echo $this->getUrl('save','vendor',null, false) ?>">
 		<table border="1" width="100%" cellspacing="4">

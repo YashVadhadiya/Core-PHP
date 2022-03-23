@@ -7,6 +7,67 @@ class Model_Customer extends Model_Core_Row
     protected $shippingAddress;
     protected $salesman;
     protected $price;
+    protected $cart;
+
+    public function getCart($reload = false)
+    {
+        $cartModel = Ccc::getModel('Cart');
+        
+        if(!$this->id)
+        {
+            return $cartModel;
+        }
+
+        if($this->cart && !$reload)
+        { 
+            return $this->cartModel;
+        }
+
+        $cart = $cartModel->fetchRow("SELECT * from cart WHERE customerId = {$this->id};");
+
+        if(!$cart)
+        {
+            return $this->cartModel;
+        }
+        $this->setCart($cart);
+        return $cart;
+    }
+
+    public function setCart(Model_Cart $cart)
+    {
+        $this->cart = $cart;
+        return $this;
+    }
+
+    public function getOrder($reload = false)
+    {
+        $orderModel = Ccc::getModel('Order');
+        
+        if(!$this->customerId)
+        {
+            return $orderModel;
+        }
+
+        if($this->order && !$reload)    
+        { 
+            echo "11"; die;
+            return $this->orderModel;
+        }
+
+        $order = $orderModel->fetchRow("SELECT * from orders WHERE customerId = {$this->customerId};");
+        if(!$order)
+        {
+            return $this->orderModel;
+        }
+        $this->setorder($order);
+        return $order;
+    }
+
+    public function setorder(Model_order $order)
+    {
+        $this->order = $order;
+        return $this;
+    }
     
     public function getBillingAddress($reload = false)
     {

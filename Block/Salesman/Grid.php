@@ -20,16 +20,5 @@ class Block_Salesman_Grid extends Block_Core_Template
 		$salesmans = $salesmanModel->fetchAll("SELECT * FROM salesman LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
 		return $salesmans;
 	}
-
-	public function getPager()
-	{
-		return $this->pager;
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this->pager;
-	}
 }
 

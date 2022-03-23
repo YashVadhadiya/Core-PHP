@@ -23,8 +23,9 @@ class Controller_Product_Media extends Controller_Core_Action
     $imageName = date("mjYhis")."-".$imageName;
     $imageAddress = implode("", $imageAddress1);
     $message = $this->getMessage();
+    $mediaModel = Ccc::getModel('Product_Media');
     
-        if (move_uploaded_file($imageAddress, $this->getLayout()->getBaseUrl('Media/Product/') .$imageName)) 
+        if (move_uploaded_file($imageAddress, $mediaModel->getImagePath() .$imageName)) 
         {
             $query = "INSERT INTO `product_media`( `productId`, `image`, `base`, `thumb`, `small`, `gallery`, `status`) VALUES ($productId,'$imageName',0,0,0,0,0)";
             $result = $this->getAdapter()->insert($query);
@@ -43,7 +44,7 @@ class Controller_Product_Media extends Controller_Core_Action
     public function saveAction()
     {
         $message = $this->getMessage();
-        $media = Ccc::getModel('Product_Media');
+        $mediaModel = Ccc::getModel('Product_Media');
         try {
             $request = $this->getRequest();
             $productId = $request->getRequest("id");
@@ -86,7 +87,7 @@ class Controller_Product_Media extends Controller_Core_Action
                 {
                     if($deleteResult)
                     {
-                        unlink($this->getLayout()->getBaseUrl('Media/Product/') . $value);
+                        unlink($mediaModel->getImagePath() . $value);
                     }
                 }
             }
@@ -122,7 +123,6 @@ class Controller_Product_Media extends Controller_Core_Action
                 {
                     array_push($galleryIds, $value);
                 }
-                print_r($galleryIds);
                 $galleryIdsImplode = implode(",", $galleryIds);
                 $query = "UPDATE `product_media` SET `gallery`= 1 WHERE imageId IN($galleryIdsImplode)";
 
