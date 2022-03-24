@@ -1,6 +1,7 @@
 <?php $cartItems = $this->getCartItem();  ?>
 <?php $products = $this->getProducts(); ?>
 <?php $order = $this->getOrder();?>
+<?php $mediaModel = Ccc::getModel('Product_Media')?>
 
 <h2>Products </h2>
 <div id="addProduct" style = "display:none">
@@ -21,7 +22,7 @@
                     <tr>
                         <td><?php if(!$product->baseImage): echo "No Image"; ?>
                                 <?php else:?>
-                                <img src="<?php echo 'Media/product/' . $product->baseImage; ?>" width="100px" height="100px" alt="image">
+                                <img src="<?php echo $mediaModel->getImageUrl() . $product->baseImage; ?>" width="100px" height="100px" alt="image">
                                 <?php endif;?></td>
                         <td><?php echo $product->name ?></td>
                         <td><input type="number" name="quantity[<?php echo $product->id ?>]" value="1" min="1" max="<?php echo $product->quantity; ?>"></td>
@@ -37,8 +38,9 @@
 </div>
 
 <div id='details'>
-<button type="submit" name="Add" id="toggle">New Item</button>
-<button id="id1" onclick="showDiv()">Update</button>
+<form method="POST" action="<?php echo $this->getUrl('updateItem','cart',null,false) ?>">
+<button type="button" name="Add" id="toggle">New Item</button>
+<button type="submit">Update</button>
 <table border=1 width=100%>
     <tr>
         <th> Image </th>
@@ -56,10 +58,10 @@
             <tr>
                 <td><?php if(!$cartItem->baseImage): echo "No Image"; ?>
                         <?php else:?>
-                        <img src="<?php echo 'Media/product/' . $cartItem->baseImage; ?>" width="100px" height="100px" alt="image">
+                        <img src="<?php echo $mediaModel->getImageUrl() . $cartItem->baseImage; ?>" width="100px" height="100px" alt="image">
                         <?php endif;?></td>
                 <td><?php echo $cartItem->name ?></td>
-                <td><?php echo $cartItem->quantity ?></td>
+                <td><input type="number" name="quantity[<?php echo $cartItem->itemId ?>]"  min="1" max="10" value="<?php echo $cartItem->quantity ?>"></td>
                 <td><?php echo $cartItem->price ?></td>
                 <td><?php echo $cartItem->price * $cartItem->quantity ?></td>
                 <td>
@@ -73,7 +75,7 @@
     <?php endif; ?>
 
 </table>
-
+</form>
 <?php if($order):
         $orderTotal = $order->grandTotal - ($order->taxAmount + $order->shippingAmount);
         else: $orderTotal = 0; endif; ?>
@@ -82,8 +84,7 @@
 $total = 0;
         endif; ?>
 
-<div id="add" style = "display:block;"> <input type="text" value="<?php echo $orderTotal; ?>" disabled></div>
-<div id="add2" style = "display:none;"> <input type="text" value="<?php echo $total; ?>" disabled></div>
+<input type="text" value="<?php echo $total; ?>" disabled>
 
 <script type="text/javascript">
     const targetDiv = document.getElementById("addProduct");
@@ -98,10 +99,5 @@ $total = 0;
       {
           targetDiv.style.display = "block";
       }
-    };
-    function showDiv() 
-    {
-        document.getElementById('add').style.display = "none";
-        document.getElementById('add2').style.display = "block";
     };
 </script>

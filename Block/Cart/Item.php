@@ -22,7 +22,7 @@ class Block_Cart_Item extends Block_Core_Template
 	public function getProducts()
 	{
 		$productModel = Ccc::getModel('Product');
-		$products = $productModel->fetchAll("SELECT p.*,b.image AS baseImage FROM product p LEFT JOIN product_media b ON p.id = b.productId AND (b.base = 1);");
+		$products = $productModel->fetchAll("SELECT p.*,b.image AS baseImage FROM product p LEFT JOIN product_media b ON p.id = b.productId AND (b.base = 1) WHERE p.status = 1;");
 		return $products;
 	}
 

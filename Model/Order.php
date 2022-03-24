@@ -6,6 +6,10 @@ class Model_Order extends Model_Core_Row
 	protected $shippingAddress;
 	protected $orderItem;
     protected $customer;
+    protected $payment;
+    protected $address;
+    protected $product;
+    protected $cartItem;
     const STATUS_PENDING = 1;
     const STATUS_PROCESSING = 2;
     const STATUS_COMPLETED = 3;

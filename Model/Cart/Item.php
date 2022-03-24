@@ -23,7 +23,7 @@ class Model_Cart_Item extends Model_Core_Row
             return $this->productModel;
         }
 
-        $product = $productModel->fetchRow("SELECT * from product WHERE id = {$this->productId};");
+        $product = $productModel->fetchRow("SELECT * from product WHERE id = {$this->productId}");
         if(!$product)
         {
             return $this->productModel;

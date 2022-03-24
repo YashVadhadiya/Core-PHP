@@ -11,7 +11,7 @@
 
 
 <h2>Order Details</h2>
-<form  action="<?php echo $this->getUrl('saveOrder') ?>" method="POST">
+<form  action="<?php echo $this->getUrl('saveOrder','order') ?>" method="POST">
 <table border="1" width="100%" cellspacing="4">
 <?php if(!$cartItems):?>
 	<tr>
