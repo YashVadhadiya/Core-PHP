@@ -95,7 +95,7 @@
 <?php $totalDiscount = 0; ?>
 <?php foreach ($cartItems as $cartItem)
     {
-        $totalDiscount = $totalDiscount + $cartItem->discount;
+        $totalDiscount = $totalDiscount + $cartItem->discount * $cartItem->quantity;
     } 
 ?>
 <h2>Order Details</h2>
