@@ -16,7 +16,6 @@ class Block_Order_Grid extends Block_Core_Template
 		$orderModel = Ccc::getModel('Order');
 		$totalCount = $orderModel->getAdapter()->fetchOne("SELECT count('orderId') FROM orders");
 		$this->getPager()->execute($totalCount, $page);
-		$orders = $orderModel->fetchAll("SELECT * FROM orders LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
-		return $orders;
+		return $orderModel->fetchAll("SELECT * FROM orders LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
 	}
 }

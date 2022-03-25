@@ -10,14 +10,15 @@ class Block_Cart_PaymentMethod extends Block_Core_Template
 	public function getPaymentMethods()
 	{
 		$paymentMethod = Ccc::getModel('PaymentMethod');
-		$paymentMethods = $paymentMethod->fetchAll("SELECT * from `payment_method`;");
-		return $paymentMethods;
+		return $paymentMethod->fetchAll("SELECT * from `payment_method`;");
 	}
+	
 	public function getCart()
 	{
-		$customerId = Ccc::getFront()->getRequest()->getRequest('id');
+		$cartId = Ccc::getModel('Admin_Message')->getSession()->cartId;
+		$cartModel = Ccc::getModel('Cart')->load($cartId);
+		$customerId = $cartModel->customerId;
 		$cartModel = Ccc::getModel('Cart');
-		$cart = $cartModel->fetchRow("SELECT * from `cart` WHERE customerId = {$customerId} ;");
-		return $cart;
+		return $cartModel->fetchRow("SELECT * from `cart` WHERE customerId = {$customerId} ;");
 	}
 }

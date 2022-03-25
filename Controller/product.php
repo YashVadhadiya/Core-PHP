@@ -126,8 +126,6 @@ class Controller_Product extends Controller_Core_Action
             $productEdit = Ccc::getBlock('Product_Edit');
             $categoryPath = Ccc::getModel('Category');
             $productEdit->setData(['product' => $product, 'categoryProductPair' => $this->getAdapter()->fetchPairs("SELECT entityId, categoryId FROM category_product WHERE productId = {$id}"), 'categoryPath' => $categoryPath]);
-            //$productEdit->setData(['categoryProductPair' => $this->getAdapter()->fetchPairs("SELECT entityId, categoryId FROM category_product WHERE productId = {$id}")]);
-            //$productEdit->setData('categoryPath' => $categoryPath);
             $content->addChild($productEdit);
             $this->renderLayout();
         } 

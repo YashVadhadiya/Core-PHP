@@ -1,5 +1,4 @@
 <?php $config = $this->getConfig(); ?>
-<?php ////$urlAction = new Controller_Core_Action();?>
 
 	<body>
 		<form method="POST" action="<?php echo $this->getUrl('save','config',null, false) ?>">

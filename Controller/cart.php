@@ -29,7 +29,6 @@ class Controller_Cart extends Controller_Core_Action
 		{
 			$message = $this->getMessage();
 			$date = date("Y-m-d H:i:s");
-
 			$customerId = $this->getRequest()->getRequest('id');
 			if(!$customerId)
 			{
@@ -47,13 +46,15 @@ class Controller_Cart extends Controller_Core_Action
 				$cartModel = Ccc::getModel('Cart');
 				$cartModel->customerId = $customerId;
 				$cartModel->createdAt = $date;
+				$result = $cartModel->save();
+				$session = $this->getMessage()->getSession();
+				$session->cartId = $result->cartId;
 			}
-			$result = $cartModel->save();
-			$cart = Ccc::getModel('Cart')->fetchRow("SELECT * FROM `cart` WHERE `cartId` = '{$result->cartId}'");
-			Ccc::getModel('Admin_Session')->cart = $cart;
+			$session = $this->getMessage()->getSession();
+			$session->cartId = $cartModel->cartId;
 			
 			$message->addMessage('Update Successfully'); 
-            $this->redirect($this->getLayout()->getUrl('cartShow','cart',null,false));
+            $this->redirect($this->getLayout()->getUrl('cartShow','cart',['id' => null],false));
 		} 
 		catch (Exception $e) 
 		{
@@ -67,7 +68,9 @@ class Controller_Cart extends Controller_Core_Action
 		try 
 		{
 			$message = $this->getMessage();
-			$customerId = $this->getRequest()->getRequest('id');
+			$cartId = $this->getMessage()->getSession()->cartId;
+			$cartModel = Ccc::getModel('Cart')->load($cartId);
+			$customerId = $cartModel->customerId;
 			if(!$customerId)
 			{
 				throw new Exception("Invalid Request");
@@ -103,7 +106,9 @@ class Controller_Cart extends Controller_Core_Action
 		{
 			$message = $this->getMessage();
 			$paymentMethodId = $this->getRequest()->getPost('paymentMethod');
-			$customerId = $this->getRequest()->getRequest('id');
+			$cartId = $this->getMessage()->getSession()->cartId;
+			$cartModel = Ccc::getModel('Cart')->load($cartId);
+			$customerId = $cartModel->customerId;
 			if(!$customerId)
 			{
 				throw new Exception("Invalid Request");
@@ -136,7 +141,9 @@ class Controller_Cart extends Controller_Core_Action
 			{
 				throw new Exception("Invalid Request");
 			}
-			$customerId = $this->getRequest()->getRequest('id');
+			$cartId = $this->getMessage()->getSession()->cartId;
+			$cartModel = Ccc::getModel('Cart')->load($cartId);
+			$customerId = $cartModel->customerId;
 			if(!$customerId)
 			{
 				throw new Exception("Invalid Request");
@@ -188,7 +195,9 @@ class Controller_Cart extends Controller_Core_Action
 			{
 				throw new Exception("Invalid Request");
 			}
-			$customerId = $this->getRequest()->getRequest('id');
+			$cartId = $this->getMessage()->getSession()->cartId;
+			$cartModel = Ccc::getModel('Cart')->load($cartId);
+			$customerId = $cartModel->customerId;
 			if(!$customerId)
 			{
 				throw new Exception("Invalid Request");
@@ -258,7 +267,9 @@ class Controller_Cart extends Controller_Core_Action
 			}
 			$ids = $postData['selected'];
 			$quantities = $postData['quantity'];
-			$customerId = $this->getRequest()->getRequest('id');
+			$cartId = $this->getMessage()->getSession()->cartId;
+			$cartModel = Ccc::getModel('Cart')->load($cartId);
+			$customerId = $cartModel->customerId;
 			if (!$customerId) 
 			{	
 				throw new Exception("Invalid Request.");
@@ -289,7 +300,6 @@ class Controller_Cart extends Controller_Core_Action
 							$discount = ($productModel->price * $productModel->discount) / 100;
 						}
 
-				//print_r($value * $discount); die;
 						$cartItemModel->cost = $productModel->cost;
 						$cartItemModel->price = $productModel->price;
 						$cartItemModel->discount = $discount * $value;
@@ -341,7 +351,9 @@ class Controller_Cart extends Controller_Core_Action
         $message = $this->getMessage();
         try 
         {
-            $customerId = $this->getRequest()->getRequest('id');
+            $cartId = $this->getMessage()->getSession()->cartId;
+			$cartModel = Ccc::getModel('Cart')->load($cartId);
+			$customerId = $cartModel->customerId;
             $itemIds = $this->getRequest()->getPost('quantity');
 
             foreach ($itemIds as $itemId => $quantity) 

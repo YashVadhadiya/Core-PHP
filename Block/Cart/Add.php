@@ -10,7 +10,6 @@ class Block_Cart_Add extends Block_Core_Template
 	public function getCustomers()
 	{
 		$customerModel = Ccc::getModel('Customer');
-		$customers = $customerModel->fetchAll("SELECT * FROM `customer`");
-		return $customers;
+		return $customerModel->fetchAll("SELECT * FROM `customer`");
 	}
 }

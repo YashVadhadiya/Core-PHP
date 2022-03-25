@@ -23,7 +23,6 @@ class Model_Salesman extends Model_Core_Row
         {
             return $customerModel;
         }
-        //$this->setCustomers($customers);
         return $customers;
     }
 

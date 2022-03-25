@@ -61,7 +61,6 @@ class Controller_Vendor extends Controller_Core_Action
 
         $vendorModel = Ccc::getModel('Vendor')->load($vendorId);
         $addressData = $vendorModel->getVendorAddress();
-        //$addressData = $address->fetchRow("SELECT * FROM vendor_address WHERE vendorId = '$vendorId'");
 
         if (!$getSaveData)
         {
@@ -138,9 +137,6 @@ class Controller_Vendor extends Controller_Core_Action
             $vendorModel = Ccc::getModel('Vendor')->load($id);
             $vendor = $vendorModel->fetchRow("SELECT * FROM `vendor` WHERE vendorId = '$id'");
             $vendorAddress = $vendorModel->getVendorAddress();
-
-            //$vendorRow = Ccc::getModel('Vendor');
-            //$vendor = $vendorRow->fetchRow("SELECT v.*,a.* from vendor v join vendor_address a on a.vendorId = v.vendorId WHERE v.vendorId = $id");
 
             if (!$vendor) 
             {

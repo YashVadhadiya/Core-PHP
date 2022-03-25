@@ -1,8 +1,8 @@
 <?php $billingAddress = $this->getBillingAddress(); ?>
 <?php $shippingAddress = $this->getShippingAddress(); ?>
 <?php $customer = $this->getCustomer(); ?>
-<?php $cartBillingAddress= $this->getCartBillingAddress(); //var_dump($cartBillingAddress); die; ?>
-<?php $cartShippingAddress= $this->getCartShippingAddress(); //var_dump($cartBillingAddress); die; ?>
+<?php $cartBillingAddress= $this->getCartBillingAddress();  ?>
+<?php $cartShippingAddress= $this->getCartShippingAddress(); ?>
 
 <form action="<?php echo $this->getUrl('saveAddress') ?>" method="POST">
 <table border="1" width="100%" cellspacing="4">

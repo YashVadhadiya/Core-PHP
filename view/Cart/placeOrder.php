@@ -4,7 +4,7 @@
 <?php if ($cartItems): ?>
 <?php foreach ($cartItems as $cartItem)
 	{
-		$totalDiscount = $totalDiscount + $cartItem->discount;
+		$totalDiscount = $totalDiscount + $cartItem->discount * ($cartItem->quantity);
 	}
 ?>
 <?php endif;?>

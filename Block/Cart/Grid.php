@@ -16,7 +16,6 @@ class Block_Cart_Grid extends Block_Core_Template
 		$cartModel = Ccc::getModel('cart');
 		$totalCount = $cartModel->getAdapter()->fetchOne("SELECT count('cartId') FROM cart");
 		$this->getPager()->execute($totalCount, $page);
-		$carts = $cartModel->fetchAll("SELECT * FROM cart LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
-		return $carts;
+		return $cartModel->fetchAll("SELECT * FROM cart LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
 	}
 }
