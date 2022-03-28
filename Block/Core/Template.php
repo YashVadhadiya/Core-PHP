@@ -5,6 +5,23 @@ class Block_Core_Template extends Model_Core_View
 {
 	protected $children = [];
 	protected $pager;
+	protected $layout = null;
+
+	public function __construct()
+	{
+		// code...
+	}
+
+	public function getLayout()
+	{
+		return $this->layout;
+	}
+
+	public function setLayout($layout)
+	{
+		$this->layout = $layout;
+		return $this;
+	}
 
 	public function getPager()
 	{

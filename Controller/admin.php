@@ -67,8 +67,10 @@ class Controller_Admin extends Controller_Core_Action
     {
         $this->setTitle('Admin Add');
         $id = Ccc::getModel('Admin');
+        //print_r($id); die;
         $content = $this->getLayout()->getContent();
-        $adminAdd = Ccc::getBlock('Admin_Edit')->setData(['admin' => $id]);
+        Ccc::register('admin', $id);
+        $adminAdd = Ccc::getBlock('Admin_Edit');//->setData(['admin' => $id]);
         $content->addChild($adminAdd);
         $this->renderLayout();
     }
@@ -86,6 +88,8 @@ class Controller_Admin extends Controller_Core_Action
             }
             
             $id = Ccc::getModel('Admin')->load($id);
+        //print_r($id); die;
+
             
             if (!$id) 
             {
@@ -93,7 +97,8 @@ class Controller_Admin extends Controller_Core_Action
             }
             
             $content = $this->getLayout()->getContent();
-            $adminEdit = Ccc::getBlock('Admin_Edit')->setData(['admin' => $id]);
+            Ccc::register('admin', $id);
+            $adminEdit = Ccc::getBlock('Admin_Edit');//->setData(['admin' => $id]);
             $content->addChild($adminEdit);
             $this->renderLayout();
         }

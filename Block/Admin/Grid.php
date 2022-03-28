@@ -1,24 +1,53 @@
-<?php 
+<?php Ccc::loadClass('Block_Core_Grid_Collection'); ?>
 
-Ccc::loadClass('Block_Core_Template');
-class Block_Admin_Grid extends Block_Core_Template
+<?php 
+class Block_Admin_Grid extends Block_Core_Grid_Collection
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/admin/grid.php');
+		parent::__construct();
 	}
 
+	public function getEditUrl($admin)
+	{
+		return $this->getUrl('edit',null,['id'=>$admin->id]);
+	}
+	
+	public function getDeleteUrl($admin)
+	{
+		return $this->getUrl('delete',null,['id'=>$admin->id]);
+	}
+	public function prepareActions()
+	{
+		$this->addAction([
+			['title'=>'Edit','method'=>'getEditUrl'],
+			['title'=>'Delete','method'=>'getDeleteUrl']
+			],'actions');
+		return $this;
+	}
+
+	public function prepareCollections()
+	{
+		$this->addCollection([$this->getAdmins()],'collection');
+	}
+
+	public function prepareColumns()
+	{
+		$this->addColumn([
+			'Admin Id','First Name', 'Last Name','Email','Status','Created Date','Updated Date'
+		],'columns');
+	}
+	
 	public function getAdmins()
 	{
-		$page = Ccc::getFront()->getRequest()->getRequest('p',1);
+		$admin = Ccc::getFront()->getRequest()->getRequest('p',1);
 		$perPageCount = Ccc::getFront()->getRequest()->getRequest('ppr',10);
 		$pager = Ccc::getModel('Core_Pager');
 		$this->setPager($pager);
-		$adminModel = Ccc::getModel('admin');
-		$totalCount = $adminModel->getAdapter()->fetchOne("SELECT count('admin') FROM admin");
-		$this->getPager()->execute($totalCount,$page);
-		$admins = $adminModel->fetchAll("SELECT * FROM admin LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
+		$adminModel = Ccc::getModel('Admin');
+		$totalCount = $adminModel->getAdapter()->fetchOne("SELECT count('id') FROM `admin`");
+		$this->getPager()->execute($totalCount,$admin);
+		$admins = $adminModel->fetchAll("SELECT `id`,`firstName`,`lastName`,`email`,`status`,`createdAt`,`updatedAt` FROM `admin` LIMIT {$this->getPager()->getStartLimit()},{$perPageCount}");
 		return $admins;
 	}
 }
-

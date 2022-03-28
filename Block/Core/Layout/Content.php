@@ -1,10 +1,10 @@
 <?php 
+Ccc::loadClass('Block_Core_Text_List');
 
-class Block_Core_Layout_Content extends Block_Core_Template
+class Block_Core_Layout_Content extends Block_Core_Text_List
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/core/layout/content.php');
+		parent::__construct();
 	}
 }
-
