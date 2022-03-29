@@ -4,7 +4,6 @@ class Block_Vendor_Grid extends Block_Core_Grid_Collection
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/vendor/grid.php');
 		parent::__construct();
 	}
 
@@ -33,8 +32,73 @@ class Block_Vendor_Grid extends Block_Core_Grid_Collection
 
 	public function prepareColumns()
 	{
-		$this->addColumn([
-			'Venor Id','First Name', 'Last Name','Email','Phone','Status','Created Date','Updated Date','Address Id','Address','Postal Code','City','State','Country'],'columns');
+		parent::prepareColumns();
+
+		$this->addColumn('vendorId', [
+			'title' => 'Vendor Id',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('firstName',[
+			'title' => 'First Name',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('lastName',[
+			'title' => 'Last Name',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('email',[
+			'title' => 'Email',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('phone',[
+			'title' => 'Phone',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('status',[
+			'title' => 'Status',
+			'type' => 'int',
+		]);
+		$this->addColumn('address',[
+			'title' => 'Address',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('postalCode',[
+			'title' => 'Postal Code',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('city',[
+			'title' => 'City',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('state',[
+			'title' => 'State',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('country',[
+			'title' => 'Country',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('createdAt',[
+			'title' => 'Created At',
+			'type' => 'datetime',
+		]);
+
+		$this->addColumn('updatedAt',[
+			'title' => 'UpdatedAt',
+			'type' => 'datetime',
+		]);
+
+		return $this;
 	}
 
 	public function getVendors()

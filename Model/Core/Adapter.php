@@ -9,7 +9,6 @@ class Model_Core_Adapter
     { 
         $this->config  = Ccc::getConfig('connection');
     }
-
     
     public function connect()
     {

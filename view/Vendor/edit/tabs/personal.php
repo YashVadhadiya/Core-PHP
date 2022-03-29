@@ -1,5 +1,5 @@
 <?php $vendor = $this->getVendor(); ?>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <table border="1" width="100%" cellspacing="4">
 
 	<!-- this is used for personal data -->

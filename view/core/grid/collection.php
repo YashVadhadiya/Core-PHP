@@ -1,7 +1,7 @@
 <?php 
 $collection = $this->getCollection('collection');
 $actions = $this->getAction('actions');
-$columns = $this->getColumn('columns');
+$columns = $this->getColumns();
 $controller = Ccc::getFront()->getRequest()->getRequest('c'); 
 ?>
 <?php $perPageCount = $this->getPager()->getPerPageCount(); ?>
@@ -15,7 +15,7 @@ $controller = Ccc::getFront()->getRequest()->getRequest('c');
     }
 </script>
 
-<button name="Add"><a href="<?php echo $this->getUrl('add',null,['p' => $this->getPager()->getStart()]) ?>">Add New</a></button>
+<button name="Add" id="addNew"><a href="<?php echo $this->getUrl('add',null,['p' => $this->getPager()->getStart()]) ?>">Add New</a></button>
 <button name='Start'><a href="<?php echo $this->getUrl('grid',null,['p' => $this->getPager()->getStart()]) ?>">Start</a></button>
     <?php if($this->getPager()->getPrev() == null):?>
 <button name='Prev' disabled ><a>Previous</a></button>
@@ -50,7 +50,7 @@ $controller = Ccc::getFront()->getRequest()->getRequest('c');
     <table  border="1" width="100%" cellspacing="4">
         <tr>
             <?php foreach($columns as $column): ?>
-                <th><?php echo $column ?></th>
+                <th><?php echo $column['title'] ?></th>
             <?php endforeach; ?>
             <th>Action</th>
 
@@ -58,8 +58,8 @@ $controller = Ccc::getFront()->getRequest()->getRequest('c');
         <?php if($collection['0']): ?>
             <?php foreach ($collection['0'] as $row): ?>
                 <tr>
-                    <?php foreach($row->getData() as $value):?>
-                        <td><?php echo $value ?></td>
+                    <?php foreach($columns as $key => $column):?>
+                        <td><?php echo $this->getColumnValue($row, $key, $column); ?></td>
                     <?php endforeach; ?> 
                     <td>
                     <?php foreach($actions as $action): ?>

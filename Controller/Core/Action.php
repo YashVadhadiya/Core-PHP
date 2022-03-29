@@ -84,10 +84,10 @@ class Controller_Core_Action
         return $adapter;
     }
 
-    public function renderLayout()
+    /*public function renderLayout()
     {
         echo $this->getLayout()->toHtml();
-    }
+    }*/
 
     public function getMessage()
     {
@@ -113,6 +113,25 @@ class Controller_Core_Action
     public function getResponse()
     {
         return Ccc::getFront()->getResponse();
+    }
+
+    /*public function renderLayout()
+    {
+        echo $this->getLayout()->toHtml();
+    }*/
+
+    public function renderLayout()
+    {
+       echo $this->getResponse()
+            ->setHeader('content-type','text/html')
+            ->render($this->getLayout()->toHtml());
+    }
+
+    public function renderJson($content)
+    {
+       echo $this->getResponse()
+            ->setHeader('content-type','application/json')
+            ->render(json_encode($content));
     }
 }
 

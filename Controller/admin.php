@@ -2,7 +2,22 @@
 <?php Ccc::loadClass('Model_Core_Request');?>
 <?php
 class Controller_Admin extends Controller_Core_Action
-{
+{   
+     public function indexAction()
+    {
+        $content = $this->getLayout()->getContent();
+        $adminGrid = Ccc::getBlock('Admin_Index');
+        $content->addChild($adminGrid);
+
+        $this->renderLayout();
+    }
+
+    public function grid1Action()
+    {
+        $this->renderJson(['status' => 'success']);
+    }
+
+
     public function gridAction()
     {
         $this->setTitle('Admin Grid');

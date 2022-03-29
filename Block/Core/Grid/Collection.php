@@ -1,11 +1,10 @@
 <?php Ccc::loadClass('Block_Core_Template'); ?>
-
 <?php 
 class Block_Core_Grid_Collection extends Block_Core_Template
 {
 	protected $collections = [];
 	protected $columns = [];
-	protected $actions= [];
+	protected $actions = [];
 
 	public function __construct()
 	{
@@ -13,6 +12,15 @@ class Block_Core_Grid_Collection extends Block_Core_Template
 		$this->prepareCollections();
 		$this->prepareColumns();
 		$this->prepareActions();
+	}
+
+	public function getColumnValue($row, $key, $column)
+	{
+		if ($key == 'status') 
+		{
+			return $row->getStatus($row->$key);
+		}
+		return $row->$key;
 	}
 
 	public function prepareCollections()
@@ -41,7 +49,7 @@ class Block_Core_Grid_Collection extends Block_Core_Template
 		return $this->columns;
 	}
 
-	public function addColumn($columns,$key)
+	public function addColumn($key, $columns)
 	{
 		$this->columns[$key] = $columns;
 		return $this;

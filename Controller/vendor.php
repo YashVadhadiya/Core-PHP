@@ -118,8 +118,8 @@ class Controller_Vendor extends Controller_Core_Action
         $address = Ccc::getModel('Vendor_Address'); 
         try 
         {
-            $message = $this->getMessage();
-           $getSaveData = $this->getRequest()->getPost('address');
+        $message = $this->getMessage();
+        $getSaveData = $this->getRequest()->getPost('address');
         date_default_timezone_set("Asia/Kolkata");
         $date = date("Y-m-d H:i:s");
         

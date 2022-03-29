@@ -21,7 +21,7 @@ class Controller_Customer extends Controller_Core_Action
 
         if (!$getSaveData)
         {
-            throw new Exception("You can not insert data in customer ID.");
+            return;
         }
 
         $customerId = (int)$this->getRequest()->getRequest('id');
@@ -39,7 +39,7 @@ class Controller_Customer extends Controller_Core_Action
             $customer->updatedAt = $date;
         }
         $result = $customer->save();
-        return $result->id;
+        //return $result->id;
 
         if (!$result) 
         {
@@ -48,12 +48,13 @@ class Controller_Customer extends Controller_Core_Action
         else 
         {
             $message->addMessage('Updated Successfully.');
-            $this->redirect($this->getLayout()->getUrl('grid', 'customer', null, false));
+            $this->redirect($this->getLayout()->getUrl('edit','customer',['id' => $result->id , 'tab' => address],true));
         }
     }
 
-    protected function saveAddress($customerId) 
+    protected function saveAddress() 
     {
+        $customerId = $this->getRequest()->getRequest('id');
         $message = $this->getMessage();
         $address = Ccc::getModel('Customer_Address');
         date_default_timezone_set("Asia/Kolkata");
@@ -96,7 +97,7 @@ class Controller_Customer extends Controller_Core_Action
         try 
         {
             $customerId = $this->saveCustomer();
-            $this->saveAddress($customerId);
+            $this->saveAddress();
             $this->redirect($this->getLayout()->getUrl('grid', 'customer', ['id' => null], false));
         }
         catch (Exception $e) 
@@ -109,11 +110,16 @@ class Controller_Customer extends Controller_Core_Action
     public function addAction()
     {
         $this->setTitle('Customer Add');
-        $id = Ccc::getModel('Customer');
+        $customerModel = Ccc::getModel('Customer');
         $content = $this->getLayout()->getContent();
-        $billingAddress = Ccc::getModel('Customer_Address');
-        $shippingAddress = Ccc::getModel('Customer_Address');
-        $customerAdd = Ccc::getBlock('Customer_Edit')->setData(['customer' => $id, 'billingAddress' => $billingAddress, 'shippingAddress' => $shippingAddress]);
+        Ccc::register('customer',$customerModel);
+        //$customerId = $this->getRequest()->getRequest('id');
+        $customerBillingAddress = $customerModel->getBillingAddress();
+        $customerShippingAddress = $customerModel->getShippingAddress();
+        //$customerShippingAddress = Ccc::getModel('Customer_Address');
+        Ccc::register('customerBillingAddress',$customerBillingAddress);
+        Ccc::register('customerShippingAddress',$customerShippingAddress);
+        $customerAdd = Ccc::getBlock('Customer_Edit'); //->setData(['customer' => $id, 'billingAddress' => $billingAddress, 'shippingAddress' => $shippingAddress]);
         $content->addChild($customerAdd);
         $this->renderLayout();
     }
@@ -140,7 +146,10 @@ class Controller_Customer extends Controller_Core_Action
                 throw new Exception('Error Processing Request');
             }
             $content = $this->getLayout()->getContent();
-            $customerEdit = Ccc::getBlock('Customer_Edit')->setData(['customer' => $customer, 'billingAddress' => $billingAddress , 'shippingAddress' => $shippingAddress]);
+            Ccc::register('customer',$customer);
+            Ccc::register('customerBillingAddress',$billingAddress);
+            Ccc::register('customerShippingAddress',$shippingAddress);
+            $customerEdit = Ccc::getBlock('Customer_Edit');//->setData(['customer' => $customer, 'billingAddress' => $billingAddress , 'shippingAddress' => $shippingAddress]);
             $content->addChild($customerEdit);
             $this->renderLayout();
         } 
