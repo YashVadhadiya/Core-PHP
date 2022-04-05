@@ -39,7 +39,7 @@ class Model_Product extends Model_Core_Row
         {
             return $mediasModel;
         }
-        $this->setMedias($medias);
+        //$this->setMedias($medias);
         return $medias;
     }
 
@@ -216,10 +216,8 @@ class Model_Product extends Model_Core_Row
     public function saveCategories($categoryIds , $productId = null)
     {
         $adapter = new Model_Core_Adapter();
-        $query = "DELETE FROM category_product WHERE productId = {$this->id}";
+        $query = "DELETE FROM category_product WHERE productId = {$productId}";
         $adapter->delete($query);   
-        if($productId)
-        {
             foreach ($categoryIds as $categoryId) 
                 {       
                     $categoryProduct = Ccc::getModel('Category_Product');
@@ -227,6 +225,9 @@ class Model_Product extends Model_Core_Row
                     $categoryProduct->categoryId = $categoryId;
                     $categoryProduct->save();
                 }
+        return;
+        /*if($productId)
+        {
 
         }
         foreach ($categoryIds as $categoryId) 
@@ -235,7 +236,7 @@ class Model_Product extends Model_Core_Row
             $categoryProduct->productId = $this->id;
             $categoryProduct->categoryId = $categoryId;
             $categoryProduct->save();
-        }
+        }*/
     }
 }
 

@@ -1,43 +1,144 @@
-<body>
-    <!-- this is nav bar code -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"> <a class="navbar-brand" href="<?php echo $this->getUrl('grid','admin',null,true) ?>">Admin</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','customer',null,true) ?>" name="customer">Customer</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','category',null,true) ?>" name="category">Category</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','product',null,true) ?>" name="Product">Product</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','config',null,true) ?>" name="config">Config</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','salesman',null,true) ?>" name="salesman">Salesman</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','page',null,true) ?>" name="page">Page</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','vendor',null,true) ?>" name="vendor">Vendor</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','paymentMethod',null,true) ?>" name="payment">Payment</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','shippingMethod',null,true) ?>" name="shipping">Shipping</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('grid','order',null,true) ?>" name="order">Order</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $this->getUrl('logout','admin_login',null,true) ?>" name="logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- nav bar ends -->
+<head>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="skin/admin/css/all.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="skin/admin/css/OverlayScrollbars.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="skin/admin/css/admin.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-light-primary elevation-4">
+            <!-- Brand Logo -->
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsyA44JdhHChP6kGqx36BolQq4Hn7z2yGekw&usqp=CAU" style="border-radius: 50%;">
+                    <div class="info">
+                        <a href="<?php echo $this->getUrl('index','admin',null,true) ?>" class="d-block">Admin User</a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">   
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','admin',null,true) ?>" class="nav-link">
+
+            <p>Admin</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','customer',null,true) ?>" class="nav-link">
+
+            <p>Customer</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','product',null,true) ?>" class="nav-link">
+
+            <p>Product</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','category',null,true) ?>" class="nav-link">
+
+            <p>Category</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','config',null,true) ?>" class="nav-link">
+
+            <p>Config</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','salesman',null,true) ?>" class="nav-link">
+
+            <p>Salesman</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','page',null,true) ?>" class="nav-link">
+
+            <p>Page</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','vendor',null,true) ?>" class="nav-link">
+
+            <p>Vendor</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','paymentMethod',null,true) ?>" class="nav-link">
+
+            <p>Payment Method</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','shippingMethod',null,true) ?>" class="nav-link">
+
+            <p>Shipping Method</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('index','order',null,true) ?>" class="nav-link">
+
+            <p>Order</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="<?php echo $this->getUrl('logout','admin_login',null,true) ?>" class="nav-link">
+
+            <p>Logout</p>
+        </a>
+    </li>
+</ul>
+</nav>
+<!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+</aside>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="skin/admin/js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="skin/admin/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="skin/admin/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="skin/admin/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="skin/admin/js/demo.js"></script>
 </body>

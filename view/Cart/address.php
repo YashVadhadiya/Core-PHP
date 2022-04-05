@@ -4,51 +4,50 @@
 <?php $cartBillingAddress= $this->getCartBillingAddress();  ?>
 <?php $cartShippingAddress= $this->getCartShippingAddress(); ?>
 
-<form action="<?php echo $this->getUrl('saveAddress') ?>" method="POST">
-<table border="1" width="100%" cellspacing="4">
+<table id="example2" class="table table-bordered table-hover">
 
     <tr>
       <td colspan="2"><h2>Billing Information</h2></td>
     </tr>
 
     <tr>
-      <td width="10%">First Name</td>
+      <td>First Name</td>
       <td><input type="text" id="billingAddress" name="customerBilling[firstName]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->firstName; else: echo $customer->firstName; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">Last Name</td>
+      <td>Last Name</td>
       <td><input type="text" id="billingAddress" name="customerBilling[lastName]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->lastName; else: echo $customer->lastName; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">Phone</td>
+      <td>Phone</td>
       <td><input type="number" id="billingAddress" name="customerBilling[phone]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->phone; else: echo $customer->phone; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">email</td>
+      <td>email</td>
       <td><input type="text" id="billingAddress" name="customerBilling[email]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->email; else: echo $customer->email; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">Address</td>
+      <td>Address</td>
       <td><input type="text" id="billingAddress" name="billingAddress[address]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->address; else: echo $billingAddress->address; endif;?>"></td>
     </tr>
     
     <tr>
-      <td width="10%">City</td>
+      <td>City</td>
       <td><input type="text" id="billingCity" name="billingAddress[city]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->city; else: echo $billingAddress->city; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">State</td>
+      <td>State</td>
       <td><input type="text" id="billingState" name="billingAddress[state]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->state; else: echo $billingAddress->state; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">Postal Code</td>
+      <td>Postal Code</td>
       <td><input type="text" id="billingPostalcode" name="billingAddress[postalCode]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->postalCode; else: echo $billingAddress->postalCode; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">Country</td>
+      <td>Country</td>
       <td><input type="text" id="billingCountry" name="billingAddress[country]" value="<?php if($cartBillingAddress) : echo $cartBillingAddress->country; else: echo $billingAddress->country; endif;?>"></td>
     </tr>
     <tr>
@@ -67,50 +66,50 @@
       }
     </script>
 <div id="shipping"  style="display:block;"  >
-<table border="1" width="100%" cellspacing="4">
+<table id="example2" class="table table-bordered table-hover">
     <tr>
       <td colspan="2"><h2>Shipping Information</h2></td>
     </tr>
 
      <tr>
-      <td width="10%">First Name</td>
+      <td>First Name</td>
       <td><input type="text" id="shippingAddress" name="customerShipping[firstName]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->firstName; else: echo $customer->firstName; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">Last Name</td>
+      <td>Last Name</td>
       <td><input type="text" id="shippingAddress" name="customerShipping[lastName]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->lastName; else: echo $customer->lastName; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">Phone</td>
+      <td>Phone</td>
       <td><input type="number" id="shippingAddress" name="customerShipping[phone]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->phone; else: echo $customer->phone; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">email</td>
+      <td>email</td>
       <td><input type="text" id="shippingAddress" name="customerShipping[email]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->email; else: echo $customer->email; endif;?>"></td>
     </tr>
 
     <tr>
-      <td width="10%">Address</td>
+      <td>Address</td>
       <td><input type="text" id="shippingAddress" name="shippingAddress[address]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->address; else: echo $shippingAddress->address; endif;?>"></td>
     </tr>
     
     <tr>
-      <td width="10%">City</td>
+      <td>City</td>
       <td><input type="text" id="shippingCity" name="shippingAddress[city]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->city; else: echo $shippingAddress->city; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">State</td>
+      <td>State</td>
       <td><input type="text" id="shippingState" name="shippingAddress[state]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->state; else: echo $shippingAddress->state; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">Postal Code</td>
+      <td>Postal Code</td>
       <td><input type="text" id="shippingPostalcode" name="shippingAddress[postalCode]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->postalCode; else: echo $shippingAddress->firstName; endif;?>"></td>
     </tr>
     <tr>
-      <td width="10%">Country</td>
+      <td>Country</td>
       <td><input type="text" id="shippingCountry" name="shippingAddress[country]" value="<?php if($cartShippingAddress) : echo $cartShippingAddress->country; else: echo $shippingAddress->country; endif;?>"></td>
     </tr>
     <tr>
@@ -118,6 +117,15 @@
     </tr>
 </table>  
 </div>
-<button type="submit" name="submit" >Save </button>
-</form>
+  <button class="btn btn-success" type="button" onclick="saveAddressForm()">Save</button>
 <hr>
+
+<script type="text/javascript">
+  function saveAddressForm() 
+  {
+    //alert('button clicked');
+    admin.setForm(jQuery('#indexForm'));
+    admin.setUrl("<?php echo $this->getUrl('saveAddress') ?>");
+    admin.load();
+  }
+  </script>

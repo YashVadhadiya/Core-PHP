@@ -1,16 +1,16 @@
 <?php 
-
-Ccc::loadClass('Block_Core_Template');
-class Block_Category_Edit extends Block_Core_Template
+Ccc::loadClass('Block_Core_Edit');
+Ccc::loadClass('Block_Category_Edit_Tab');
+class Block_Category_Edit extends Block_Core_Edit
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/category/edit.php');
+		parent::__construct();
 	}
-	
-	public function getCategory()
+
+	public function getSaveUrl()
 	{
-		return $this->getData('category');
+		return $this->getUrl('save',null,['tab' => null]);
 	}
 
 	public function getCategoryWithPath()
@@ -21,5 +21,8 @@ class Block_Category_Edit extends Block_Core_Template
 		return $categoryPath;
 	}
 
+	public function getCategory()
+	{		
+		return $this->getData('category');
+	}
 }
-

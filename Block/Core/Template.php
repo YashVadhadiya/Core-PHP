@@ -12,6 +12,23 @@ class Block_Core_Template extends Model_Core_View
 		// code...
 	}
 
+	public function getBlock($key)
+	{
+		$block = $this->getChild($key);
+		if($block)
+		{
+			return $block;
+		}
+		$block = Ccc::getBlock($key);
+		
+		if($block)
+		{
+			$block->setLayout($this->getLayout());
+			return $block;
+		}
+		return null;
+	}
+
 	public function getLayout()
 	{
 		return $this->layout;
@@ -47,10 +64,12 @@ class Block_Core_Template extends Model_Core_View
 
 	public function addChild($object , $key = null)
 	{
-		if(!$key){
+		if(!$key)
+		{
 			$key = get_class($object);
 		}
 		$this->children[$key] = $object;
+		$object->setLayout($this->getLayout());
 		return $this;
 	}
 

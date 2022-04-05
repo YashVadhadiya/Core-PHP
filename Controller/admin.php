@@ -2,139 +2,125 @@
 <?php Ccc::loadClass('Model_Core_Request');?>
 <?php
 class Controller_Admin extends Controller_Core_Action
-{   
-     public function indexAction()
+{
+    public function indexAction()
     {
         $content = $this->getLayout()->getContent();
         $adminGrid = Ccc::getBlock('Admin_Index');
         $content->addChild($adminGrid);
-
         $this->renderLayout();
     }
 
-    public function grid1Action()
+    public function gridBlockAction()
     {
-        $this->renderJson(['status' => 'success']);
+     $adminGrid = Ccc::getBlock("Admin_Grid")->toHtml();
+     $messageBlock = Ccc::getBlock('Core_Message')->toHtml();
+     $response = [
+        'status' => 'success',
+        'content' => $adminGrid,
+        'message' => $messageBlock,
+    ] ;
+    $this->renderJson($response);
+}
+
+public function addBlockAction()
+{
+    $admin = Ccc::getModel('admin');
+    Ccc::register('admin',$admin);
+    $adminAdd =$this->getLayout()->getBlock('Admin_Edit')->toHtml();
+    $response = [
+        'status' => 'success',
+        'content' => $adminAdd
+    ];
+    $this->renderJson($response);
+}
+
+public function editBlockAction()
+{
+    $id = (int) $this->getRequest()->getRequest('id');
+    if(!$id)
+    {
+        throw new Exception("Id not valid.");
     }
+    $adminModel = Ccc::getModel('admin')->load($id);
+    $admin = $adminModel->fetchRow("SELECT * FROM `admin` WHERE `id` = $id");
+    Ccc::register('admin',$adminModel);
 
-
-    public function gridAction()
+    if(!$admin)
     {
-        $this->setTitle('Admin Grid');
-        $content = $this->getLayout()->getContent();
-        $adminGrid = Ccc::getBlock('Admin_Grid');
-        $content->addChild($adminGrid);
-        echo($this->renderLayout());
+        throw new Exception("unable to load admin.");
     }
+    $content = $this->getLayout()->getContent();
+    $adminEdit = Ccc::getBlock("Admin_Edit")->toHtml();
+    $response = [
+        'status' => 'success',
+        'content' => $adminEdit
+    ];
+    $this->renderJson($response);
+}
 
-    public function saveAction()
+public function saveAction()
+{
+    $admin = Ccc::getModel('Admin');
+    $date = date('Y-m-d H:i:s');
+    $getSaveData = $this->getRequest()->getRequest('admin');
+    $message = $this->getMessage();
+
+    try
     {
-        $admin = Ccc::getModel('Admin');
-        $date = date('Y-m-d H:i:s');
-        $getSaveData = $this->getRequest()->getRequest('admin');
-        $message = $this->getMessage();
-    
-        try
+        if (!$getSaveData)
         {
-            if (!$getSaveData)
-            {
-                throw new Exception("You can not insert data in admin.");
-            }
-
-            $adminId = (int)$this->getRequest()->getRequest('id');
-            $admin = Ccc::getModel('Admin')->load($adminId);
-            
-            if(!$admin)
-            {
-                $admin = Ccc::getModel('Admin');
-                $admin->createdAt = $date;
-                $admin->setData($getSaveData);
-                $admin->password = md5($getSaveData['password']);
-            }
-            else
-            {
-                $admin->setData($getSaveData);
-                $admin->updatedAt = $date;
-                $admin->password = md5($getSaveData['password']);
-            }
-
-            $result = $admin->save();
-
-            if (!$result) 
-            {
-                throw new Exception("System is not able to update");
-            } 
-            else 
-            {
-                $message->addMessage('Updated Successfully.');
-                $this->redirect($this->getLayout()->getUrl('grid', 'admin', null, true));
-            }
+            throw new Exception("You can not insert data in admin.");
         }
+
+        $adminId = (int)$this->getRequest()->getRequest('id');
+        $admin = Ccc::getModel('Admin')->load($adminId);
         
-        catch (Exception $e) 
+        if(!$admin)
         {
-            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getLayout()->getUrl('grid', 'admin', ['id' => null], true));
+            $admin = Ccc::getModel('Admin');
+            $admin->createdAt = $date;
+            $admin->setData($getSaveData);
+            $admin->password = md5($getSaveData['password']);
+        }
+        else
+        {
+            $admin->setData($getSaveData);
+            $admin->updatedAt = $date;
+            $admin->password = md5($getSaveData['password']);
+        }
+
+        $result = $admin->save();
+
+        if (!$result) 
+        {
+            throw new Exception("System is not able to update");
+        } 
+        else 
+        {
+            $message->addMessage('Updated Successfully.');
+            $this->redirect($this->getLayout()->getUrl('gridBlock', 'admin', null, true));
         }
     }
-
-    public function addAction()
+    
+    catch (Exception $e) 
     {
-        $this->setTitle('Admin Add');
-        $id = Ccc::getModel('Admin');
-        //print_r($id); die;
-        $content = $this->getLayout()->getContent();
-        Ccc::register('admin', $id);
-        $adminAdd = Ccc::getBlock('Admin_Edit');//->setData(['admin' => $id]);
-        $content->addChild($adminAdd);
-        $this->renderLayout();
+        $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+        $this->redirect($this->getLayout()->getUrl('gridBlock', 'admin', ['id' => null], true));
     }
+}
 
-    public function editAction()
+public function deleteAction()
+{
+    $getDelete = $this->getRequest()->getRequest('id');
+    $admin = Ccc::getModel('Admin')->load($getDelete);
+    $result = $admin->delete();
+    $message = $this->getMessage();
+    if ($result)
     {
-        $this->setTitle('Admin Edit');
-        $message = $this->getMessage();
-        try
-        {
-            $id = (int) $this->getRequest()->getRequest('id');
-            if (!$id)
-            {
-                throw new Exception("Enable to load admin Id.");
-            }
-            
-            $id = Ccc::getModel('Admin')->load($id);
-        //print_r($id); die;
-
-            
-            if (!$id) 
-            {
-                throw new Exception("Invalid Id.");
-            }
-            
-            $content = $this->getLayout()->getContent();
-            Ccc::register('admin', $id);
-            $adminEdit = Ccc::getBlock('Admin_Edit');//->setData(['admin' => $id]);
-            $content->addChild($adminEdit);
-            $this->renderLayout();
-        }
-        catch (Exception $e) 
-        {
-            $message->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-            $this->redirect($this->getLayout()->getUrl('grid', 'admin', null, true));    
-        }
+        $message->addMessage('Deleted Successfully.');
+        $this->redirect($this->getLayout()->getUrl('gridBlock', 'admin', null, true));
     }
-
-    public function deleteAction()
-    {
-        $getDelete = $this->getRequest()->getRequest('id');
-        $admin = Ccc::getModel('Admin')->load($getDelete);
-        $result = $admin->delete();
-        $message = $this->getMessage();
-        if ($result)
-        {
-            $message->addMessage('Deleted Successfully.');
-            $this->redirect($this->getLayout()->getUrl('grid', 'admin', null, true));
-        }
-    }
+}
 } 
 ?>

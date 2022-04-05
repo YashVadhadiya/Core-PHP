@@ -28,7 +28,7 @@ class Model_Category extends Model_Core_Row
         {
             return $mediasModel;
         }
-        $this->setMedias($medias);
+        //$this->setMedias($medias);
         return $medias;
     }
 

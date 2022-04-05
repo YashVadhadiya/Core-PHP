@@ -7,7 +7,6 @@ class Block_Customer_Edit extends Block_Core_Edit
 	public function __construct()
 	{
 		parent::__construct();
-		//$this->setTemplate('view/customer/edit.php');
 	}
 	
 	public function getCustomer()
@@ -25,10 +24,9 @@ class Block_Customer_Edit extends Block_Core_Edit
 		return $this->getData('shippingAddress');
 	}
 
-	public function getEditUrl()
+	public function getSaveUrl()
 	{
-		//Ccc::getRegistry('personal');
-		return $this->getUrl('save');
+		return $this->getUrl('save',null,['tab' => null]);
 	}
 
 }

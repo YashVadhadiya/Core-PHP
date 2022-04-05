@@ -27,7 +27,7 @@ class Controller_Core_Action
                 if($login)
                 {
                     $message->addMessage('Alrady LoggedIn.');
-                    $this->redirect($this->getLayout()->getUrl('grid','product',null,true));
+                    $this->redirect($this->getLayout()->getUrl('index','product',null,true));
                 }
             }
             else

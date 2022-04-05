@@ -1,14 +1,29 @@
 <?php 
 
-Ccc::loadClass('Block_Core_Template');
-class Block_Product_Edit extends Block_Core_Template{
+Ccc::loadClass('Block_Core_Edit');
+Ccc::loadClass('Block_Product_Edit_Tab');
+class Block_Product_Edit extends Block_Core_Edit
+{
 	public function __construct()
 	{
-		$this->setTemplate('view/product/edit.php');
+		parent::__construct();
 	}
-	public function getProduct()
+	
+	public function getProducts()
 	{
-		return $this->getData('product');
+		return Ccc::getRegistry('product');
+	}
+
+	public function getMedia()
+	{
+		return $this->getData('media');
+	}
+
+   public function getCategories()
+	{
+		$categoryModel = Ccc::getModel('Category');
+		$categories = $categoryModel->fetchAll("SELECT *  FROM category  WHERE status = 1");
+		return $categories;
 	}
 
 	public function getCategoryWithPath()
@@ -19,17 +34,14 @@ class Block_Product_Edit extends Block_Core_Template{
 		return $categoryPath;
 	}
 
-	public function getCategories()
-	{
-		$categoryModel = Ccc::getModel('Category');
-		$categories = $categoryModel->fetchAll("SELECT * FROM category WHERE status = 1");
-		return $categories;
-	}
-
 	public function getCategoryProductPair()
-	{		
+	{	
 		return $this->getData('categoryProductPair');
 	}
 
-}
+	public function getSaveUrl()
+	{
+		return $this->getUrl('save',null,['tab' => null]);
+	}
 
+}

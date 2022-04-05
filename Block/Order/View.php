@@ -4,7 +4,6 @@ class Block_Order_View extends Block_Core_Template
 {
 	public function __construct()
 	{
-
 		$this->setTemplate('view/order/view.php');
 	}
 
@@ -92,5 +91,13 @@ class Block_Order_View extends Block_Core_Template
 		$customerId = $order->customerId;
 		$cart = Ccc::getModel('Cart');
 		return $cart->fetchRow("SELECT * from `cart` WHERE `customerId` = {$customerId};");
+	}
+
+	public function getOrderComment()
+	{
+		$orderCommentModel = Ccc::getModel('Order_Comment');
+		$orderId = Ccc::getFront()->getRequest()->getRequest('id');
+		$order = $orderCommentModel->fetchRow("SELECT * FROM order_comment WHERE orderId = $orderId order by createdAt DESC Limit 1 ");
+		return $order;
 	}
 }

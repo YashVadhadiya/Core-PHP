@@ -1,13 +1,72 @@
 <?php 
-
-Ccc::loadClass('Block_Core_Template');
-class Block_PaymentMethod_Grid extends Block_Core_Template
+Ccc::loadClass('Block_Core_Grid');
+class Block_PaymentMethod_Grid extends Block_Core_Grid
 {
-	public $pager;
-
 	public function __construct()
 	{
-		$this->setTemplate('view/paymentMethod/grid.php');
+		parent::__construct();
+	}
+
+	public function getEditUrl($paymentMethod)
+	{
+		return $this->getUrl('edit',null,['id'=>$paymentMethod->methodId]);
+	}
+	
+	public function getDeleteUrl($paymentMethod)
+	{
+		return $this->getUrl('delete',null,['id'=>$paymentMethod->methodId]);
+	}
+	public function prepareActions()
+	{
+		parent::prepareActions();
+		$this->setActions([
+			['title'=>'Edit','method'=>'getEditUrl'],
+			['title'=>'Delete','method'=>'getDeleteUrl']
+			]);
+		return $this;
+	}
+
+	public function prepareCollections()
+	{
+		parent::prepareCollections();
+		return $this->setCollections($this->getPaymentMethods());
+	}
+
+	public function prepareColumns()
+	{
+		parent::prepareColumns();
+
+		$this->addColumn('methodId', [
+			'title' => 'Payment Method Id',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('name',[
+			'title' => 'Name',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('note',[
+			'title' => 'Note',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('status',[
+			'title' => 'Status',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('createdAt',[
+			'title' => 'Created At',
+			'type' => 'datetime',
+		]);
+
+		$this->addColumn('updatedAt',[
+			'title' => 'Updated At',
+			'type' => 'datetime',
+		]);
+
+		return $this;
 	}
 
 	public function getPaymentMethods()

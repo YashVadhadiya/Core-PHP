@@ -3,7 +3,7 @@
 
 <form action="<?php echo $this->getUrl('save','product_media',null,false) ?>" method="POST" align="center">
 	<input type="submit" name="update" value="UPDATE"> 
-	<button ><a href="<?php echo $this->getUrl('grid','product',null,false) ?>">Back to Product Grid</a></button>
+	<button class="btn btn-warning"><a href="<?php echo $this->getUrl('grid','product',null,false) ?>">Back to Product Grid</a></button>
 	<br></br>
 	<table border=1 width=100%>
 		<tr>

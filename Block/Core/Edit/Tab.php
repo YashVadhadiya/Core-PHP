@@ -51,12 +51,6 @@ class Block_Core_Edit_Tab extends Block_Core_Template
 		return $this->currentTab;
 	}
 
-	/*public function setTabs($tabs)
-	{
-		$this->tabs = $tabs;
-		return $this;
-	}*/
-
 	public function getTabs()
 	{
 		return $this->tabs;

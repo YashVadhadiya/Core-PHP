@@ -50,7 +50,7 @@ class Model_Customer extends Model_Core_Row
 
         if($this->order && !$reload)    
         { 
-            echo "11"; die;
+            //echo "11"; die;
             return $this->orderModel;
         }
 

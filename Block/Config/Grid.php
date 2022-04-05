@@ -1,10 +1,72 @@
 <?php 
-Ccc::loadClass('Block_Core_Template');
-class Block_Config_Grid extends Block_Core_Template
+Ccc::loadClass('Block_Core_Grid');
+class Block_Config_Grid extends Block_Core_Grid
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/config/grid.php');
+		parent::__construct();
+	}
+
+	public function getEditUrl($config)
+	{
+		return $this->getUrl('edit',null,['configId'=>$config->configId]);
+	}
+	
+	public function getDeleteUrl($config)
+	{
+		return $this->getUrl('delete',null,['configId'=>$config->configId]);
+	}
+	public function prepareActions()
+	{
+		parent::prepareActions();
+		$this->setActions([
+			['title'=>'Edit','method'=>'getEditUrl'],
+			['title'=>'Delete','method'=>'getDeleteUrl']
+			]);
+		return $this;
+	}
+
+	public function prepareCollections()
+	{
+		parent::prepareCollections();
+		return $this->setCollections($this->getConfigs());
+	}
+
+	public function prepareColumns()
+	{
+		parent::prepareColumns();
+
+		$this->addColumn('configId', [
+			'title' => 'Config Id',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('name',[
+			'title' => 'Name',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('code',[
+			'title' => 'Code',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('value',[
+			'title' => 'Value',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('status',[
+			'title' => 'Status',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('createdAt',[
+			'title' => 'Created At',
+			'type' => 'datetime',
+		]);
+
+		return $this;
 	}
 
 	public function getConfigs()

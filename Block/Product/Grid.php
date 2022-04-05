@@ -1,10 +1,118 @@
 <?php 
 
-Ccc::loadClass('Block_Core_Template');
-class Block_Product_Grid extends Block_Core_Template{
+Ccc::loadClass('Block_Core_Grid');
+class Block_Product_Grid extends Block_Core_Grid
+{
 	public function __construct()
 	{
-		$this->setTemplate('view/product/grid.php');
+		parent::__construct();
+	}
+
+	public function getEditUrl($product)
+	{
+		return $this->getUrl('edit',null,['id'=>$product->id]);
+	}
+	
+	public function getDeleteUrl($product)
+	{
+		return $this->getUrl('delete',null,['id'=>$product->id]);
+	}
+	public function prepareActions()
+	{
+		parent::prepareActions();
+		$this->setActions([
+			['title'=>'Edit','method'=>'getEditUrl'],
+			['title'=>'Delete','method'=>'getDeleteUrl']
+			]);
+		return $this;
+	}
+
+	public function prepareCollections()
+	{
+		parent::prepareCollections();
+		return $this->setCollections($this->getProducts());
+	}
+
+	public function prepareColumns()
+	{
+		parent::prepareColumns();
+
+		$this->addColumn('id', [
+			'title' => 'Product Id',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('name',[
+			'title' => 'Name',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('price',[
+			'title' => 'Price',
+			'type' => 'float',
+		]);
+
+		$this->addColumn('cost',[
+			'title' => 'Cost',
+			'type' => 'float',
+		]);
+
+		$this->addColumn('discount',[
+			'title' => 'Discount',
+			'type' => 'float',
+		]);
+
+		$this->addColumn('discountMode',[
+			'title' => 'Discount Mode',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('quantity',[
+			'title' => 'Quantity',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('sku',[
+			'title' => 'SKU',
+			'type' => 'varchar',
+		]);
+
+		$this->addColumn('tax',[
+			'title' => 'Tax',
+			'type' => 'decimal',
+		]);
+
+		$this->addColumn('status',[
+			'title' => 'Status',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('baseImage',[
+			'title' => 'Base Image',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('smallImage',[
+			'title' => 'Small Image',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('thumbImage',[
+			'title' => 'Thumb Image',
+			'type' => 'int',
+		]);
+
+		$this->addColumn('createdAt',[
+			'title' => 'Created At',
+			'type' => 'datetime',
+		]);
+
+		$this->addColumn('updatedAt',[
+			'title' => 'Updated At',
+			'type' => 'datetime',
+		]);
+
+		return $this;
 	}
 
 	public function getProducts()

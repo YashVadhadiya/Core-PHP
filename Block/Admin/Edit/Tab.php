@@ -15,7 +15,7 @@ class Block_Admin_Edit_Tab extends Block_Core_Edit_Tab
 	{ 
 		$this->addTab(
 			[
-			'title' => 'Personal Information',
+			'title' => 'Admin Information',
 			'block' => 'Admin_Edit_Tabs_Personal',
 			'url' => $this->getUrl(null,null,['tab' => 'personal'])],'personal');	
 		

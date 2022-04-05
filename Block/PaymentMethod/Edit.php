@@ -1,15 +1,15 @@
 <?php 
-
-Ccc::loadClass('Block_Core_Template');
-class Block_PaymentMethod_Edit extends Block_Core_Template
+Ccc::loadClass('Block_Core_Edit');
+Ccc::loadClass('Block_PaymentMethod_Edit_Tab');
+class Block_PaymentMethod_Edit extends Block_Core_Edit
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/paymentMethod/edit.php');
+		parent::__construct();
 	}
-	public function getPaymentMethod()
+
+	public function getSaveUrl()
 	{
-		return $this->getData('paymentMethod');
+		return $this->getUrl('save',null,['tab' => null]);
 	}
 }
-

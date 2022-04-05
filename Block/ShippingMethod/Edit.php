@@ -1,15 +1,15 @@
 <?php 
-
-Ccc::loadClass('Block_Core_Template');
-class Block_ShippingMethod_Edit extends Block_Core_Template
+Ccc::loadClass('Block_Core_Edit');
+Ccc::loadClass('Block_ShippingMethod_Edit_Tab');
+class Block_ShippingMethod_Edit extends Block_Core_Edit
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/shippingMethod/edit.php');
+		parent::__construct();
 	}
-	public function getShippingMethod()
+
+	public function getSaveUrl()
 	{
-		return $this->getData('shippingMethod');
+		return $this->getUrl('save',null,['tab' => null]);
 	}
 }
-

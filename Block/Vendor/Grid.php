@@ -1,6 +1,6 @@
-<?php Ccc::loadClass('Block_Core_Grid_Collection'); ?>
+<?php Ccc::loadClass('Block_Core_Grid'); ?>
 <?php 
-class Block_Vendor_Grid extends Block_Core_Grid_Collection
+class Block_Vendor_Grid extends Block_Core_Grid
 {
 	public function __construct()
 	{
@@ -18,16 +18,18 @@ class Block_Vendor_Grid extends Block_Core_Grid_Collection
 	}
 	public function prepareActions()
 	{
-		$this->addAction([
+		parent::prepareActions();
+		$this->setActions([
 			['title'=>'Edit','method'=>'getEditUrl'],
 			['title'=>'Delete','method'=>'getDeleteUrl']
-			],'actions');
+			]);
 		return $this;
 	}
 
 	public function prepareCollections()
 	{
-		$this->addCollection([$this->getVendors()],'collection');
+		parent::prepareCollections();
+		return $this->setCollections($this->getVendors());
 	}
 
 	public function prepareColumns()
@@ -94,7 +96,7 @@ class Block_Vendor_Grid extends Block_Core_Grid_Collection
 		]);
 
 		$this->addColumn('updatedAt',[
-			'title' => 'UpdatedAt',
+			'title' => 'Updated At',
 			'type' => 'datetime',
 		]);
 

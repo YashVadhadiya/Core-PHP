@@ -9,10 +9,8 @@ class Block_Vendor_Edit extends Block_Core_Edit
 		parent::__construct();
 	}
 	
-	public function getEditUrl()
+	public function getSaveUrl()
 	{
-		//Ccc::getRegistry('personal');
-		return $this->getUrl('save');
+		return $this->getUrl('save',null,['tab' => null]);
 	}
 }
-

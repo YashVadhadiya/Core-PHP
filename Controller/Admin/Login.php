@@ -42,10 +42,10 @@ class Controller_Admin_Login extends Controller_Core_Action
 			$result = Ccc::getModel('Admin_Login')->login($adminData['email'], $adminData['password']);
 			if (!$result) 
 			{
-				throw new Exception("Something went wrong!!!.");
+				throw new Exception("Try Again Something Went Wrong!!!");
 			}
 			$message->addMessage("Logged In successfully.");
-			$this->redirect($this->getLayout()->getUrl('grid','product',null,true));
+			$this->redirect($this->getLayout()->getUrl('index','product',null,true));
 		} 
 		catch (Exception $e) 
 		{

@@ -1,16 +1,17 @@
 <?php 
 
-Ccc::loadClass('Block_Core_Template');
-class Block_Order_Edit extends Block_Core_Template
+Ccc::loadClass('Block_Order_Edit_Tab');
+Ccc::loadClass('Block_Core_Edit');
+class Block_Order_Edit extends Block_Core_Edit
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/order/edit.php');
+		parent::__construct();
 	}
-
-	public function getOrder()
+	
+	public function getSaveUrl()
 	{
-		return $this->getData('order');
+		return $this->getUrl('save');
 	}
 }
 
