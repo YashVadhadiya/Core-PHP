@@ -6,7 +6,11 @@
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="skin/admin/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="skin/admin/css/admin.css">
+    <link rel="stylesheet" href="skin/admin/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <!-- Site wrapper -->
@@ -41,84 +45,84 @@
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','admin',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-user"></i>
             <p>Admin</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','customer',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-group"></i>
             <p>Customer</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','product',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-shopping-bag"></i>
             <p>Product</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','category',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-list-alt"></i>
             <p>Category</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','config',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-gear"></i>
             <p>Config</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','salesman',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-universal-access"></i>
             <p>Salesman</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','page',null,true) ?>" class="nav-link">
-
+            <i class="fas fa-newspaper"></i>
             <p>Page</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','vendor',null,true) ?>" class="nav-link">
-
+            <i class="fab fa-creative-commons-by"></i>
             <p>Vendor</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','paymentMethod',null,true) ?>" class="nav-link">
-
+            <i class="fas fa-money-check"></i>
             <p>Payment Method</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','shippingMethod',null,true) ?>" class="nav-link">
-
+            <i class="fas fa-shipping-fast"></i>
             <p>Shipping Method</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('index','order',null,true) ?>" class="nav-link">
-
+            <i class="fa fa-shopping-cart"></i>
             <p>Order</p>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="<?php echo $this->getUrl('logout','admin_login',null,true) ?>" class="nav-link">
-
+            <i class="fas fa-sign-out-alt"></i>
             <p>Logout</p>
         </a>
     </li>
