@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3305
--- Generation Time: Apr 05, 2022 at 10:01 AM
+-- Generation Time: Apr 06, 2022 at 05:57 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -46,7 +46,9 @@ CREATE TABLE `address` (
 
 INSERT INTO `address` (`addressId`, `customerId`, `address`, `postalCode`, `city`, `state`, `country`, `billing`, `shipping`, `same`) VALUES
 (359, 244, 'e', 0, 'e', 'e', 'e', 1, 0, 1),
-(360, 244, 'e', 0, 'e', 'e', 'e', 0, 1, 1);
+(360, 244, 'e', 0, 'e', 'e', 'e', 0, 1, 1),
+(361, 245, 'r', 123211, 'r', 'r', 'r', 1, 0, 1),
+(362, 245, 'r', 123211, 'r', 'r', 'r', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -94,7 +96,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cartId`, `customerId`, `total`, `shippingMethodId`, `shippingAmount`, `paymentMethodId`, `createdAt`, `updatedAt`) VALUES
-(58, 244, 5000, 4, 65, 2, '2022-04-05 13:14:00', NULL);
+(58, 244, 5000, 4, 65, 2, '2022-04-05 13:14:00', NULL),
+(59, 245, 10000, 2, 100, 1, '2022-04-06 00:35:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -125,7 +128,9 @@ CREATE TABLE `cart_address` (
 
 INSERT INTO `cart_address` (`cartAddressId`, `cartId`, `firstName`, `lastName`, `phone`, `email`, `address`, `city`, `state`, `country`, `postalCode`, `billing`, `shipping`, `same`) VALUES
 (67, 58, 'w', 'w', '', 'w', 'e', 'e', 'e', 'e', 0, 1, 0, 0),
-(68, 58, 'w', 'w', '', 'w', 'e', 'e', 'e', 'e', 0, 0, 1, 0);
+(68, 58, 'w', 'w', '', 'w', 'e', 'e', 'e', 'e', 0, 0, 1, 0),
+(69, 59, 'd', 'd', '4123213421', 'd@d', 'r', 'r', 'r', 'r', 123211, 1, 0, 1),
+(70, 59, 'd', 'd', '4123213421', 'd@d', 'r', 'r', 'r', 'r', 123211, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -151,7 +156,9 @@ CREATE TABLE `cart_item` (
 
 INSERT INTO `cart_item` (`itemId`, `cartId`, `productId`, `quantity`, `price`, `cost`, `tax`, `taxAmount`, `discount`) VALUES
 (178, 58, 663, 4, 1000, 1000, '10', 100, 10),
-(179, 58, 664, 1, 1000, 1000, '10', 100, 10);
+(179, 58, 664, 1, 1000, 1000, '10', 100, 10),
+(180, 59, 663, 4, 1000, 1000, '10', 100, 10),
+(181, 59, 664, 6, 1000, 1000, '10', 100, 10);
 
 -- --------------------------------------------------------
 
@@ -174,10 +181,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`categoryId`, `parentId`, `path`, `categoryName`, `status`, `createdAt`, `updatedAt`) VALUES
-(33, 0, '33', 'mi', 1, '2022-03-21 11:47:51', '2022-04-05 10:04:42'),
-(34, 33, '33/34', '10', 1, '2022-03-27 22:38:53', '2022-04-05 10:08:42'),
-(35, 34, '33/34/35', '2', 1, '2022-04-03 11:40:43', '2022-04-05 10:06:09'),
-(36, 33, '33/36', 'plus', 1, '2022-04-03 11:53:33', '2022-04-05 10:10:52');
+(72, 0, '72', 'fdbadfbad', 1, '2022-04-05 23:18:20', '2022-04-06 00:27:06');
 
 -- --------------------------------------------------------
 
@@ -201,11 +205,8 @@ CREATE TABLE `category_media` (
 --
 
 INSERT INTO `category_media` (`imageId`, `categoryId`, `image`, `base`, `thumb`, `small`, `status`, `gallery`) VALUES
-(30, 36, '0452022100341-favicon.jpg', 1, 1, 0, 0, '0'),
-(31, 33, '0452022100421-WhatsApp Image 2022-03-24 at 9.57.29 PM.jpeg', 0, 0, 0, 0, '0'),
-(32, 36, '0452022100452-WhatsApp Image 2022-03-24 at 9.57.29 PM.jpeg', 0, 0, 0, 0, '0'),
-(33, 35, '0452022100514-WhatsApp Image 2022-03-24 at 9.57.29 PM.jpeg', 1, 1, 1, 1, '1'),
-(34, 34, '0452022100819-WhatsApp Image 2022-04-02 at 8.43.40 PM.jpeg', 0, 0, 0, 0, '0');
+(55, 72, '0452022111826-unnamed.png', 1, 1, 1, 1, '1'),
+(56, 72, '0452022111904-php-e8c6425acd65e1cbc012639ad25598c7.png', 0, 0, 0, 1, '1');
 
 -- --------------------------------------------------------
 
@@ -224,7 +225,9 @@ CREATE TABLE `category_product` (
 --
 
 INSERT INTO `category_product` (`entityId`, `categoryId`, `productId`) VALUES
-(32, 34, 663);
+(56, 72, 664),
+(57, 72, 693),
+(58, 72, 663);
 
 -- --------------------------------------------------------
 
@@ -271,7 +274,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `salesmanId`, `firstName`, `lastName`, `email`, `phone`, `status`, `createdAt`, `updatedAt`) VALUES
-(244, 33, 'w', 'w', 'w', 'w', 1, '2022-04-05 12:55:40', '2022-04-05 13:08:53');
+(244, 33, 'w', 'w', 'w', 'w', 1, '2022-04-05 12:55:40', '2022-04-05 13:08:53'),
+(245, 34, 'd', 'd', 'd@d', '4123213421', 1, '2022-04-06 00:34:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -293,11 +297,9 @@ CREATE TABLE `customer_price` (
 INSERT INTO `customer_price` (`entityId`, `customerId`, `productId`, `customerPrice`) VALUES
 (63, 244, 663, 999),
 (64, 244, 664, 999),
-(65, 244, 665, 999),
-(66, 244, 666, 999),
-(67, 244, 667, 999),
-(68, 244, 671, 245),
-(69, 244, 672, 9.5);
+(70, 245, 663, 999),
+(71, 245, 664, 999),
+(72, 245, 693, 0);
 
 -- --------------------------------------------------------
 
@@ -328,7 +330,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`orderId`, `customerId`, `firstName`, `lastName`, `email`, `phone`, `grandTotal`, `taxAmount`, `shippingMethodId`, `shippingAmount`, `paymentMethodId`, `state`, `status`, `createdAt`, `updatedAt`) VALUES
-(67, 244, 'w', 'w', 'w', '', 5215, 200, 4, 65, 2, 1, 1, '2022-04-05 13:14:23', NULL);
+(67, 244, 'w', 'w', 'w', '', 5215, 200, 4, 65, 2, 1, 1, '2022-04-05 13:14:23', NULL),
+(68, 245, 'd', 'd', 'd@d', '4123213421', 10200, 200, 2, 100, 1, 1, 1, '2022-04-06 00:35:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -359,7 +362,9 @@ CREATE TABLE `order_address` (
 
 INSERT INTO `order_address` (`addressId`, `orderId`, `firstName`, `lastName`, `email`, `phone`, `city`, `state`, `country`, `postalCode`, `address`, `type`, `createdAt`, `updatedAt`) VALUES
 (121, 67, 'w', 'w', 'w', '', 'e', 'e', 'e', 0, 'e', 1, '2022-04-05 13:14:23', NULL),
-(122, 67, 'w', 'w', 'w', '', 'e', 'e', 'e', 0, 'e', 2, '2022-04-05 13:14:23', NULL);
+(122, 67, 'w', 'w', 'w', '', 'e', 'e', 'e', 0, 'e', 2, '2022-04-05 13:14:23', NULL),
+(123, 68, 'd', 'd', 'd@d', '4123213421', 'r', 'r', 'r', 123211, 'r', 1, '2022-04-06 00:35:41', NULL),
+(124, 68, 'd', 'd', 'd@d', '4123213421', 'r', 'r', 'r', 123211, 'r', 2, '2022-04-06 00:35:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -382,7 +387,9 @@ CREATE TABLE `order_comment` (
 
 INSERT INTO `order_comment` (`commentId`, `orderId`, `status`, `note`, `customerNotified`, `createdAt`) VALUES
 (10, 67, 0, '', 0, '2022-04-05 13:14:23'),
-(11, 67, 5, '', 1, '2022-04-05 13:14:40');
+(11, 67, 5, '', 1, '2022-04-05 13:14:40'),
+(12, 68, 0, '', 0, '2022-04-06 00:35:41'),
+(13, 68, 5, '', 1, '2022-04-06 00:35:52');
 
 -- --------------------------------------------------------
 
@@ -412,7 +419,9 @@ CREATE TABLE `order_item` (
 
 INSERT INTO `order_item` (`itemId`, `orderId`, `productId`, `name`, `sku`, `cost`, `price`, `tax`, `taxAmount`, `discount`, `quantity`, `createdAt`, `updatedAt`) VALUES
 (521, 67, 663, 'q', 'FSbadnagdngzfgn', 1000, 1000, '10', 400, 40, 4, '2022-04-05 13:14:23', NULL),
-(522, 67, 664, 'q', 'FSbadnagdngzfgn', 1000, 1000, '10', 100, 10, 1, '2022-04-05 13:14:23', NULL);
+(522, 67, 664, 'q', 'FSbadnagdngzfgn', 1000, 1000, '10', 100, 10, 1, '2022-04-05 13:14:23', NULL),
+(523, 68, 663, 'q', 'FSbadnagdngzfgn', 1000, 1000, '10', 400, 40, 4, '2022-04-06 00:35:41', NULL),
+(524, 68, 664, 'q', 'FSbadnagdngzfgn', 1000, 1000, '10', 600, 60, 6, '2022-04-06 00:35:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -489,13 +498,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `price`, `cost`, `discount`, `discountMode`, `quantity`, `sku`, `tax`, `status`, `createdAt`, `updatedAt`) VALUES
-(663, 'q', 1000, 1000, 10, 1, 1000, 'FSbadnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-05 12:31:26'),
-(664, 'q', 1000, 1000, 10, 1, 1000, 'FSbadnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-04 20:21:02'),
-(665, 'q', 1000, 1000, 10, 1, 1000, 'FSbadnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-04 20:21:02'),
-(666, 'q', 1000, 1000, 10, 1, 1000, 'FSbadnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-04 20:21:02'),
-(667, 'q', 1000, 1000, 10, 1, 1000, 'FSbadnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-04 20:21:02'),
-(671, 'a', 250, 200, 10, 2, 1000, 'fbadfndgnsfaadf', '10', 1, '2022-04-05 01:15:13', '2022-04-05 01:19:54'),
-(672, 'w', 10, 10, 10, 2, 1000, 'dfbsdgndz', '10', 1, '2022-04-05 10:00:07', '2022-04-05 10:02:27');
+(663, 'q', 1000, 1000, 10, 1, 1000, 'FSbadnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-06 00:31:13'),
+(664, 'q', 1000, 1000, 10, 1, 1000, 'FSbadsdavadfvdnagdngzfgn', '10', 1, '2022-04-04 20:21:02', '2022-04-06 00:24:00'),
+(693, 'r', 0, 0, 0, 2, 0, 'r', '0', 1, '2022-04-06 00:27:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -519,12 +524,9 @@ CREATE TABLE `product_media` (
 --
 
 INSERT INTO `product_media` (`imageId`, `productId`, `base`, `thumb`, `small`, `image`, `status`, `gallery`) VALUES
-(50, 671, 1, 0, 0, '0452022011527-favicon.jpg', 0, '0'),
-(51, 671, 0, 1, 0, '0452022011635-WhatsApp Image 2022-03-24 at 9.57.29 PM.jpeg', 0, '0'),
-(52, 672, 0, 0, 0, '0452022100024-favicon.jpg', 0, '0'),
-(53, 672, 0, 0, 1, '0452022100235-WhatsApp Image 2022-03-24 at 9.57.29 PM.jpeg', 0, '0'),
-(54, 663, 0, 0, 0, '0452022122431-activity.png', 0, '0'),
-(55, 663, 0, 0, 0, '0452022122514-favicon.jpg', 0, '0');
+(65, 663, 1, 0, 0, '0452022115713-C6996CE2-4685-478F-8E5A-8D85438CFAC3.jpg', 1, '0'),
+(70, 664, 0, 1, 0, '0462022122417-yash stz logo.png', 0, '0'),
+(71, 693, 1, 1, 1, '0462022122749-C6996CE2-4685-478F-8E5A-8D85438CFAC3.jpg', 1, '1');
 
 -- --------------------------------------------------------
 
@@ -549,7 +551,8 @@ CREATE TABLE `salesman` (
 --
 
 INSERT INTO `salesman` (`salesmanId`, `firstName`, `lastName`, `email`, `status`, `phone`, `percentage`, `createdAt`, `updatedAt`) VALUES
-(33, 'demo', 'demo', 'demo@demo', 1, '1234567890', 10, '2022-04-05 12:32:43', '2022-04-05 13:15:07');
+(33, 'demo', 'demo', 'demo@demo', 1, '1234567890', 10, '2022-04-05 12:32:43', '2022-04-05 13:15:07'),
+(34, 'x', 's', 's@a', 1, '12313212311', 11, '2022-04-06 00:34:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -640,7 +643,8 @@ ALTER TABLE `address`
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `cart`
@@ -699,6 +703,7 @@ ALTER TABLE `config`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `salesmanId` (`salesmanId`);
 
 --
@@ -757,7 +762,8 @@ ALTER TABLE `payment_method`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `sku` (`sku`);
 
 --
 -- Indexes for table `product_media`
@@ -770,7 +776,8 @@ ALTER TABLE `product_media`
 -- Indexes for table `salesman`
 --
 ALTER TABLE `salesman`
-  ADD PRIMARY KEY (`salesmanId`);
+  ADD PRIMARY KEY (`salesmanId`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `shipping_method`
@@ -782,7 +789,8 @@ ALTER TABLE `shipping_method`
 -- Indexes for table `vendor`
 --
 ALTER TABLE `vendor`
-  ADD PRIMARY KEY (`vendorId`);
+  ADD PRIMARY KEY (`vendorId`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `vendor_address`
@@ -799,7 +807,7 @@ ALTER TABLE `vendor_address`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `addressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
+  MODIFY `addressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -811,37 +819,37 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `cart_address`
 --
 ALTER TABLE `cart_address`
-  MODIFY `cartAddressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `cartAddressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `category_media`
 --
 ALTER TABLE `category_media`
-  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `category_product`
 --
 ALTER TABLE `category_product`
-  MODIFY `entityId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `entityId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `config`
@@ -853,37 +861,37 @@ ALTER TABLE `config`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `customer_price`
 --
 ALTER TABLE `customer_price`
-  MODIFY `entityId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `entityId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `order_address`
 --
 ALTER TABLE `order_address`
-  MODIFY `addressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `addressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `order_comment`
 --
 ALTER TABLE `order_comment`
-  MODIFY `commentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `commentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=523;
+  MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
 
 --
 -- AUTO_INCREMENT for table `page`
@@ -901,19 +909,19 @@ ALTER TABLE `payment_method`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=673;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=694;
 
 --
 -- AUTO_INCREMENT for table `product_media`
 --
 ALTER TABLE `product_media`
-  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `salesman`
 --
 ALTER TABLE `salesman`
-  MODIFY `salesmanId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `salesmanId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `shipping_method`
