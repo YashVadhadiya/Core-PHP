@@ -16,7 +16,7 @@ $id= $_GET['id'];?>
 
                                 <button  class="btn btn-success" type="button" onclick="mediaUpdate()" name="update">Update</button>
                             </form>
-                            <button  class="btn btn-warning" ><a href="<?php echo $this->getUrl('index','category',null,true) ?>">Cancel</a></button>
+                            <button  class="btn btn-warning" ><a href="<?php echo $this->getUrl('index','category',null,true) ?>">Back To Category Grid</a></button>
                             <table border=1 width=100%>
                                 <tr>
                                     <th>Image Id</th>

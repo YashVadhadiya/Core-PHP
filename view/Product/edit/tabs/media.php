@@ -16,7 +16,7 @@
 
                                 <button class="btn btn-success" type="button" onclick="mediaUpdate()" name="update">Update</button>
                             </form>
-                            <button class="btn btn-warning" ><a href="<?php echo $this->getUrl('index','product',null,true) ?>">Cancel</a></button>
+                            <button class="btn btn-warning" ><a href="<?php echo $this->getUrl('index','product',null,true) ?>">Back To Product Grid</a></button>
 
                             <table border=1 width=100%>
                                 <tr>
